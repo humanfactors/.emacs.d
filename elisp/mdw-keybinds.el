@@ -49,12 +49,12 @@
        (global-set-key (kbd ,keybind) ',func))))
 
 
-(mdw/define-openfile-mdub "dropboxmain" "~/Dropbox" "C-x M-1")
-(mdw/define-openfile-mdub "home" "~/" "C-x M-h")
-(mdw/define-openfile-mdub "AHK" "~/Dropbox/Code/AHK" "C-x M-a")
-(mdw/define-openfile-mdub "org" "~/Dropbox/org" "C-x M-o")
-(mdw/define-openfile-mdub "notes" "~/Dropbox/org" "C-x M-n")
-(mdw/define-openfile-mdub "code" "~/Code/" "C-x M-c")
+(mdw/define-openfile "dropboxmain" "~/Dropbox" "C-x M-1")
+(mdw/define-openfile "home" "~/" "C-x M-h")
+(mdw/define-openfile "AHK" "~/Dropbox/Code/AHK" "C-x M-a")
+(mdw/define-openfile "org" "~/Dropbox/org" "C-x M-o")
+(mdw/define-openfile "notes" "~/Dropbox/org" "C-x M-n")
+(mdw/define-openfile "code" "~/Code/" "C-x M-c")
 
 ;; M-up and M-down move lines
 
