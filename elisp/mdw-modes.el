@@ -1,2 +1,2 @@
 
-(provide 'mdw-modes.el)
+(provide 'mdw-modes)
