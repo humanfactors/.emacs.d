@@ -59,6 +59,51 @@
 ;; M-up and M-down move lines
 
 
+
+;; Hydra acewindow
+
+;; (defhydra hydra-window (:color red
+;;                         :columns nil)
+;;   "window"
+;;   ("h" windmove-left nil)
+;;   ("j" windmove-down nil)
+;;   ("k" windmove-up nil)
+;;   ("l" windmove-right nil)
+  
+  
+;;   ("left" windmove-left nil)
+;;   ("down" windmove-down nil)
+;;   ("up" windmove-up nil)
+;;   ("right" windmove-right nil)
+  
+  
+;;   ("H" hydra-move-splitter-left nil)
+;;   ("J" hydra-move-splitter-down nil)
+;;   ("K" hydra-move-splitter-up nil)
+;;   ("L" hydra-move-splitter-right nil)
+  
+;;   ("|" (lambda ()
+;;          (interactive)
+;;          (split-window-right)
+;;          (windmove-right))
+;;        "vert")
+;;   ("-" (lambda ()
+;;          (interactive)
+;;          (split-window-below)
+;;          (windmove-down))
+;;        "horz")
+
+;;   ("t" transpose-frame "'" :exit t)
+;;   ("o" delete-other-windows "one" :exit t)
+;;   ("a" ace-window "ace")
+;;   ("s" ace-swap-window "swap")
+;;   ("d" ace-delete-window "del")
+;;   ("m" ace-maximize-window "ace-one" :exit t)
+;;   ("q" nil "cancel")
+;;   ("f" nil))
+
+;; (global-set-key (kbd "C-M-o") 'hydra-window/body)
+
 (provide 'mdw-keybinds)
 ;;; mdw-keybinds.el ends here
 
