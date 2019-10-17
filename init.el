@@ -2,6 +2,9 @@
 ;;
 ;;; Code:
 
+;; Setup custom file
+(setq custom-file "~/.emacs.d/emacs-custom.el")
+
 ;; This just stops this erroring the first time you load emacs
 (unless (file-exists-p custom-file)
   (with-temp-buffer
@@ -9,8 +12,6 @@
     (write-file custom-file nil)
     ))
 
-;; Setup custom file
-(setq custom-file "~/.emacs.d/emacs-custom.el")
 (load custom-file)
 
 ;; Default directory
