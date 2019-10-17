@@ -31,19 +31,20 @@
      (+ (point) (skip-chars-backward "a-zA-Z0-9._"))
      (+ (point) (skip-chars-forward "a-zA-Z0-9._")))))
 
+
 (with-eval-after-load "ess-r-mode"
 
-(defun ess-eval-word ()
-  (interactive)
-  (let ((x (ess-edit-word-at-point)))
-    (ess-eval-linewise (concat x))))
+  (defun ess-eval-word ()
+    (interactive)
+    (let ((x (ess-edit-word-at-point)))
+      (ess-eval-linewise (concat x))))
 
-(define-key ess-mode-map  (kbd "C-c r") 'ess-eval-word)
-(define-key ess-mode-map  (kbd "C-S-M") 'then_R_operator)
-(define-key ess-mode-map  (kbd "C-'") 'tide-insert-assign)
+  (define-key ess-mode-map  (kbd "C-c r") 'ess-eval-word)
+  (define-key ess-mode-map  (kbd "C-S-M") 'then_R_operator)
+  (define-key ess-mode-map  (kbd "C-'") 'tide-insert-assign)
 
 )
 
 
 
-(provide 'mdw-ess.el)
+(provide 'mdw-ess)
