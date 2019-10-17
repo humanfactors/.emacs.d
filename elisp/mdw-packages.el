@@ -23,8 +23,8 @@
         ivy
         deft
         general
-        ace-window
         which-key
+        ace-window
         counsel
         swiper                ;; Better search in buffer
         org
