@@ -30,8 +30,13 @@
 (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
 (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
 
+
 ;; Clock
 (setq display-time-24hr-format t)
+
+;; Modeline
+(require 'spaceline-config)
+(spaceline-emacs-theme)
 
 (provide 'mdw-vibes)
 

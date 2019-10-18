@@ -11,7 +11,6 @@
 (setq mouse-yank-at-point nil) ;; Fixes bug associated with middle click paste for spell check
 (setq tab-width 4) ; or any other preferred value
 
-
 ;; Startup
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-message t)
@@ -50,7 +49,10 @@
 (setq fill-column 120)
 (auto-fill-mode 0)
 (electric-pair-mode 1)
+(setq word-wrap 1)
 
+
+(setq dired-dnd-protocol-alist nil) ; Dired disable drag n drop copy
 
 ;; Quality of Life
 (setq ring-bell-function 'ignore)
@@ -65,10 +67,12 @@
 ;; Allow 20MB of memory (instead of 0.76MB default) before calling
 ;; garbage collection. This means GC runs less often, which speeds
 ;; up some operations
-(setq gc-cons-threshold 20000000)
 (setq gc-cons-threshold-original gc-cons-threshold)
 (setq gc-cons-threshold (* 1024 1024 100))
 
+
+;; I hate the emacs backward and forward delte defaults
+(global-set-key (kbd "C-<backspace>") 'dwim-backward-kill-word)
 
 (provide 'mdw-defaults)
 ;;; mdw-defaults.el ends here

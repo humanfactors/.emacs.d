@@ -3,14 +3,22 @@
 ;;
 ;;; Code:
 
-(global-set-key (kbd "M-<f4>") 'kill-emacs)
-(global-set-key (kbd "C-z") 'undo)
+(require 'general)
+(require 'undo-tree)
 
+(global-set-key (kbd "M-<f4>") 'kill-emacs)
+(global-set-key (kbd "C-z") 'undo-tree-undo)
+(global-set-key (kbd "C-S-Z") 'undo-tree-redo)
 
 ;; Editing
 (global-set-key (kbd "M-<backspace>") 'backward-kill-word)
 (global-set-key (kbd "C-x K") 'kill-buffer-and-window)
 (global-set-key (kbd "C-x k") 'kill-this-buffer)
+(global-set-key (kbd "M-D") 'duplicate-thing)
+
+;; By default, BACKSPACE ON EMACS turns a tab character into a set of spaces
+;; & deletes one. This sets backspace to delete 1 character instead of 1 column.
+(global-set-key (kbd "DEL") 'backward-delete-char)
 
 (defun yank-pop-forwards (arg)
   (interactive "p")
@@ -55,6 +63,36 @@
 (mdw/define-openfile "org" "~/Dropbox/org" "C-x M-o")
 (mdw/define-openfile "notes" "~/Dropbox/org" "C-x M-n")
 (mdw/define-openfile "code" "~/Code/" "C-x M-c")
+(mdw/define-openfile "emacs-dir" "~/.emacs.d/" "")
+
+(global-unset-key (kbd "C-\\"))
+
+(general-define-key
+ :prefix "C-\\"
+ "d" 'deft
+ )
+
+(general-define-key
+ :prefix "C-\\ o"
+ :prefix-command 'opendirs
+ "o" 'openfile-emacs-dir
+ )
+
+(general-define-key
+ :prefix "C-c"
+ ;; bind "C-c a" to 'org-agenda
+ "a" 'org-agenda
+ "b" 'counsel-bookmark
+ "c" 'org-capture)
+
+
+(global-set-key (kbd "C-x C-<up>") 'windmove-up)
+(global-set-key (kbd "C-x C-<down>") 'windmove-down)
+(global-set-key (kbd "C-x C-<left>") 'windmove-left)
+(global-set-key (kbd "C-x C-<right>") 'windmove-right)
+
+
+
 
 ;; M-up and M-down move lines
 

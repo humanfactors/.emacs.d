@@ -59,6 +59,11 @@ Uses `bjk-timestamp-format' for formatting the date/time."
   (interactive "p")
   (move-line (if (null n) 1 n)))
 
+(defmacro when-system (type &rest body)
+  "Evaluate BODY if `system-type' equals TYPE."
+  (declare (indent defun))
+  `(when (eq system-type ',type)
+     ,@body))
 
 
 ;; Function for finding out info about font at cursor
@@ -69,6 +74,42 @@ Uses `bjk-timestamp-format' for formatting the date/time."
     (if face (message "Face: %s" face) (message "No face at %d" pos))))
 
 
+(defun dwim-backward-kill-word ()
+  "DWIM kill characters backward until encountering the beginning of a
+word or non-word."
+  (interactive)
+  (if (thing-at-point 'word) (backward-kill-word 1)
+    (let* ((orig-point              (point))
+           (orig-line               (line-number-at-pos))
+           (backward-word-point     (progn (backward-word) (point)))
+           (backward-non-word-point (progn (goto-char orig-point) (backward-non-word) (point)))
+           (min-point               (max backward-word-point backward-non-word-point)))
+
+      (if (< (line-number-at-pos min-point) orig-line) (progn (goto-char min-point) (end-of-line) (delete-horizontal-space))
+        (delete-region min-point orig-point)
+        (goto-char min-point))
+      )))
+
+(defun backward-non-word ()
+  "Move backward until encountering the beginning of a non-word."
+  (interactive)
+  (search-backward-regexp "[^a-zA-Z0-9\s\n]")
+  (while (looking-at "[^a-zA-Z0-9\s\n]")
+    (backward-char))
+  (forward-char))
+
+(defun duplicate-thing (comment)
+  "Duplicates the current line, or the region if active. If an argument is
+given, the duplicated region will be commented out."
+  (interactive "P")
+  (save-excursion
+    (let ((start (if (region-active-p) (region-beginning) (point-at-bol)))
+          (end   (if (region-active-p) (region-end) (point-at-eol))))
+      (goto-char end)
+      (unless (region-active-p)
+        (newline))
+      (insert (buffer-substring start end))
+      (when comment (comment-region start end)))))
 
 (provide 'mdw-utilities)
 ;; End of mdw-utilities.el

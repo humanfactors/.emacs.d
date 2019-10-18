@@ -23,6 +23,7 @@
         ivy
         deft
         general
+	spaceline
         which-key
         ace-window
         counsel
@@ -31,7 +32,7 @@
         smartparens          ;; Slurp and barf
         rainbow-delimiters   ;; Colorful parens
         ;; rainbow-mode         ;; Highlight colors in code
-        ;; undo-tree            ;; Show a graph of edits that can be undone
+        undo-tree            ;; Show a graph of edits that can be undone
         smex                 ;; Better help in minibuffer
         company              ;; Auto completion
         expand-region        ;; Select larger and larger region
