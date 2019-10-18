@@ -18,6 +18,7 @@ Uses `bjk-timestamp-format' for formatting the date/time."
   (insert (format-time-string "%Y%m%d_%H%M" (current-time))))
 
 
+
 (defun mdw/open-directory-in-system-viewer ()
   (interactive)
   (when-system gnu/linux

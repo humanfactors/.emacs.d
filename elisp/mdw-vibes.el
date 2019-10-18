@@ -6,6 +6,18 @@
 
 (load-theme 'spacemacs-dark)
 
+;; Initial buffer
+
+(setf initial-buffer-choice (lambda () (dired "~/Dropbox/org")))
+(defun display-startup-echo-area-message ()
+  (message "Welcome to the Matrix."))
+  
+;; initial window
+(setq initial-frame-alist
+      '(
+        (width . 140) ; character
+        (height . 40) ; lines
+        ))
 
 ;; Set default font
 (set-face-attribute 'default nil
