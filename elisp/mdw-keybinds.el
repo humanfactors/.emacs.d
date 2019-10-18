@@ -91,6 +91,8 @@
 (global-set-key (kbd "C-x C-<left>") 'windmove-left)
 (global-set-key (kbd "C-x C-<right>") 'windmove-right)
 
+;; I hate the emacs backward and forward delte defaults
+(global-set-key (kbd "C-<backspace>") 'dwim-backward-kill-word)
 
 
 

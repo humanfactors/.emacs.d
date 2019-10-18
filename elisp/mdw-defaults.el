@@ -71,9 +71,6 @@
 (setq gc-cons-threshold (* 1024 1024 100))
 
 
-;; I hate the emacs backward and forward delte defaults
-(global-set-key (kbd "C-<backspace>") 'dwim-backward-kill-word)
-
 (provide 'mdw-defaults)
 ;;; mdw-defaults.el ends here
 
