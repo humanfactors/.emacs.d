@@ -28,5 +28,6 @@
 (require 'mdw-keybinds)
 (require 'mdw-deft)
 (require 'mdw-vibes)
-;; (require 'mdw-modes)
+(require 'mdw-modes)
+(require 'mdw-org)
 (require 'mdw-ess)

@@ -13,6 +13,9 @@
 (global-set-key (kbd "C-z") 'undo-tree-undo)
 (global-set-key (kbd "C-S-Z") 'undo-tree-redo)
 
+;; Ace Window
+(global-set-key (kbd "M-o") 'ace-window)
+
 ;; Editing
 (global-set-key (kbd "M-<backspace>") 'backward-kill-word)
 (global-set-key (kbd "C-x K") 'kill-buffer-and-window)
@@ -94,6 +97,15 @@
  "k" 'openfile-AHK
  "c" 'openfile-code
  "n" 'openfile-notes
+ )
+
+;; Define file prefix keybinds
+(general-define-key
+ :prefix "C-\\ k"
+ :prefix-command 'keybind-utilites
+ "f" 'free-keys
+ "i" 'mdw/insert-global-set-key
+ "L" 'describe-bindings
  )
 
 (general-define-key
