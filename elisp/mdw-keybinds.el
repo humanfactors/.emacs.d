@@ -67,11 +67,13 @@
 
 (global-unset-key (kbd "C-\\"))
 
+;; Define application keybinds (e.g., deft)
 (general-define-key
  :prefix "C-\\"
  "d" 'deft
  )
 
+;; Define file prefix keybinds
 (general-define-key
  :prefix "C-\\ o"
  :prefix-command 'opendirs
@@ -85,13 +87,10 @@
  "b" 'counsel-bookmark
  "c" 'org-capture)
 
-
 (global-set-key (kbd "C-x C-<up>") 'windmove-up)
 (global-set-key (kbd "C-x C-<down>") 'windmove-down)
 (global-set-key (kbd "C-x C-<left>") 'windmove-left)
 (global-set-key (kbd "C-x C-<right>") 'windmove-right)
-
-
 
 
 ;; M-up and M-down move lines
