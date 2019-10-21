@@ -12,3 +12,4 @@
 
 elpa/*
 emacs-custom.el
+smex-items

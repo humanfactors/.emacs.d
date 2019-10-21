@@ -6,7 +6,10 @@
 (require 'general)
 (require 'undo-tree)
 
-(global-set-key (kbd "M-<f4>") 'kill-emacs)
+
+
+(global-set-key (kbd "<S-return>") 'end-of-line-and-indented-new-line)
+(global-set-key (kbd "M-<f4>") 'save-buffers-kill-emacs)
 (global-set-key (kbd "C-z") 'undo-tree-undo)
 (global-set-key (kbd "C-S-Z") 'undo-tree-redo)
 
@@ -56,28 +59,41 @@
          (interactive) (find-file ,dir))
        (global-set-key (kbd ,keybind) ',func))))
 
+(defmacro mdw/define-openfile-funconly (filename dir)
+  (let ((func (intern (concat "openfile-" filename))))
+    `(progn
+       (defun ,func ()
+         (interactive) (find-file ,dir)))))
 
+
+(mdw/define-openfile "org" "~/Dropbox/org" "C-x M-o")
 (mdw/define-openfile "dropboxmain" "~/Dropbox" "C-x M-1")
 (mdw/define-openfile "home" "~/" "C-x M-h")
-(mdw/define-openfile "AHK" "~/Dropbox/Code/AHK" "C-x M-a")
-(mdw/define-openfile "org" "~/Dropbox/org" "C-x M-o")
-(mdw/define-openfile "notes" "~/Dropbox/org" "C-x M-n")
-(mdw/define-openfile "code" "~/Code/" "C-x M-c")
-(mdw/define-openfile "emacs-dir" "~/.emacs.d/" "")
 
-(global-unset-key (kbd "C-\\"))
+(mdw/define-openfile-funconly "AHK" "~/Dropbox/Code/AHK")
+(mdw/define-openfile-funconly "notes" "~/Dropbox/org")
+(mdw/define-openfile-funconly "code" "~/Code/")
+(mdw/define-openfile-funconly "emacs-dir" "~/.emacs.d/")
 
 ;; Define application keybinds (e.g., deft)
+(global-unset-key (kbd "C-\\"))
 (general-define-key
  :prefix "C-\\"
  "d" 'deft
+ "v" 'mdw/open-directory-in-system-viewer
  )
 
 ;; Define file prefix keybinds
 (general-define-key
  :prefix "C-\\ o"
  :prefix-command 'opendirs
- "o" 'openfile-emacs-dir
+ "o" 'openfile-org
+ "e" 'openfile-emacs-dir
+ "d" 'openfile-dropboxmain
+ "h" 'openfile-home
+ "k" 'openfile-AHK
+ "c" 'openfile-code
+ "n" 'openfile-notes
  )
 
 (general-define-key
@@ -92,6 +108,8 @@
 (global-set-key (kbd "C-x C-<left>") 'windmove-left)
 (global-set-key (kbd "C-x C-<right>") 'windmove-right)
 
+;; I hate the emacs backward and forward delte defaults
+(global-set-key (kbd "C-<backspace>") 'dwim-backward-kill-word)
 
 ;; M-up and M-down move lines
 
