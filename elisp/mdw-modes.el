@@ -17,6 +17,6 @@
 (add-to-list 'auto-mode-alist '("\\.Rmd\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.rmd\\'" . markdown-mode))
 
-
+(add-hook 'visual-line-mode-hook #'visual-fill-column-mode)
 
 (provide 'mdw-modes)

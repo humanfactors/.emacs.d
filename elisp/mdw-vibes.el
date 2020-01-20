@@ -4,7 +4,16 @@
 ;;
 ;;; Code:
 
-(load-theme 'spacemacs-dark)
+;; Setting themes
+(require 'cl)
+
+(load-theme 'leuven)
+
+(setq cycle-themes-theme-list
+      '(leuven spacemacs-dark spacemacs-light))
+
+(require 'cycle-themes)
+(cycle-themes-mode)
 
 ;; Initial buffer
 

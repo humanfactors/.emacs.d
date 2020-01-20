@@ -19,6 +19,7 @@
 
 ;; Ensure my custom Elisp is on loadpath
 (add-to-list 'load-path "~/.emacs.d/elisp")
+(add-to-list 'load-path "~/.emacs.d/elisp/deps")
 
 ;; The Mdubziverse
 (require 'mdw-defaults)

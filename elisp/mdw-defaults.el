@@ -18,6 +18,10 @@
 ;; y or n is fine
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+; BLINK BLINK BLINK NO NO NO
+(setq-default cursor-type 'bar)
+(blink-cursor-mode 0)
+
 ;; Little modes and fixes
 (auto-save-mode 0)
 (delete-selection-mode 1)
@@ -47,9 +51,20 @@
 
 ;; Editing 
 (setq fill-column 120)
+(setq visual-fill-column-width 120)
 (auto-fill-mode 0)
 (electric-pair-mode 1)
 (setq word-wrap 1)
+
+;; Copy Pasting
+(setq select-enable-primary t)
+(setq select-enable-clipboard t)
+(setq save-interprogram-paste-before-kill t)
+
+;; Dired doens't need to be filled unless it's insanity
+(add-hook 'dired-mode-hook
+          (lambda () 
+             (setq fill-column 120)))
 
 
 (setq dired-dnd-protocol-alist nil) ; Dired disable drag n drop copy

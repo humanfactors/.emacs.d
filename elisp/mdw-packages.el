@@ -41,6 +41,7 @@
         markdown-mode
         ess
         spacemacs-theme
+	visual-fill-column
         )
       )
 

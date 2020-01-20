@@ -26,8 +26,8 @@
 (setq which-key-idle-delay 0.3)
 
 (require 'company)
-  (setq company-idle-delay              0.1
-        company-minimum-prefix-length   2
+  (setq company-idle-delay              0.3
+        company-minimum-prefix-length   3
         company-show-numbers            t
         company-dabbrev-downcase        nil
       )
