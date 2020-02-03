@@ -112,5 +112,77 @@ given, the duplicated region will be commented out."
       (insert (buffer-substring start end))
       (when comment (comment-region start end)))))
 
+
+
+(defun spacemacs/maximize-vertically ()
+  "Delete all windows above and below the current window."
+  (interactive)
+  (require 'windmove)
+  (save-excursion
+    (while (condition-case nil (windmove-up) (error nil))
+      (delete-window))
+    (while (condition-case nil (windmove-down) (error nil))
+      (delete-window))))
+
+(defun spacemacs/maximize-horizontally ()
+  "Delete all windows to the left and right of the current window."
+  (interactive)
+  (require 'windmove)
+  (save-excursion
+    (while (condition-case nil (windmove-left) (error nil))
+      (delete-window))
+    (while (condition-case nil (windmove-right) (error nil))
+      (delete-window))))
+
+(defun spacemacs/toggle-maximize-buffer ()
+  "Maximize buffer"
+  (interactive)
+  (save-excursion
+    (if (and (= 1 (length (window-list)))
+             (assoc ?_ register-alist))
+        (jump-to-register ?_)
+      (progn
+        (window-configuration-to-register ?_)
+        (delete-other-windows)))))
+
+
+;; from @bmag
+(defun spacemacs/window-layout-toggle ()
+  "Toggle between horizontal and vertical layout of two windows."
+  (interactive)
+  (if (= (count-windows) 2)
+      (let* ((window-tree (car (window-tree)))
+             (current-split-vertical-p (car window-tree))
+             (first-window (nth 2 window-tree))
+             (second-window (nth 3 window-tree))
+             (second-window-state (window-state-get second-window))
+             (splitter (if current-split-vertical-p
+                           #'split-window-horizontally
+                         #'split-window-vertically)))
+        (delete-other-windows first-window)
+        ;; `window-state-put' also re-selects the window if needed, so we don't
+        ;; need to call `select-window'
+        (window-state-put second-window-state (funcall splitter)))
+    (error "Can't toggle window layout when the number of windows isn't two.")))
+
+(defun spacemacs/window-layout-toggle ()
+  "Toggle between horizontal and vertical layout of two windows."
+  (interactive)
+  (if (= (count-windows) 2)
+    (let* ((window-tree (car (window-tree)))
+           (current-split-vertical-p (car window-tree))
+           (first-window (nth 2 window-tree))
+           (second-window (nth 3 window-tree))
+           (second-window-state (window-state-get second-window))
+           (splitter (if current-split-vertical-p
+                         #'split-window-horizontally
+                       #'split-window-vertically)))
+      (delete-other-windows first-window)
+      ;; `window-state-put' also re-selects the window if needed, so we don't
+      ;; need to call `select-window'
+      (window-state-put second-window-state (funcall splitter)))
+    (error "Can't toggle window layout when the number of windows isn't two.")))
+
+
 (provide 'mdw-utilities)
 ;; End of mdw-utilities.el

@@ -14,3 +14,6 @@ elpa/*
 emacs-custom.el
 smex-items
 server/server
+recentf
+projectile.cache
+projectile-bookmarks.eld

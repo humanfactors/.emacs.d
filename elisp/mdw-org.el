@@ -30,5 +30,7 @@
  "C-c i" (mdw|org-emphasize mdw/org-italic ?/)   
  "C-c l" (mdw|org-emphasize mdw/org-literal ?=))
 
+(setq-default org-display-custom-times t)
+(setq org-time-stamp-custom-formats '("<%a %b %e %Y>" . "<%a %b %e %Y %H:%M>"))
 
 (provide 'mdw-org)

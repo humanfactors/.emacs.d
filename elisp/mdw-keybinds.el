@@ -7,7 +7,6 @@
 (require 'undo-tree)
 
 
-
 (global-set-key (kbd "<S-return>") 'end-of-line-and-indented-new-line)
 (global-set-key (kbd "M-<f4>") 'save-buffers-kill-emacs)
 (global-set-key (kbd "C-z") 'undo-tree-undo)
@@ -41,8 +40,6 @@
 (global-set-key (kbd "C-{") 'backward-sentence)
 (global-set-key (kbd "C-}") 'forward-sentence)
 
-
-
 ;; Keybinds for Custom Functions defined in mdw-utilities.el
 (global-set-key (kbd "M-<up>") 'move-line-up)
 (global-set-key (kbd "M-<down>") 'move-line-down)
@@ -52,6 +49,14 @@
 ;; Appearance
 (define-key global-map (kbd "<f7><f7>") 'visual-fill-column-mode)
 
+;; Avy
+(global-set-key (kbd "C-c j") 'avy-goto-word-or-subword-1)
+
+
+;; Projectile
+
+;; Recent files
+(global-set-key (kbd "C-c r") 'counsel-recentf)
 
 ;; File Nav
 
@@ -136,7 +141,6 @@
 ;;   ("j" windmove-down nil)
 ;;   ("k" windmove-up nil)
 ;;   ("l" windmove-right nil)
-  
   
 ;;   ("left" windmove-left nil)
 ;;   ("down" windmove-down nil)

@@ -32,3 +32,4 @@
 (require 'mdw-modes)
 (require 'mdw-org)
 (require 'mdw-ess)
+(require 'mdw-projectile)

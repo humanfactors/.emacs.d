@@ -6,18 +6,18 @@
 
 ;; Setting themes
 (require 'cl)
+(load-theme 'dracula)
+;; (load-theme 'leuven)
 
-(load-theme 'leuven)
+;; (setq cycle-themes-theme-list
+      ;; '(leuven spacemacs-dark spacemacs-light))
 
-(setq cycle-themes-theme-list
-      '(leuven spacemacs-dark spacemacs-light))
-
-(require 'cycle-themes)
-(cycle-themes-mode)
+;; (require 'cycle-themes)
+;; (cycle-themes-mode)
 
 ;; Initial buffer
 
-(setf initial-buffer-choice (lambda () (dired "~/Dropbox/org")))
+;; (setf initial-buffer-choice (lambda () (dired "~/Dropbox/org")))
 (defun display-startup-echo-area-message ()
   (message "Welcome to the Matrix."))
   

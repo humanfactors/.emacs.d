@@ -11,6 +11,11 @@
 (setq mouse-yank-at-point nil) ;; Fixes bug associated with middle click paste for spell check
 (setq tab-width 4) ; or any other preferred value
 
+;; Recent files
+(require 'recentf)
+(recentf-mode 1)
+(setq recentf-max-menu-items 25)
+
 ;; Startup
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-message t)
@@ -21,6 +26,9 @@
 ; BLINK BLINK BLINK NO NO NO
 (setq-default cursor-type 'bar)
 (blink-cursor-mode 0)
+
+;; Fringes
+(fringe-mode '(25 . 0))
 
 ;; Little modes and fixes
 (auto-save-mode 0)
@@ -37,13 +45,15 @@
 
 (setq
    backup-by-copying t      ; don't clobber symlinks
-   backup-directory-alist
-   '(("." . "~/.saves"))    ; don't litter my fs tree
    delete-old-versions t
    kept-new-versions 6
    kept-old-versions 2
    version-control t
    vc-follow-symlinks t)
+
+(setq backup-directory-alist '(("." . "~/.saves/")))    ; don't litter my fs tree
+(setq auto-save-file-name-transforms
+      `((".*" "~/.emacs-saves/" t)))
 
 ;; Disable lockfiles
 (setq create-lockfiles nil)
