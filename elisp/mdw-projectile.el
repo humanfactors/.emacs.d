@@ -14,15 +14,7 @@
 (setq projectile-find-dir-includes-top-level t)
 
 
-;; (setq counsel-projectile-switch-project-action #'counsel-projectile-find-dir)
 (setq counsel-projectile-find-dir-includes-top-level t)
-
-;; (counsel-projectile-modify-action
-;;  'counsel-projectile-switch-project-action
-;;  '((move counsel-projectile-switch-project-action-dired 1)
-;;    (setkey counsel-projectile-switch-project-action-dired "D")
-;;    (setkey counsel-projectile-switch-project-action " ")))
-
 
 (defun ivy-read-action-format-columns (actions)
   "Create a docstring from ACTIONS, using several columns if needed to preserve `ivy-height'.

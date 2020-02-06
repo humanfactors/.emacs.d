@@ -2,6 +2,13 @@
 
 (require 'org)
 
+(custom-set-faces
+ '(org-done ((t (:weight normal
+                 :strike-through t)))))
+ ;; '(org-headline-done 
+ ;;            ((((class color) (min-colors 16) (background dark)) 
+ ;;               (:foreground "LightSalmon" :strike-through t)))))
+
 (setq org-directory "~/Dropbox/org/"
       org-support-shift-select 1)
 
@@ -12,8 +19,21 @@
 (setq org-hierarchical-todo-statistics t)
 (setq org-bullets-mode nil)
 (setq org-support-shift-select t)
-(setq org-cycle-separator-lines 1)
+(setq org-cycle-separator-linesq 1)
 
+
+(defun org-wrap-source ()
+  (interactive)
+  (let ((start (min (point) (mark)))
+        (end (max (point) (mark))))
+    (goto-char end)
+    (unless (bolp)
+      (newline))
+    (insert "#+END_SRC\n")
+    (goto-char start)
+    (unless (bolp)
+      (newline))
+    (insert "#+BEGIN_SRC\n")))
 
 (defmacro mdw|org-emphasize (fname char)
         "Make function for setting the emphasis in org mode"

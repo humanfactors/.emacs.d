@@ -48,6 +48,10 @@
 
 ;; Appearance
 (define-key global-map (kbd "<f7><f7>") 'visual-fill-column-mode)
+(define-key global-map (kbd "<f7> n") 'display-line-numbers-mode)
+
+
+
 
 ;; Avy
 (global-set-key (kbd "C-c j") 'avy-goto-word-or-subword-1)
