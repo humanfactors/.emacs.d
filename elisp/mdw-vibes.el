@@ -6,6 +6,7 @@
 (require 'cl)
 
 ;; Set default font
+(add-to-list 'default-frame-alist '(font . "Roboto Mono for Powerline"))
 (set-face-attribute 'default nil
                     :family "Roboto Mono for Powerline"
                     :height 120

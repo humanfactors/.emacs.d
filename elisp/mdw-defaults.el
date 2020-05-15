@@ -19,9 +19,11 @@
 ;; buffers
 (global-set-key (kbd "C-x C-b") #'ibuffer)
 
-;; Startup
+;; Startup speedups and fun
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-message t)
+(setq frame-inhibit-implied-resize t)
+(setq initial-major-mode 'fundamental-mode)
 
 ;; y or n is fine
 (defalias 'yes-or-no-p 'y-or-n-p)
