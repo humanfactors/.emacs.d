@@ -2,6 +2,8 @@
 ;;
 ;;; Code:
 
+
+
 ;; Utility Functionality
 (defun michael-timestamp ()
   "Insert a timestamp at the current point.
@@ -26,6 +28,7 @@ Uses `bjk-timestamp-format' for formatting the date/time."
         (browse-url-of-file (expand-file-name default-directory))
       (error "No `default-directory' to open")))
   (when-system windows-nt
+    (require 'w32-browser)
     (if default-directory
         (w32explore (expand-file-name default-directory))
       (error "No `default-directory' to open"))))

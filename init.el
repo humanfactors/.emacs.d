@@ -3,6 +3,13 @@
 ;;; Code:
 
 ;; Setup custom file
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 (setq custom-file "~/.emacs.d/emacs-custom.el")
 
 ;; This just stops this erroring the first time you load emacs
@@ -19,17 +26,13 @@
 
 ;; Ensure my custom Elisp is on loadpath
 (add-to-list 'load-path "~/.emacs.d/elisp")
-(add-to-list 'load-path "~/.emacs.d/elisp/deps")
+
 
 ;; The Mdubziverse
-(require 'mdw-defaults)
 (require 'mdw-packages)
-(require 'mdw-complete)
+(require 'mdw-defaults)
 (require 'mdw-utilities) ; Always ensure utilities loads before keybinds
+(require 'mdw-modes) ; Always ensure modes loads before keybinds
 (require 'mdw-keybinds)
-(require 'mdw-deft)
 (require 'mdw-vibes)
-(require 'mdw-modes)
 (require 'mdw-org)
-(require 'mdw-ess)
-(require 'mdw-projectile)

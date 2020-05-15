@@ -16,6 +16,9 @@
 (recentf-mode 1)
 (setq recentf-max-menu-items 25)
 
+;; buffers
+(global-set-key (kbd "C-x C-b") #'ibuffer)
+
 ;; Startup
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-message t)
@@ -34,13 +37,13 @@
 (auto-save-mode 0)
 (delete-selection-mode 1)
 (tool-bar-mode -1)
-(menu-bar-mode 1)
+(when (not (display-graphic-p))
+  (menu-bar-mode -1))
 (scroll-bar-mode 0)
 (set-fringe-mode 1)
 (hl-line-mode 1)
 
 (global-auto-revert-mode 1) ;; change buffer automatically when file changes on disk
-(global-visual-line-mode 1)
 (setq sentence-end-double-space nil)	; sentence SHOULD end with only a point.
 
 (setq
@@ -74,7 +77,7 @@
 ;; Dired doens't need to be filled unless it's insanity
 (add-hook 'dired-mode-hook
           (lambda () 
-             (setq fill-column 120)))
+             (setq fill-column 140)))
 
 
 (setq dired-dnd-protocol-alist nil) ; Dired disable drag n drop copy
@@ -95,6 +98,28 @@
 (setq gc-cons-threshold-original gc-cons-threshold)
 (setq gc-cons-threshold (* 1024 1024 100))
 
+
+
+;; Mouse wheel
+(setq mouse-wheel-scroll-amount '(3 ((shift) . 1)))
+(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+
+
+;; Clock
+(setq display-time-24hr-format t)
+
+;; initial window
+(setq initial-frame-alist
+      '(
+        (width . 140) ; character
+        (height . 40) ; lines
+        ))
+
+;; Initial buffer
+;; (setf initial-buffer-choice (lambda () (dired "~/Dropbox/org")))
+(defun display-startup-echo-area-message ()
+  (message "Welcome to the Matrix."))
 
 (provide 'mdw-defaults)
 ;;; mdw-defaults.el ends here

@@ -3,17 +3,8 @@
 ;;
 ;;; Code:
 
-(require 'general)
-(require 'undo-tree)
-
-
 (global-set-key (kbd "<S-return>") 'end-of-line-and-indented-new-line)
 (global-set-key (kbd "M-<f4>") 'save-buffers-kill-emacs)
-(global-set-key (kbd "C-z") 'undo-tree-undo)
-(global-set-key (kbd "C-S-Z") 'undo-tree-redo)
-
-;; Ace Window
-(global-set-key (kbd "M-o") 'ace-window)
 
 ;; Editing
 (global-set-key (kbd "M-<backspace>") 'backward-kill-word)
@@ -49,21 +40,17 @@
 ;; Appearance
 (define-key global-map (kbd "<f7><f7>") 'visual-fill-column-mode)
 (define-key global-map (kbd "<f7> n") 'display-line-numbers-mode)
-
-
-
+(global-set-key [C-wheel-up] 'text-scale-increase)
+(global-set-key [C-wheel-down] 'text-scale-decrease)
 
 ;; Avy
 (global-set-key (kbd "C-c j") 'avy-goto-word-or-subword-1)
 
 
-;; Projectile
-
 ;; Recent files
 (global-set-key (kbd "C-c r") 'counsel-recentf)
 
 ;; File Nav
-
 (defmacro mdw/define-openfile (filename dir keybind)
   (let ((func (intern (concat "openfile-" filename))))
     `(progn
@@ -93,7 +80,8 @@
  :prefix "C-\\"
  "d" 'deft
  "v" 'mdw/open-directory-in-system-viewer
- )
+ "n" 'neotree-toggle
+)
 
 ;; Define file prefix keybinds
 (general-define-key
