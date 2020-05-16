@@ -65,12 +65,10 @@
 ;; (global-set-key  "\M-y" 'yank-pop) ; Unrequired fix for crappy popmenu
 
 (use-package which-key
-  :defer 2
   :config
-  (progn
   (setq which-key-idle-delay 0.3)
   (setq which-key-allow-multiple-replacements t)
-  (which-key-mode 1)))
+  (which-key-mode 1))
 
 (use-package company
   :ensure t
@@ -86,7 +84,7 @@
 (use-package projectile
 	:preface
 	(defun ivy-read-action-format-columns (actions)
-	"Create a docstring from ACTIONS, using several columns if needed to preserve `ivy-height'.
+	  "Create a docstring from ACTIONS, using several columns if needed to preserve `ivy-height'.
 
 	ACTIONS is a list.  Each list item is a list of 3 items: key (a string), cmd and doc (a string)."
 	(let ((length (length actions))
@@ -137,7 +135,8 @@
 )
 
 
-(use-package ess 
+(use-package ess-r-mode
+  :ensure ess
   :defer t
   :preface
   (defun then_R_operator ()

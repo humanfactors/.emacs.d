@@ -64,7 +64,6 @@
        (defun ,func ()
          (interactive) (find-file ,dir)))))
 
-
 (mdw/define-openfile "org" "~/Dropbox/org" "C-x M-o")
 (mdw/define-openfile "dropboxmain" "~/Dropbox" "C-x M-1")
 (mdw/define-openfile "home" "~/" "C-x M-h")
