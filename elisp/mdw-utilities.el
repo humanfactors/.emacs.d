@@ -187,5 +187,16 @@ given, the duplicated region will be commented out."
     (error "Can't toggle window layout when the number of windows isn't two.")))
 
 
+(defun insert-global-set-key (key command)
+  (interactive (list (read-key-sequence "Key sequence: ")
+                     (read-command "Command: ")))
+  (prin1 `(global-set-key (kbd ,(key-description key)) ',command)
+         (current-buffer)))
+
+(defun mdw/standard-drinks (abv quant)
+  (interactive(list (read-number "ABV in %")
+		    (read-number "How many millilitres?")))
+  (print (* abv (/ quant 1000.0) 0.789)))
+
 (provide 'mdw-utilities)
 ;; End of mdw-utilities.el

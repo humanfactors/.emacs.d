@@ -1,5 +1,28 @@
 ;; General mode configuation
 
+;; smart-parens
+
+(use-package smartparens
+  :ensure t
+  :config
+  (smartparens-global-mode t)
+  (require 'smartparens-config)
+  (define-key smartparens-mode-map (kbd "M-C-(") 'sp-wrap-round)
+  (define-key smartparens-mode-map (kbd "M-C-[") 'sp-wrap-square)
+  (define-key smartparens-mode-map (kbd "M-C-{") 'sp-wrap-curly)
+  :diminish smartparens-mode)
+
+  ;; ( ;("C-M-f" . sp-forward-sexp)
+  ;;  ;("C-M-b" . sp-backward-sexp)
+  ;;  ("C-M-n" . sp-up-sexp)
+  ;;  ("C-M-d" . sp-down-sexp)
+  ;;  ("C-M-u" . sp-backward-up-sexp)
+  ;;  ("C-M-p" . sp-backward-down-sexp)
+  ;;  ("C-M-w" . sp-copy-sexp)
+  ;;  ("M-s" . sp-splice-sexp)
+  ;;  ("M-r" . sp-splice-sexp-killing-around)
+  ;;  ("C-M-t" . sp-transpose-sexp))
+
 ;; ag.el
 (use-package ag
   :ensure t
@@ -19,18 +42,12 @@
 ;; Ace Window
 (use-package ace-window
   :config
-  (global-set-key (kbd "M-o") 'ace-window)) 
+  (global-set-key (kbd "M-o") 'ace-window))
 
 
 (use-package neotree
   :bind ("<f8>" . neotree))
 
-
-(use-package counsel
-  :after ivy
-  :config (counsel-mode)
-    (define-key counsel-find-file-map  (kbd "<backspace>") 'counsel-up-directory)
-    (define-key counsel-find-file-map  (kbd "<backtab>") 'counsel-up-directory))
 
 (use-package swiper
   :after ivy
@@ -42,7 +59,6 @@
   :defer t  )
 
 (use-package ivy
-  :defer 0.1
   :diminish
   :bind (("C-c C-r" . ivy-resume)
          ("C-x B" . ivy-switch-buffer-other-window))
@@ -52,15 +68,25 @@
   :config
   (setq ivy-initial-inputs-alist nil)
   (global-set-key (kbd "M-x") 'counsel-M-x)
+  (define-key ivy-minibuffer-map (kbd "M-y") 'ivy-next-line)
+  (ivy-mode))
+
+(use-package counsel
+  :after ivy
+  :init
+  (with-eval-after-load 'counsel
+    (setq ivy-initial-inputs-alist nil))
+  :config
+  (define-key counsel-find-file-map  (kbd "<backspace>") 'counsel-up-directory)
+  (define-key counsel-find-file-map  (kbd "<backtab>") 'counsel-up-directory)
   (global-set-key (kbd "C-x C-f") 'counsel-find-file)
   (global-set-key (kbd "<f1> f") 'counsel-describe-function)
   (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
   (global-set-key (kbd "<f1> l") 'counsel-find-library)
   (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
   (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
-  (define-key ivy-minibuffer-map (kbd "M-y") 'ivy-next-line)
+  (counsel-mode))
 
-  :config (ivy-mode))
 
 ;; (global-set-key  "\M-y" 'yank-pop) ; Unrequired fix for crappy popmenu
 
@@ -184,7 +210,7 @@
   :init
   (setq markdown-italic-underscore t)
   (setq markdown-asymmetric-header t)
-  (setq markdown-fontify-code-blocks-natively t)  
+  (setq markdown-fontify-code-blocks-natively t)
   (setq markdown-list-indent-width 4)
   (add-to-list 'auto-mode-alist '("\\.Rmd\\'" . markdown-mode))
   (add-to-list 'auto-mode-alist '("\\.rmd\\'" . markdown-mode))
