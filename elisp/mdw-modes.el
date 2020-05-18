@@ -34,8 +34,9 @@
   :bind (("C-z" . undo-tree-undo)
         ("C-S-Z" . undo-tree-redo))
   :config
-  (global-undo-tree-mode)
- )
+  (global-undo-tree-mode))
+
+(require 'w32-browser)
 
 (use-package general)
 
@@ -46,7 +47,7 @@
 
 
 (use-package neotree
-  :bind ("<f8>" . neotree))
+  :bind ("<f8>" . neotree-toggle))
 
 
 (use-package swiper
@@ -227,7 +228,6 @@
 
 
 (use-package deft
-  :bind ("<f5> <f5>" . deft)
   :ensure t
   :defer t
   :config

@@ -16,8 +16,7 @@
 (unless (file-exists-p custom-file)
   (with-temp-buffer
     (insert ";; emacs-custom.el")
-    (write-file custom-file nil)
-    ))
+    (write-file custom-file nil)))
 
 (load custom-file)
 
@@ -26,7 +25,7 @@
 
 ;; Ensure my custom Elisp is on loadpath
 (add-to-list 'load-path "~/.emacs.d/elisp")
-
+(add-to-list 'load-path "~/.emacs.d/elisp/deps")
 
 ;; The Mdubziverse
 (require 'mdw-packages)

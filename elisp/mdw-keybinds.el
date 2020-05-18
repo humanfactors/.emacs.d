@@ -68,6 +68,9 @@
 (mdw/define-openfile "dropboxmain" "~/Dropbox" "C-x M-1")
 (mdw/define-openfile "home" "~/" "C-x M-h")
 
+
+(mdw/define-openfile-funconly "manuscripts" "~/Dropbox/org/Manuscripts.org")
+(mdw/define-openfile-funconly "forrest" "~/Dropbox/org/Forrest.org")
 (mdw/define-openfile-funconly "AHK" "~/Dropbox/Code/AHK")
 (mdw/define-openfile-funconly "notes" "~/Dropbox/org")
 (mdw/define-openfile-funconly "code" "~/Code/")
@@ -95,6 +98,7 @@
  "n" 'openfile-notes
  )
 
+
 ;; Define file prefix keybinds
 (general-define-key
  :prefix "C-\\ k"
@@ -102,6 +106,15 @@
  "f" 'free-keys
  "i" 'mdw/insert-global-set-key
  "L" 'describe-bindings
+ )
+
+;; Define file prefix keybinds
+(general-define-key
+ :prefix "<f5>"
+ :prefix-command 'keybinds-notes
+ "<f5>" 'deft
+ "m" 'openfile-manuscripts
+ "f" 'openfile-forrest
  )
 
 (general-define-key
