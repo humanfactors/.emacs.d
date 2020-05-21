@@ -18,8 +18,13 @@
 (setf org-blank-before-new-entry '((heading . auto) (plain-list-item . nil)))
 (setq org-hierarchical-todo-statistics t)
 (setq org-bullets-mode nil)
+(setq org-indent-mode t)
+(setq org-hide-leading-stars 0)
 (setq org-support-shift-select t)
 (setq org-cycle-separator-linesq 1)
+
+(add-to-list 'org-structure-template-alist
+	     (list "ti" "#+TITLE: ?\n"))
 
 
 (defun org-wrap-source ()
