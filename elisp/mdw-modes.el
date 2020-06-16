@@ -23,6 +23,21 @@
   ;;  ("M-r" . sp-splice-sexp-killing-around)
   ;;  ("C-M-t" . sp-transpose-sexp))
 
+(use-package writeroom-mode
+  :ensure t
+  :defer t
+  :config
+  (with-eval-after-load 'writeroom-mode
+  (define-key writeroom-mode-map (kbd "C-M-<") #'writeroom-decrease-width)
+  (define-key writeroom-mode-map (kbd "C-M->") #'writeroom-increase-width)
+  (define-key writeroom-mode-map (kbd "C-M-=") #'writeroom-adjust-width))
+  (setq writeroom-mode-line t)
+  (setq writeroom-mode-line t)
+  :bind (
+	 ("<f7>-w" . writeroom-mode)
+	 )
+  )
+
 ;; ag.el
 (use-package ag
   :ensure t
@@ -149,7 +164,7 @@
 				"\n"))))
 	:config
 	(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-	(setq projectile-project-search-path '("~/Code" "~/Code/R"))
+	(setq projectile-project-search-path '("~/Code"))
 	(setq projectile-sort-order 'recentf)
 	(setq projectile-indexing-method 'hybrid)
 	(setq projectile-enable-caching t)
