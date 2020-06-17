@@ -255,4 +255,20 @@
   (define-key deft-mode-map (kbd "C-c C-m") 'deft-new-file-named))
 
 
+(use-package biblio
+  :ensure t
+  :defer t)
+
+;; (setq org-ref-default-bibliography '("~/Papers/references.bib")
+;;       org-ref-pdf-directory "~/Papers/"
+;;       org-ref-bibliography-notes "~/Papers/notes.org")
+
+(use-package org-ref
+  :ensure t
+  :after (biblio)
+  :init
+  (add-hook 'bibtex-mode-hook '(require 'org-ref-bibtex)))
+
+
+
 (provide 'mdw-modes)
