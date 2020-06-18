@@ -12,8 +12,8 @@
   (define-key smartparens-mode-map (kbd "M-C-{") 'sp-wrap-curly)
   :diminish smartparens-mode)
 
-  ;; ( ;("C-M-f" . sp-forward-sexp)
-  ;;  ;("C-M-b" . sp-backward-sexp)
+  ;; (("C-M-f" . sp-forward-sexp)
+  ;;  ("C-M-b" . sp-backward-sexp)
   ;;  ("C-M-n" . sp-up-sexp)
   ;;  ("C-M-d" . sp-down-sexp)
   ;;  ("C-M-u" . sp-backward-up-sexp)
@@ -58,6 +58,11 @@
 (use-package neotree
   :ensure t
   :defer t  )
+
+(use-package emojify
+  :ensure t
+  :config
+  (add-hook 'after-init-hook #'global-emojify-mode))
 
 (use-package ivy
   :diminish
