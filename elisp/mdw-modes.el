@@ -2,15 +2,15 @@
 
 ;; smart-parens
 
-(use-package smartparens
-  :ensure t
-  :config
-  (smartparens-global-mode t)
-  (require 'smartparens-config)
-  (define-key smartparens-mode-map (kbd "M-C-(") 'sp-wrap-round)
-  (define-key smartparens-mode-map (kbd "M-C-[") 'sp-wrap-square)
-  (define-key smartparens-mode-map (kbd "M-C-{") 'sp-wrap-curly)
-  :diminish smartparens-mode)
+;; (use-package smartparens
+;;   :ensure t
+;;   :config
+;;   (smartparens-global-mode t)
+;;   (require 'smartparens-config)
+;;   (define-key smartparens-mode-map (kbd "M-C-(") 'sp-wrap-round)
+;;   (define-key smartparens-mode-map (kbd "M-C-[") 'sp-wrap-square)
+;;   (define-key smartparens-mode-map (kbd "M-C-{") 'sp-wrap-curly)
+;;   :diminish smartparens-mode)
 
   ;; (("C-M-f" . sp-forward-sexp)
   ;;  ("C-M-b" . sp-backward-sexp)
@@ -77,6 +77,9 @@
 (use-package emojify
   :ensure t
   :config
+  (setq emojify-emoji-styles "unicode")
+  (setq emojify-display-style "unicode")
+  (setq  emojify-prog-contexts "comments")
   (add-hook 'after-init-hook #'global-emojify-mode))
 
 (use-package ivy
