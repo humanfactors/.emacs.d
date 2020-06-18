@@ -72,6 +72,12 @@
   (ivy-count-format "(%d/%d) ")
   (ivy-use-virtual-buffers t)
   :config
+  (global-set-key (kbd "<f1> f") 'counsel-describe-function)
+  (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+  (global-set-key (kbd "<f1> o") 'counsel-describe-symbol)
+  (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+  (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+  (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
   (setq ivy-initial-inputs-alist nil)
   (global-set-key (kbd "M-x") 'counsel-M-x)
   (define-key ivy-minibuffer-map (kbd "M-y") 'ivy-next-line)
