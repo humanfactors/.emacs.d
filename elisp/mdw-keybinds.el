@@ -1,4 +1,3 @@
-
 ;;; mdw-keybinds.el
 ;;
 ;;; Code:
@@ -81,9 +80,14 @@
 (general-define-key
  :prefix "C-\\"
  "d" 'deft
+ "h e" 'elisp-index-search
+ "h f" 'find-function
+ "h i" 'read-command
  "v" 'mdw/open-directory-in-system-viewer
  "n" 'neotree-toggle
-)
+ )
+
+
 
 ;; Define file prefix keybinds
 (general-define-key
