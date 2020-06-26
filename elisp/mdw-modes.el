@@ -2,6 +2,35 @@
 
 ;; smart-parens
 
+(use-package evil
+  :ensure t ;; install the evil package if not installed
+  :init ;; tweak evil's configuration before loading it
+  (setq evil-search-module 'evil-search)
+  (setq evil-ex-complete-emacs-commands t)
+  (setq evil-disable-insert-state-bindings t)
+  (setq evil-default-state 'emacs)
+  (setq evil-toggle-key "<f9>")
+
+  :config ;; tweak evil after loading it
+  ;; Clear any insert bindings just in case
+  (setcdr evil-insert-state-map nil)
+  (setq evil-insert-state-map (make-sparse-keymap))
+  (setq evil-emacs-state-cursor '(bar)) ;; I want my bar back
+  
+  ;; (setq evil-insert-state-map (make-sparse-keymap))
+  ;; (define-key evil-emacs-state-map (kbd "<f12>") 'evil-normal-state)
+
+  (global-set-key (kbd "<f12>") 'evil-normal-state)
+  (define-key evil-emacs-state-map (kbd "<escape>") 'evil-normal-state)
+  (define-key evil-motion-state-map "\C-e" 'evil-end-of-line)
+  (define-key evil-motion-state-map "\C-a" 'evil-beginning-of-line)
+  (define-key evil-normal-state-map "\C-p" 'evil-previous-line)
+  (define-key evil-normal-state-map "\C-n" 'evil-next-line)
+  (defalias 'evil-insert-state 'evil-emacs-state)
+  (evil-mode 1))
+
+
+
 (use-package smartparens
   :ensure t
   :config
@@ -269,6 +298,9 @@
   :init
   (add-hook 'bibtex-mode-hook '(require 'org-ref-bibtex)))
 
-
+(use-package avy
+  :config
+  (general-define-key "C-'" 'avy-goto-word-1)
+  (general-define-key "C-;" 'avy-goto-char))
 
 (provide 'mdw-modes)
