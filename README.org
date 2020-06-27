@@ -1,8 +1,6 @@
-#+TITLE: Michael's =.emacs.d=
+#+TITLE: Michael David's =.emacs.d=
 
 #+html: <img align="right" src="docs/resize.png?raw=true" alt="Logo" width="300"/> 
-
-* Mission
 
 This is an personal, customised and quite unoptimised config ― but it's mine. 
 
