@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: header comment
-# key: %%%
-# --
-%%% Local Variables: 
-%%% coding: utf-8
-%%% mode: latex
-%%% TeX-engine: xetex
-%%% End: 
