@@ -1,6 +1,6 @@
 #+TITLE: Michael's =.emacs.d=
 
-<img align="right" src="docs/resize.png?raw=true" alt="Logo" width="300"/> 
+#+html: <img align="right" src="docs/resize.png?raw=true" alt="Logo" width="300"/> 
 
 * Mission
 
