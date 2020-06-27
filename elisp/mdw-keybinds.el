@@ -62,21 +62,32 @@
        (defun ,func ()
          (interactive) (find-file ,dir)))))
 
+(defmacro me/define-openfile-funconly (filename dir)
+  (let ((func (intern (concat "openfile-" filename))))
+    `(defun ,func () (interactive) (find-file ,dir))))
+
+(defmacro me/define-openfiles (files)
+  `(progn
+     ,@(mapcar (lambda (item)
+                 `(me/define-openfile-funconly ,(car item) ,(cadr item)))
+               files)))
+               
 (if (string= (system-name) "NOTHINGUNDONE")
-(progn
-  (mdw/define-openfile-funconly "manuscripts" "d:/Dropbox/org/Manuscripts.org")
-  (mdw/define-openfile-funconly "forrest" "d:/Dropbox/org/Forrest.org")
-  (mdw/define-openfile-funconly "AHK" "d:/Dropbox/Code/AHK")
-  (mdw/define-openfile-funconly "notes" "d:/Dropbox/org")
-  (mdw/define-openfile-funconly "manuscripts" "d:/Dropbox/org/Manuscripts.org")
-  (mdw/define-openfile-funconly "forrest" "d:/Dropbox/org/Forrest.org")
-  (mdw/define-openfile-funconly "AHK" "d:/Dropbox/Code/AHK")
-  (mdw/define-openfile-funconly "notes" "d:/Dropbox/org")
-  (mdw/define-openfile-funconly "code" "~/Code/")
-  (mdw/define-openfile-funconly "emacs-dir" "~/.emacs.d/")
-  (mdw/define-openfile "org" "d:/Dropbox/org" "C-x M-o")
-  (mdw/define-openfile "dropboxmain" "d:/Dropbox" "C-x M-1")
-  (mdw/define-openfile "home" "~/" "C-x M-h"))
+    (progn
+      (me/define-openfiles
+       (("manuscripts" "d:/Dropbox/org/Manuscripts.org")
+	("forrest" "d:/Dropbox/org/Forrest.org")
+	("AHK" "d:/Dropbox/Code/AHK")
+	("notes" "d:/Dropbox/org")
+	("manuscripts" "d:/Dropbox/org/Manuscripts.org")
+	("forrest" "d:/Dropbox/org/Forrest.org")
+	("AHK" "d:/Dropbox/Code/AHK")
+	("notes" "d:/Dropbox/org")
+	("code" "~/Code/")
+	("emacs-dir" "~/.emacs.d/")))
+      (mdw/define-openfile "org" "d:/Dropbox/org" "C-x M-o")
+      (mdw/define-openfile "dropboxmain" "d:/Dropbox" "C-x M-1")
+      (mdw/define-openfile "home" "~/" "C-x M-h"))
   nil)
 
 ;; (mdw/define-openfile-funconly "manuscripts" "~/Dropbox/org/Manuscripts.org")
