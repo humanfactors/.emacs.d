@@ -1,4 +1,4 @@
-#+TITLE: Michael's .emacs.d
+#+TITLE: Michael's =.emacs.d=
 
 [[file:docs/resize.png]]
 
