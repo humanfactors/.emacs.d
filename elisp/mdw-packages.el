@@ -7,8 +7,6 @@
 ;; Setup package manager
 (require 'package)
 
-(package-initialize)
-
 (setq package-enable-at-startup nil)
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
                          ("org" . "https://orgmode.org/elpa/")
