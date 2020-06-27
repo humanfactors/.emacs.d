@@ -21,3 +21,6 @@ My config uses Evil, but note I only have two input modes:
 
 I don't have a vim insert state.
 
+* Preview
+
+[[file:docs/preview.png]]
