@@ -2,6 +2,35 @@
 
 ;; smart-parens
 
+(use-package evil
+  :ensure t ;; install the evil package if not installed
+  :init ;; tweak evil's configuration before loading it
+  (setq evil-search-module 'evil-search)
+  (setq evil-ex-complete-emacs-commands t)
+  (setq evil-disable-insert-state-bindings t)
+  (setq evil-default-state 'emacs)
+  (setq evil-toggle-key "<f9>")
+
+  :config ;; tweak evil after loading it
+  ;; Clear any insert bindings just in case
+  (setcdr evil-insert-state-map nil)
+  (setq evil-insert-state-map (make-sparse-keymap))
+  (setq evil-emacs-state-cursor '(bar)) ;; I want my bar back
+  
+  ;; (setq evil-insert-state-map (make-sparse-keymap))
+  ;; (define-key evil-emacs-state-map (kbd "<f12>") 'evil-normal-state)
+
+  (global-set-key (kbd "<f12>") 'evil-normal-state)
+  (define-key evil-emacs-state-map (kbd "<escape>") 'evil-normal-state)
+  (define-key evil-motion-state-map "\C-e" 'evil-end-of-line)
+  (define-key evil-motion-state-map "\C-a" 'evil-beginning-of-line)
+  (define-key evil-normal-state-map "\C-p" 'evil-previous-line)
+  (define-key evil-normal-state-map "\C-n" 'evil-next-line)
+  (defalias 'evil-insert-state 'evil-emacs-state)
+  (evil-mode 1))
+
+
+
 (use-package smartparens
   :ensure t
   :config
@@ -11,9 +40,8 @@
   (define-key smartparens-mode-map (kbd "M-C-[") 'sp-wrap-square)
   (define-key smartparens-mode-map (kbd "M-C-{") 'sp-wrap-curly)
   :diminish smartparens-mode)
-
-  ;; ( ;("C-M-f" . sp-forward-sexp)
-  ;;  ;("C-M-b" . sp-backward-sexp)
+  ;; (("C-M-f" . sp-forward-sexp)
+  ;;  ("C-M-b" . sp-backward-sexp)
   ;;  ("C-M-n" . sp-up-sexp)
   ;;  ("C-M-d" . sp-down-sexp)
   ;;  ("C-M-u" . sp-backward-up-sexp)
@@ -22,6 +50,21 @@
   ;;  ("M-s" . sp-splice-sexp)
   ;;  ("M-r" . sp-splice-sexp-killing-around)
   ;;  ("C-M-t" . sp-transpose-sexp))
+
+(use-package writeroom-mode
+  :ensure t
+  :defer t
+  :config
+  (with-eval-after-load 'writeroom-mode
+  (define-key writeroom-mode-map (kbd "C-M-<") #'writeroom-decrease-width)
+  (define-key writeroom-mode-map (kbd "C-M->") #'writeroom-increase-width)
+  (define-key writeroom-mode-map (kbd "C-M-=") #'writeroom-adjust-width))
+  (setq writeroom-mode-line t)
+  (setq writeroom-mode-line t)
+  :bind (
+	 ("<f7>-w" . writeroom-mode)
+	 )
+  )
 
 ;; ag.el
 (use-package ag
@@ -57,6 +100,14 @@
   :bind (("C-s" . swiper)
          ("C-r" . swiper)))
 
+(use-package emojify
+  :ensure t
+  :config
+  (setq emojify-emoji-styles "unicode")
+  (setq emojify-display-style "unicode")
+  (setq  emojify-prog-contexts "comments")
+  (add-hook 'after-init-hook #'global-emojify-mode))
+
 (use-package ivy
   :diminish
   :bind (("C-c C-r" . ivy-resume)
@@ -65,6 +116,12 @@
   (ivy-count-format "(%d/%d) ")
   (ivy-use-virtual-buffers t)
   :config
+  (global-set-key (kbd "<f1> f") 'counsel-describe-function)
+  (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+  (global-set-key (kbd "<f1> o") 'counsel-describe-symbol)
+  (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+  (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+  (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
   (setq ivy-initial-inputs-alist nil)
   (global-set-key (kbd "M-x") 'counsel-M-x)
   (define-key ivy-minibuffer-map (kbd "M-y") 'ivy-next-line)
@@ -147,7 +204,7 @@
 				"\n"))))
 	:config
 	(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-	(setq projectile-project-search-path '("~/Code" "~/Code/R"))
+	(setq projectile-project-search-path '("~/Code"))
 	(setq projectile-sort-order 'recentf)
 	(setq projectile-indexing-method 'hybrid)
 	(setq projectile-enable-caching t)
@@ -423,5 +480,23 @@
   ;; (add-hook 'lisp-mode-hook #'paredit-mode)
   ;; (add-hook 'eval-expression-minibuffer-setup-hook #'paredit-mode))
 
+(use-package biblio
+  :ensure t
+  :defer t)
+
+;; (setq org-ref-default-bibliography '("~/Papers/references.bib")
+;;       org-ref-pdf-directory "~/Papers/"
+;;       org-ref-bibliography-notes "~/Papers/notes.org")
+
+(use-package org-ref
+  :ensure t
+  :after (biblio)
+  :init
+  (add-hook 'bibtex-mode-hook '(require 'org-ref-bibtex)))
+
+(use-package avy
+  :config
+  (general-define-key "C-'" 'avy-goto-word-1)
+  (general-define-key "C-;" 'avy-goto-char))
 
 (provide 'mdw-modes)
