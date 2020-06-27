@@ -21,4 +21,7 @@ I don't have a vim insert state.
 
 * Preview
 
+#+ATTR_HTML: :alt A really messy code base
 [[file:docs/preview.png]]
+#+ATTR_HTML: :alt When I need to shut up and fucking write something (example here only).
+[[file:docs/writing-preview.png]]
