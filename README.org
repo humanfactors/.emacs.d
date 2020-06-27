@@ -1,6 +1,6 @@
 #+TITLE: Michael's =.emacs.d=
 
-[[file:docs/resize.png]]
+<img align="right" src="docs/resize.png?raw=true" alt="Logo" width="300"/> 
 
 * Mission
 
