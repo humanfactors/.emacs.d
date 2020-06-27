@@ -70,7 +70,9 @@
 (use-package ag
   :ensure t
   :init
-  (setq ag-executable "ag.exe"))
+  (when-system windows-nt
+    (setq ag-executable "ag.exe"))
+  )
 
 (use-package undo-tree
   :ensure t
@@ -89,18 +91,14 @@
   (global-set-key (kbd "M-o") 'ace-window))
 
 
-(use-package neotree
-  :bind ("<f8>" . neotree-toggle))
+;; (use-package neotree
+;;   :bind ("<f8>" . neotree-toggle))
 
 
 (use-package swiper
   :after ivy
   :bind (("C-s" . swiper)
          ("C-r" . swiper)))
-
-(use-package neotree
-  :ensure t
-  :defer t  )
 
 (use-package emojify
   :ensure t
@@ -296,6 +294,191 @@
   (setq deft-text-mode 'org-mode)
   (define-key deft-mode-map (kbd "C-c C-m") 'deft-new-file-named))
 
+
+(use-package clojure-mode
+  :ensure t
+  :mode (("\\.clj\\'" . clojure-mode)
+         ("\\.edn\\'" . clojure-mode))
+  ;; :init
+  ;; (add-hook 'clojure-mode-hook #'yas-minor-mode)
+  ;; (add-hook 'clojure-mode-hook #'linum-mode)
+  ;; (add-hook 'clojure-mode-hook #'subword-mode)
+  ;; (add-hook 'clojure-mode-hook #'smartparens-mode)
+  ;; (add-hook 'clojure-mode-hook #'eldoc-mode)
+
+  )
+
+(use-package cider
+  :ensure t)
+
+
+(use-package reftex
+  :ensure t
+  :defer t
+  :config
+  (setq reftex-cite-prompt-optional-args t)) ;; Prompt for empty optional arguments in cite
+
+(use-package company-auctex
+  :ensure t
+  :init (company-auctex-init))
+
+(use-package auctex-latexmk
+  :ensure t
+  :config
+  (auctex-latexmk-setup)
+  (setq auctex-latexmk-inherit-TeX-PDF-mode t))
+
+
+(use-package tex
+  :ensure auctex
+  :mode ("\\.tex\\'" . latex-mode)
+  :config (progn
+	    (setq TeX-source-correlate-mode t)
+	    (setq TeX-source-correlate-method 'synctex)
+	    (setq TeX-auto-save t)
+	    (setq TeX-parse-self t)
+	    (setq reftex-plug-into-AUCTeX t)
+	    (setq TeX-view-program-selection '((output-pdf "Evince")))
+	    (add-hook 'LaTeX-mode-hook 'TeX-source-correlate-mode)
+	    (add-hook 'LaTeX-mode-hook 'auto-fill-mode)
+	    (add-hook 'LaTeX-mode-hook 'flyspell-mode)
+	    (add-hook 'LaTeX-mode-hook 'yas-minor-mode-on)
+	    (add-hook 'LaTeX-mode-hook 'flyspell-buffer)
+	    (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+	    (add-hook 'LaTeX-mode-hook
+		      (lambda ()
+			(reftex-mode t)
+			(flyspell-mode t)))))
+
+(use-package ivy-bibtex
+  :defer t
+  :ensure t
+  :bind ( :map  LaTeX-mode-map
+		("C-\ l b" . ivy-bibtex)))
+
+(use-package smartparens
+  :init
+  (bind-key "C-M-f" #'sp-forward-sexp smartparens-mode-map)
+  (bind-key "C-M-b" #'sp-backward-sexp smartparens-mode-map)
+  (bind-key "C-)" #'sp-forward-slurp-sexp smartparens-mode-map)
+  (bind-key "C-(" #'sp-backward-slurp-sexp smartparens-mode-map)
+  (bind-key "M-)" #'sp-forward-barf-sexp smartparens-mode-map)
+  (bind-key "M-(" #'sp-backward-barf-sexp smartparens-mode-map)
+  (bind-key "C-S-s" #'sp-splice-sexp)
+  (bind-key "C-M-<backspace>" #'backward-kill-sexp)
+  :config
+  (smartparens-global-mode t)
+  :config
+  (setq sp-show-pair-from-inside nil)
+  (require 'smartparens-config)
+  :diminish smartparens-mode
+  )
+
+
+(use-package treemacs
+  :ensure t
+  :defer t
+  :init
+  (with-eval-after-load 'winum
+    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+  :config
+  (progn
+    (setq treemacs-collapse-dirs                 (if treemacs-python-executable 3 0)
+          treemacs-deferred-git-apply-delay      0.5
+          treemacs-directory-name-transformer    #'identity
+          treemacs-display-in-side-window        t
+          treemacs-eldoc-display                 t
+          treemacs-file-event-delay              5000
+          treemacs-file-extension-regex          treemacs-last-period-regex-value
+          treemacs-file-follow-delay             0.2
+          treemacs-file-name-transformer         #'identity
+          treemacs-follow-after-init             t
+          treemacs-git-command-pipe              ""
+          treemacs-goto-tag-strategy             'refetch-index
+          treemacs-indentation                   2
+          treemacs-indentation-string            " "
+          treemacs-is-never-other-window         nil
+          treemacs-max-git-entries               5000
+          treemacs-missing-project-action        'ask
+          treemacs-move-forward-on-expand        nil
+          treemacs-no-png-images                 nil
+          treemacs-no-delete-other-windows       t
+          treemacs-project-follow-cleanup        nil
+          treemacs-persist-file                  (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
+          treemacs-position                      'left
+          treemacs-recenter-distance             0.1
+          treemacs-recenter-after-file-follow    nil
+          treemacs-recenter-after-tag-follow     nil
+          treemacs-recenter-after-project-jump   'always
+          treemacs-recenter-after-project-expand 'on-distance
+          treemacs-show-cursor                   nil
+          treemacs-show-hidden-files             t
+          treemacs-silent-filewatch              nil
+          treemacs-silent-refresh                nil
+          treemacs-sorting                       'alphabetic-asc
+          treemacs-space-between-root-nodes      t
+          treemacs-tag-follow-cleanup            t
+          treemacs-tag-follow-delay              1.5
+          treemacs-user-mode-line-format         nil
+          treemacs-user-header-line-format       nil
+          treemacs-width                         35)
+
+    ;; The default width and height of the icons is 22 pixels. If you are
+    ;; using a Hi-DPI display, uncomment this to double the icon size.
+    ;;(treemacs-resize-icons 44)
+
+    (treemacs-follow-mode t)
+    (treemacs-filewatch-mode t)
+    (treemacs-fringe-indicator-mode t)
+    (pcase (cons (not (null (executable-find "git")))
+                 (not (null treemacs-python-executable)))
+      (`(t . t)
+       (treemacs-git-mode 'deferred))
+      (`(t . _)
+       (treemacs-git-mode 'simple))))
+  :bind
+  (:map global-map
+        ("<f8>" . 'treemacs)
+        ("C-\ t" . 'treemacs)
+        ("M-0"       . treemacs-select-window)
+        ("C-x t 1"   . treemacs-delete-other-windows)
+        ("C-x t t"   . treemacs)
+        ("C-x t B"   . treemacs-bookmark)
+        ("C-x t C-t" . treemacs-find-file)
+        ("C-x t M-t" . treemacs-find-tag)))
+
+(use-package treemacs-evil
+  :after treemacs evil
+  :ensure t)
+
+(use-package treemacs-projectile
+  :after treemacs projectile
+  :ensure t)
+
+(use-package treemacs-icons-dired
+  :after treemacs dired
+  :ensure t
+  :config (treemacs-icons-dired-mode))
+
+(use-package treemacs-magit
+  :after treemacs magit
+  :ensure t)
+
+(use-package treemacs-persp
+  :after treemacs persp-mode
+  :ensure t
+  :config (treemacs-set-scope-type 'Perspectives))
+
+
+;; (use-package paredit
+  ;; :ensure t
+  ;; :config
+  ;; (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
+  ;; enable in the *scratch* buffer
+  ;; (add-hook 'lisp-interaction-mode-hook #'paredit-mode)
+  ;; (add-hook 'ielm-mode-hook #'paredit-mode)
+  ;; (add-hook 'lisp-mode-hook #'paredit-mode)
+  ;; (add-hook 'eval-expression-minibuffer-setup-hook #'paredit-mode))
 
 (use-package biblio
   :ensure t

@@ -6,12 +6,16 @@
 (require 'cl)
 
 ;; Set default font
-(add-to-list 'default-frame-alist '(font . "Roboto Mono for Powerline"))
+(add-to-list 'default-frame-alist '(font . "Fira Code 13"))
 (set-face-attribute 'default nil
-                    :family "Roboto Mono for Powerline"
-                    :height 120
+                    :family "Fira Code"
+                    :height 130
                     :weight 'normal
                     :width 'normal)
+
+(use-package fira-code-mode
+  :custom (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x")) ;; List of ligatures to turn off
+  :hook prog-mode) ;; Enables fira-code-mode automatically for programming major modes
 
 (setq inhibit-compacting-font-caches t)
 (setq find-file-visit-truename t)
@@ -62,6 +66,8 @@
   :ensure nil
   :hook
   ((prog-mode) . display-line-numbers-mode))
+
+
 
 
 (provide 'mdw-vibes)
