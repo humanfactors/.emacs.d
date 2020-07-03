@@ -19,5 +19,7 @@ projectile.cache
 projectile-bookmarks.eld
 desktop.ini
 eshell/history
+.cache/treemacs-persist
+transient/history.el
 emojis
 *.ttf

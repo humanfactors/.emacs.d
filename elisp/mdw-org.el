@@ -56,6 +56,9 @@
 (mdw|org-emphasize mdw/org-underline ?_)
 (mdw|org-emphasize mdw/org-strike-through ?+)
 
+
+(add-hook 'org-mode-hook 'turn-on-flyspell)
+
 (general-define-key
  :keymaps 'org-mode-map
  "C-c b" (mdw|org-emphasize mdw/org-bold ?*)

@@ -1,4 +1,3 @@
-
 ;;; mdw-keybinds.el
 ;;
 ;;; Code:
@@ -46,7 +45,6 @@
 ;; Avy
 (global-set-key (kbd "C-c j") 'avy-goto-word-or-subword-1)
 
-
 ;; Recent files
 (global-set-key (kbd "C-c r") 'counsel-recentf)
 
@@ -64,26 +62,59 @@
        (defun ,func ()
          (interactive) (find-file ,dir)))))
 
-(mdw/define-openfile "org" "~/Dropbox/org" "C-x M-o")
-(mdw/define-openfile "dropboxmain" "~/Dropbox" "C-x M-1")
-(mdw/define-openfile "home" "~/" "C-x M-h")
+(defmacro me/define-openfile-funconly (filename dir)
+  (let ((func (intern (concat "openfile-" filename))))
+    `(defun ,func () (interactive) (find-file ,dir))))
+
+(defmacro me/define-openfiles (files)
+  `(progn
+     ,@(mapcar (lambda (item)
+                 `(me/define-openfile-funconly ,(car item) ,(cadr item)))
+               files)))
+               
+(if (string= (system-name) "NOTHINGUNDONE")
+    (progn
+      (me/define-openfiles
+       (("manuscripts" "d:/Dropbox/org/Manuscripts.org")
+	("forrest" "d:/Dropbox/org/Forrest.org")
+	("AHK" "d:/Dropbox/Code/AHK")
+	("notes" "d:/Dropbox/org")
+	("manuscripts" "d:/Dropbox/org/Manuscripts.org")
+	("forrest" "d:/Dropbox/org/Forrest.org")
+	("AHK" "d:/Dropbox/Code/AHK")
+	("notes" "d:/Dropbox/org")
+	("code" "~/Code/")
+	("emacs-dir" "~/.emacs.d/")))
+      (mdw/define-openfile "org" "d:/Dropbox/org" "C-x M-o")
+      (mdw/define-openfile "dropboxmain" "d:/Dropbox" "C-x M-1")
+      (mdw/define-openfile "home" "~/" "C-x M-h"))
+  nil)
+
+;; (mdw/define-openfile-funconly "manuscripts" "~/Dropbox/org/Manuscripts.org")
+;; (mdw/define-openfile-funconly "forrest" "~/Dropbox/org/Forrest.org")
+;; (mdw/define-openfile-funconly "AHK" "~/Dropbox/Code/AHK")
+;; (mdw/define-openfile-funconly "notes" "~/Dropbox/org")
+;; (mdw/define-openfile-funconly "code" "~/Code/")
+;; (mdw/define-openfile-funconly "emacs-dir" "~/.emacs.d/")
+;; (mdw/define-openfile "org" "~/Dropbox/org" "C-x M-o")
+;; (mdw/define-openfile "dropboxmain" "~/Dropbox" "C-x M-1")
+;; (mdw/define-openfile "home" "~/" "C-x M-h")
 
 
-(mdw/define-openfile-funconly "manuscripts" "~/Dropbox/org/Manuscripts.org")
-(mdw/define-openfile-funconly "forrest" "~/Dropbox/org/Forrest.org")
-(mdw/define-openfile-funconly "AHK" "~/Dropbox/Code/AHK")
-(mdw/define-openfile-funconly "notes" "~/Dropbox/org")
-(mdw/define-openfile-funconly "code" "~/Code/")
-(mdw/define-openfile-funconly "emacs-dir" "~/.emacs.d/")
 
 ;; Define application keybinds (e.g., deft)
 (global-unset-key (kbd "C-\\"))
 (general-define-key
  :prefix "C-\\"
  "d" 'deft
+ "h e" 'elisp-index-search
+ "h f" 'find-function
+ "h i" 'read-command
  "v" 'mdw/open-directory-in-system-viewer
  "n" 'neotree-toggle
-)
+ )
+
+
 
 ;; Define file prefix keybinds
 (general-define-key
