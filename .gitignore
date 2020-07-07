@@ -22,3 +22,4 @@ eshell/history
 .cache/treemacs-persist
 transient/history.el
 emojis
+*.ttf
