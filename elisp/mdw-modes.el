@@ -133,8 +133,8 @@
   (with-eval-after-load 'counsel
     (setq ivy-initial-inputs-alist nil))
   :config
-  (define-key counsel-find-file-map  (kbd "<backspace>") 'counsel-up-directory)
-  (define-key counsel-find-file-map  (kbd "<backtab>") 'counsel-up-directory)
+  (define-key counsel-find-file-map  (kbd "C-<backspace>") 'counsel-up-directory)
+  ;; (define-key counsel-find-file-map  (kbd "<backtab>") 'counsel-up-directory)
   (global-set-key (kbd "C-x C-f") 'counsel-find-file)
   (global-set-key (kbd "<f1> f") 'counsel-describe-function)
   (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
@@ -426,6 +426,9 @@
     ;; The default width and height of the icons is 22 pixels. If you are
     ;; using a Hi-DPI display, uncomment this to double the icon size.
     ;;(treemacs-resize-icons 44)
+
+
+    (when-system windows-nt (setq treemacs-python-executable "C:\\Users\\micha\\AppData\\Local\\Programs\\Python\\Python38"))
 
     (treemacs-follow-mode t)
     (treemacs-filewatch-mode t)
