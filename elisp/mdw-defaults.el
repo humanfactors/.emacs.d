@@ -66,6 +66,7 @@
 
 ;; Editing 
 (setq fill-column 120)
+(setq-default fill-column 120)
 (setq visual-fill-column-width 120)
 (auto-fill-mode 0)
 (electric-pair-mode 1)

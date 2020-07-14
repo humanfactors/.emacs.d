@@ -90,15 +90,15 @@
       (mdw/define-openfile "home" "~/" "C-x M-h"))
   nil)
 
-;; (mdw/define-openfile-funconly "manuscripts" "~/Dropbox/org/Manuscripts.org")
-;; (mdw/define-openfile-funconly "forrest" "~/Dropbox/org/Forrest.org")
-;; (mdw/define-openfile-funconly "AHK" "~/Dropbox/Code/AHK")
-;; (mdw/define-openfile-funconly "notes" "~/Dropbox/org")
-;; (mdw/define-openfile-funconly "code" "~/Code/")
-;; (mdw/define-openfile-funconly "emacs-dir" "~/.emacs.d/")
-;; (mdw/define-openfile "org" "~/Dropbox/org" "C-x M-o")
-;; (mdw/define-openfile "dropboxmain" "~/Dropbox" "C-x M-1")
-;; (mdw/define-openfile "home" "~/" "C-x M-h")
+(mdw/define-openfile-funconly "manuscripts" "~/Dropbox/org/Manuscripts.org")
+(mdw/define-openfile-funconly "forrest" "~/Dropbox/org/Forrest.org")
+(mdw/define-openfile-funconly "AHK" "~/Dropbox/Code/AHK")
+(mdw/define-openfile-funconly "notes" "~/Dropbox/org")
+(mdw/define-openfile-funconly "code" "~/Code/")
+(mdw/define-openfile-funconly "emacs-dir" "~/.emacs.d/")
+(mdw/define-openfile "org" "~/Dropbox/org" "C-x M-o")
+(mdw/define-openfile "dropboxmain" "~/Dropbox" "C-x M-1")
+(mdw/define-openfile "home" "~/" "C-x M-h")
 
 
 

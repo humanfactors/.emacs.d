@@ -197,5 +197,44 @@ given, the duplicated region will be commented out."
 		    (read-number "How many millilitres?")))
   (print (* abv (/ quant 1000.0) 0.789)))
 
+
+;; (defun jmi/set-buffer-local-family (font-family)
+  ;; "Sets font in current buffer"
+  ;; (interactive "sFont Family: ")
+  ;; (defface tmp-buffer-local-face 
+    ;; '((t :family font-family))
+    ;; "Temporary buffer-local face")
+  ;; (buffer-face-set 'tmp-buffer-local-face))
+
+
+
+ (defun my-variable-serif ()
+   "Sets a fixed width (monospace) font in current buffer"
+   (interactive)
+   (setq buffer-face-mode-face '(:family "Open Sans" :height 140))
+   (buffer-face-mode))
+
+(global-set-key (kbd "<f7> c") 'variable-pitch-mode)
+
+;; (add-hook 'markdown-mode-hook (lambda () (variable-pitch-mode t))
+
+
+;;; It is the opposite of fill-paragraph    
+(defun unfill-paragraph ()
+  "Takes a multi-line paragraph and makes it into a single line of text."
+  (interactive)
+  (let ((fill-column (point-max)))
+    (fill-paragraph nil)))
+
+(defun my-fill-paragraph (&optional arg)
+  "Fill or unfill paragraph.  If repeated, alternate.
+A prefix arg for filling means justify (as for `fill-paragraph')."
+  (interactive "P")
+  (let ((fillp  (not (eq last-command 'fill-paragraph))))
+    (apply (setq this-command  (if fillp 'fill-paragraph 'unfill-paragraph))
+           (and fillp  arg  '(full t)))))
+
+
+
 (provide 'mdw-utilities)
 ;; End of mdw-utilities.el

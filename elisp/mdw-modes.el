@@ -62,7 +62,7 @@
   (setq writeroom-mode-line t)
   (setq writeroom-mode-line t)
   :bind (
-	 ("<f7>-w" . writeroom-mode)
+	 ("<f7> w" . writeroom-mode)
 	 )
   )
 
