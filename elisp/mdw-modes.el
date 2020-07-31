@@ -16,7 +16,7 @@
   (setcdr evil-insert-state-map nil)
   (setq evil-insert-state-map (make-sparse-keymap))
   (setq evil-emacs-state-cursor '(bar)) ;; I want my bar back
-  
+
   ;; (setq evil-insert-state-map (make-sparse-keymap))
   ;; (define-key evil-emacs-state-map (kbd "<f12>") 'evil-normal-state)
 
@@ -77,7 +77,7 @@
 (use-package undo-tree
   :ensure t
   :bind (("C-z" . undo-tree-undo)
-        ("C-S-Z" . undo-tree-redo))
+	("C-S-Z" . undo-tree-redo))
   :config
   (global-undo-tree-mode))
 
@@ -98,7 +98,7 @@
 (use-package swiper
   :after ivy
   :bind (("C-s" . swiper)
-         ("C-r" . swiper)))
+	 ("C-r" . swiper)))
 
 (use-package emojify
   :ensure t
@@ -111,7 +111,7 @@
 (use-package ivy
   :diminish
   :bind (("C-c C-r" . ivy-resume)
-         ("C-x B" . ivy-switch-buffer-other-window))
+	 ("C-x B" . ivy-switch-buffer-other-window))
   :custom
   (ivy-count-format "(%d/%d) ")
   (ivy-use-virtual-buffers t)
@@ -158,9 +158,9 @@
   (add-hook 'after-init-hook 'global-company-mode)
   :config
     (setq company-idle-delay              0.3
-          company-minimum-prefix-length   3
-          company-show-numbers            t
-          company-dabbrev-downcase        nil))
+	  company-minimum-prefix-length   3
+	  company-show-numbers            t
+	  company-dabbrev-downcase        nil))
 
 
 (use-package projectile
@@ -217,45 +217,105 @@
 )
 
 
+
+(defun then_R_operator ()
+  "R - %>% operator or 'then' pipe operator"
+  (interactive)
+  (just-one-space 1)
+  (insert "%>%")
+  (reindent-then-newline-and-indent))
+
+(defun tide-insert-assign ()
+  "Insert an assignment <-"
+  (interactive)
+  (insert "<- "))
+
+;; Mark a word at a point ==============================================
+;; http://www.emacswiki.org/emacs/ess-edit.el
+(defun ess-edit-word-at-point ()
+  (save-excursion
+    (buffer-substring
+     (+ (point) (skip-chars-backward "a-zA-Z0-9._"))
+     (+ (point) (skip-chars-forward "a-zA-Z0-9._")))))
+
+(defun fm/r()
+  "start R with a reasonable layout."
+  (interactive)
+  ;; Create new window right of the current one
+  ;; Current window is 80 characters (columns) wide
+  (split-window-right 120)
+  ;; Go to next window
+  (other-window 1)
+  ;; Create new window below current one
+  (split-window-below)
+  ;; Start R in current window
+  (R)
+  ;; Go to previous window
+  (other-window -1)
+  ;; never open any buffer in window with shell
+  (set-window-dedicated-p (nth 1 (window-list)) t))
+
+
 (use-package ess-r-mode
   :ensure ess
-  :defer t
+  ;; :defer t
+  :commands R
   :preface
-  (defun then_R_operator ()
-    "R - %>% operator or 'then' pipe operator"
-    (interactive)
-    (just-one-space 1)
-    (insert "%>%")
-    (reindent-then-newline-and-indent))
-  (defun tide-insert-assign ()
-    "Insert an assignment <-"
-    (interactive)
-    (insert "<- "))
-  ;; Mark a word at a point ==============================================
-  ;; http://www.emacswiki.org/emacs/ess-edit.el
-  (defun ess-edit-word-at-point ()
-    (save-excursion
-      (buffer-substring
-      (+ (point) (skip-chars-backward "a-zA-Z0-9._"))
-      (+ (point) (skip-chars-forward "a-zA-Z0-9._")))))
-
   (defun ess-eval-word ()
     (interactive)
     (let ((x (ess-edit-word-at-point)))
       (ess-eval-linewise (concat x))))
+
+  :bind(:map ess-r-mode-map
+	     ("C-c r" . ess-eval-word)
+	     ("C-S-m" . then_R_operator)
+	     ("C-'" . tide-insert-assign)
+	     ("C-S-<f10>" . inferior-ess-reload)
+	     ("<C-return>" . ess-eval-region-or-function-or-paragraph-and-step)
+	     ("C-<kp-enter>" . ess-eval-region-or-function-or-paragraph-and-step))
+  :bind(:map inferior-ess-r-mode-map
+	     ("C-S-m" . then_R_operator)
+	     ("C-S-<f10>" . inferior-ess-reload)
+	     ("C-l" . comint-clear-buffer))
   :init
-  (setq ess-tab-complete-in-script t)
-  (setq ess-indent-with-fancy-comments nil)
+  (require 'ess-site)
+  ;; (require 'ess-view)
+  ;; (require 'ess-R-data-view)
+  (setq comint-move-point-for-output t)
+  (setq comint-scroll-show-maximum-output t)
+  (setq comint-scroll-to-bottom-on-input t)
+  (setq comint-scroll-to-bottom-on-output t)
   (setq ess-disable-underscore-assign t)
-  (setq ess-smart-S-assign-key nil)
   (setq ess-eval-visibly 'nowait)
-  (setq ess-indent-level 2)
-  (setq tab-width 2)
   (setq ess-fancy-comments nil)
-  :config
-  (define-key ess-r-mode-map  (kbd "C-c r") 'ess-eval-word)
-  (define-key ess-r-mode-map  (kbd "C-S-M") 'then_R_operator)
-  (define-key ess-r-mode-map  (kbd "C-'") 'tide-insert-assign))
+  (setq ess-indent-level 2)
+  (setq ess-indent-with-fancy-comments nil)
+  (setq ess-offset-arguments 'prev-line)
+  (setq ess-smart-S-assign-key nil)
+  (setq ess-history-directory "~/.emacs-saves/")
+  (setq ess-tab-complete-in-script t)
+  (setq inferior-R-args "--no-restore-history --no-restore --quiet --no-save")
+  (setq tab-width 2)
+  (setq ess-style 'RStudio)
+  (setq ess-ask-for-ess-directory nil)
+  (setq ess-help-own-frame 'one))
+
+(defun R-scratch ()
+  (interactive)
+  (progn
+    (delete-other-windows)
+    (setq new-buf (get-buffer-create "scratch.R"))
+    (switch-to-buffer new-buf)
+    (R-mode)
+    (setq w1 (selected-window))
+    (setq w1name (buffer-name))
+    (setq w2 (split-window w1 nil t))
+    (if (not (member "*R*" (mapcar (function buffer-name) (buffer-list))))
+	(R))
+    (set-window-buffer w2 "*R*")
+    (set-window-buffer w1 w1name)))
+
+(global-set-key (kbd "C-x 9") 'R-scratch)
 
 
 ;; Markdown
@@ -270,14 +330,16 @@
   (setq markdown-list-indent-width 4)
   (add-to-list 'auto-mode-alist '("\\.Rmd\\'" . markdown-mode))
   (add-to-list 'auto-mode-alist '("\\.rmd\\'" . markdown-mode))
+  :custom-face
+  (markdown-code-face ((t nil)))
   :config
   ;; Fix inline codeblocks being split in markdown mode in Rmarkdown documents when filling
   (add-hook 'fill-nobreak-predicate
-            #'markdown-inline-code-at-point-p))
+	    #'markdown-inline-code-at-point-p))
 
 (use-package visual-fill-column
   :ensure t
-  :config
+  :init
   (add-hook 'visual-line-mode-hook #'visual-fill-column-mode)
   (global-visual-line-mode 1))
 
@@ -285,20 +347,29 @@
 (use-package deft
   :ensure t
   :defer t
-  :config
+  :init
   (setq deft-extensions '("org" "md" "tex" "txt"))
   (setq deft-use-filter-string-for-filename t)
   (setq deft-use-filename-as-title t)
   (setq deft-org-mode-title-prefix t)
   (setq deft-directory "~/Dropbox/Notes")
   (setq deft-text-mode 'org-mode)
-  (define-key deft-mode-map (kbd "C-c C-m") 'deft-new-file-named))
+  :bind (:map deft-mode-map ("C-c C-m" . deft-new-file-named)))
+
+
+(use-package smart-hungry-delete
+  :ensure t
+  :bind (("<backspace>" . smart-hungry-delete-backward-char)
+		 ("C-d" . smart-hungry-delete-forward-char))
+  :defer nil ;; dont defer so we can add our functions to hooks
+  :config (smart-hungry-delete-add-default-hooks)
+  )
 
 
 (use-package clojure-mode
   :ensure t
   :mode (("\\.clj\\'" . clojure-mode)
-         ("\\.edn\\'" . clojure-mode))
+	 ("\\.edn\\'" . clojure-mode))
   ;; :init
   ;; (add-hook 'clojure-mode-hook #'yas-minor-mode)
   ;; (add-hook 'clojure-mode-hook #'linum-mode)
@@ -322,6 +393,10 @@
   :ensure t
   :init (company-auctex-init))
 
+(use-package company-bibtex
+  :commands company-bibtex
+  :config (add-to-list 'company-backends #'company-bibtex))
+
 (use-package auctex-latexmk
   :ensure t
   :config
@@ -331,6 +406,7 @@
 
 (use-package tex
   :ensure auctex
+  ;; :commands TeX-latex-mode
   :mode ("\\.tex\\'" . latex-mode)
   :config (progn
 	    (setq TeX-source-correlate-mode t)
@@ -384,71 +460,73 @@
   :config
   (progn
     (setq treemacs-collapse-dirs                 (if treemacs-python-executable 3 0)
-          treemacs-deferred-git-apply-delay      0.5
-          treemacs-directory-name-transformer    #'identity
-          treemacs-display-in-side-window        t
-          treemacs-eldoc-display                 t
-          treemacs-file-event-delay              5000
-          treemacs-file-extension-regex          treemacs-last-period-regex-value
-          treemacs-file-follow-delay             0.2
-          treemacs-file-name-transformer         #'identity
-          treemacs-follow-after-init             t
-          treemacs-git-command-pipe              ""
-          treemacs-goto-tag-strategy             'refetch-index
-          treemacs-indentation                   2
-          treemacs-indentation-string            " "
-          treemacs-is-never-other-window         nil
-          treemacs-max-git-entries               5000
-          treemacs-missing-project-action        'ask
-          treemacs-move-forward-on-expand        nil
-          treemacs-no-png-images                 nil
-          treemacs-no-delete-other-windows       t
-          treemacs-project-follow-cleanup        nil
-          treemacs-persist-file                  (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
-          treemacs-position                      'left
-          treemacs-recenter-distance             0.1
-          treemacs-recenter-after-file-follow    nil
-          treemacs-recenter-after-tag-follow     nil
-          treemacs-recenter-after-project-jump   'always
-          treemacs-recenter-after-project-expand 'on-distance
-          treemacs-show-cursor                   nil
-          treemacs-show-hidden-files             t
-          treemacs-silent-filewatch              nil
-          treemacs-silent-refresh                nil
-          treemacs-sorting                       'alphabetic-asc
-          treemacs-space-between-root-nodes      t
-          treemacs-tag-follow-cleanup            t
-          treemacs-tag-follow-delay              1.5
-          treemacs-user-mode-line-format         nil
-          treemacs-user-header-line-format       nil
-          treemacs-width                         35)
+	  treemacs-deferred-git-apply-delay      0.5
+	  treemacs-directory-name-transformer    #'identity
+	  treemacs-display-in-side-window        t
+	  treemacs-eldoc-display                 t
+	  treemacs-file-event-delay              5000
+	  treemacs-file-extension-regex          treemacs-last-period-regex-value
+	  treemacs-file-follow-delay             0.2
+	  treemacs-file-name-transformer         #'identity
+	  treemacs-follow-after-init             t
+	  treemacs-git-command-pipe              ""
+	  treemacs-goto-tag-strategy             'refetch-index
+	  treemacs-indentation                   2
+	  treemacs-indentation-string            " "
+	  treemacs-is-never-other-window         nil
+	  treemacs-max-git-entries               5000
+	  treemacs-missing-project-action        'ask
+	  treemacs-move-forward-on-expand        nil
+	  treemacs-no-png-images                 nil
+	  treemacs-no-delete-other-windows       t
+	  treemacs-project-follow-cleanup        nil
+	  treemacs-persist-file                  (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
+	  treemacs-position                      'left
+	  treemacs-recenter-distance             0.1
+	  treemacs-recenter-after-file-follow    nil
+	  treemacs-recenter-after-tag-follow     nil
+	  treemacs-recenter-after-project-jump   'always
+	  treemacs-recenter-after-project-expand 'on-distance
+	  treemacs-show-cursor                   nil
+	  treemacs-show-hidden-files             t
+	  treemacs-silent-filewatch              nil
+	  treemacs-silent-refresh                nil
+	  treemacs-sorting                       'alphabetic-asc
+	  treemacs-space-between-root-nodes      t
+	  treemacs-tag-follow-cleanup            t
+	  treemacs-tag-follow-delay              1.5
+	  treemacs-user-mode-line-format         nil
+	  treemacs-user-header-line-format       nil
+	  treemacs-width                         35)
 
     ;; The default width and height of the icons is 22 pixels. If you are
     ;; using a Hi-DPI display, uncomment this to double the icon size.
     ;;(treemacs-resize-icons 44)
 
 
-    (when-system windows-nt (setq treemacs-python-executable "C:\\Users\\micha\\AppData\\Local\\Programs\\Python\\Python38"))
+    (when-system windows-nt (setq treemacs-python-executable (treemacs--find-python3)))
+
+    ;; "python.exe"
 
     (treemacs-follow-mode t)
     (treemacs-filewatch-mode t)
     (treemacs-fringe-indicator-mode t)
     (pcase (cons (not (null (executable-find "git")))
-                 (not (null treemacs-python-executable)))
+		 (not (null treemacs-python-executable)))
       (`(t . t)
        (treemacs-git-mode 'deferred))
       (`(t . _)
        (treemacs-git-mode 'simple))))
   :bind
   (:map global-map
-        ("<f8>" . 'treemacs)
-        ("C-\ t" . 'treemacs)
-        ("M-0"       . treemacs-select-window)
-        ("C-x t 1"   . treemacs-delete-other-windows)
-        ("C-x t t"   . treemacs)
-        ("C-x t B"   . treemacs-bookmark)
-        ("C-x t C-t" . treemacs-find-file)
-        ("C-x t M-t" . treemacs-find-tag)))
+	("<f8>" . 'treemacs)
+	("C-\ t" . 'treemacs)
+	("M-0"       . treemacs-select-window)
+	("C-x t 1"   . treemacs-delete-other-windows)
+	("C-x t t"   . treemacs)
+	("C-x t B"   . treemacs-bookmark)
+	("C-x t C-t" . treemacs-find-file)
+	("C-x t M-t" . treemacs-find-tag)))
 
 (use-package treemacs-evil
   :after treemacs evil
@@ -494,7 +572,20 @@
 (use-package org-ref
   :ensure t
   :after (biblio)
-  :init
+  :commands (org-ref-bibtex-next-entry
+	     org-ref-bibtex-previous-entry
+	     org-ref-open-in-browser
+	     org-ref-open-bibtex-notes
+	     org-ref-open-bibtex-pdf
+	     org-ref-bibtex-hydra/body
+	     org-ref-bibtex-hydra/org-ref-bibtex-new-entry/body-and-exit
+	     org-ref-sort-bibtex-entry
+	     arxiv-add-bibtex-entry
+	     arxiv-get-pdf-add-bibtex-entry
+	     doi-utils-add-bibtex-entry-from-doi
+	     isbn-to-bibtex
+	     pubmed-insert-bibtex-from-pmid)
+  :config
   (add-hook 'bibtex-mode-hook '(require 'org-ref-bibtex)))
 
 (use-package avy

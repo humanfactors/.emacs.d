@@ -8,14 +8,16 @@
 ;; Set default font
 (add-to-list 'default-frame-alist '(font . "Fira Code 13"))
 (set-face-attribute 'default nil
-                    :family "Fira Code"
-                    :height 130
-                    :weight 'normal
-                    :width 'normal)
+		    :family "Fira Code"
+		    :height 130
+		    :weight 'normal
+		    :width 'normal)
 
-(use-package fira-code-mode
-  :custom (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x")) ;; List of ligatures to turn off
-  :hook prog-mode) ;; Enables fira-code-mode automatically for programming major modes
+(add-hook 'before-save-hook 'whitespace-cleanup)
+
+;; (use-package fira-code-mode
+  ;; :custom (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x")) ;; List of ligatures to turn off
+  ;; :hook prog-mode) ;; Enables fira-code-mode automatically for programming major modes
 
 (setq inhibit-compacting-font-caches t)
 (setq find-file-visit-truename t)
@@ -32,7 +34,7 @@
   )
 
 (use-package beacon
-  :init 
+  :init
   (beacon-mode 1)
   (setq beacon-color "#50fa7b"
 	beacon-lighter ""
@@ -42,10 +44,10 @@
   :config
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t ; if nil, bold is universally disabled
-        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+	doom-themes-enable-italic t) ; if nil, italics is universally disabled
   (load-theme 'doom-dracula t)
   (setq doom-dracula-padded-modeline t
-        doom-dracula-colorful-headers t)
+	doom-dracula-colorful-headers t)
   (doom-themes-org-config))
 
 (use-package rainbow-mode

@@ -24,6 +24,7 @@
 (setq org-cycle-separator-lines 1)
 (setq org-indent-mode-turns-on-hiding-stars nil)
 (setq org-hide-leading-stars-before-indent-mode nil)
+(setq org-startup-indented t)
 
 (add-to-list 'org-structure-template-alist
 	     (list "ti" "#+TITLE: ?\n"))

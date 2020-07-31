@@ -6,14 +6,18 @@
 (global-set-key (kbd "M-<f4>") 'save-buffers-kill-emacs)
 
 ;; Editing
-(global-set-key (kbd "M-<backspace>") 'backward-kill-word)
 (global-set-key (kbd "C-x K") 'kill-buffer-and-window)
 (global-set-key (kbd "C-x k") 'kill-this-buffer)
 (global-set-key (kbd "M-D") 'duplicate-thing)
 
+;; I hate the emacs backward and forward delte defaults
+(global-set-key (kbd "C-<backspace>") 'ryanmarcus/backward-kill-word)
+(global-set-key (kbd "M-<backspace>") 'backward-kill-word)
+
 ;; By default, BACKSPACE ON EMACS turns a tab character into a set of spaces
 ;; & deletes one. This sets backspace to delete 1 character instead of 1 column.
 (global-set-key (kbd "DEL") 'backward-delete-char)
+
 
 (defun yank-pop-forwards (arg)
   (interactive "p")
@@ -95,9 +99,9 @@
 (mdw/define-openfile-funconly "AHK" "~/Dropbox/Code/AHK")
 (mdw/define-openfile-funconly "notes" "~/Dropbox/org")
 (mdw/define-openfile-funconly "code" "~/Code/")
-(mdw/define-openfile-funconly "emacs-dir" "~/.emacs.d/")
-(mdw/define-openfile "org" "~/Dropbox/org" "C-x M-o")
-(mdw/define-openfile "dropboxmain" "~/Dropbox" "C-x M-1")
+(mdw/define-openfile-funconly "emacs-dir" "~/.emacs.d/elisp/")
+(mdw/define-openfile "org" "~/Dropbox/org/" "C-x M-o")
+(mdw/define-openfile "dropboxmain" "~/Dropbox/" "C-x M-1")
 (mdw/define-openfile "home" "~/" "C-x M-h")
 
 
@@ -159,9 +163,6 @@
 (global-set-key (kbd "C-x C-<down>") 'windmove-down)
 (global-set-key (kbd "C-x C-<left>") 'windmove-left)
 (global-set-key (kbd "C-x C-<right>") 'windmove-right)
-
-;; I hate the emacs backward and forward delte defaults
-(global-set-key (kbd "C-<backspace>") 'dwim-backward-kill-word)
 
 ;; M-up and M-down move lines
 

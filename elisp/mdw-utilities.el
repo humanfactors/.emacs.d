@@ -87,11 +87,9 @@ word or non-word."
            (backward-word-point     (progn (backward-word) (point)))
            (backward-non-word-point (progn (goto-char orig-point) (backward-non-word) (point)))
            (min-point               (max backward-word-point backward-non-word-point)))
-
       (if (< (line-number-at-pos min-point) orig-line) (progn (goto-char min-point) (end-of-line) (delete-horizontal-space))
         (delete-region min-point orig-point)
-        (goto-char min-point))
-      )))
+        (goto-char min-point)))))
 
 (defun backward-non-word ()
   "Move backward until encountering the beginning of a non-word."
@@ -100,6 +98,52 @@ word or non-word."
   (while (looking-at "[^a-zA-Z0-9\s\n]")
     (backward-char))
   (forward-char))
+
+
+(defun aborn/backward-kill-word ()
+  "Customize/Smart backward-kill-word."
+  (interactive)
+  (let* ((cp (point))
+         (backword)
+         (end)
+         (space-pos)
+         (backword-char (if (bobp)
+                            ""           ;; cursor in begin of buffer
+                          (buffer-substring cp (- cp 1)))))
+    (if (equal (length backword-char) (string-width backword-char))
+        (progn
+          (save-excursion
+            (setq backword (buffer-substring (point) (progn (forward-word -1) (point)))))
+          (setq ab/debug backword)
+          (save-excursion
+            (when (and backword          ;; when backword contains space
+                       (s-contains? " " backword))
+              (setq space-pos (ignore-errors (search-backward " ")))))
+          (save-excursion
+            (let* ((pos (ignore-errors (search-backward-regexp "\n")))
+                   (substr (when pos (buffer-substring pos cp))))
+              (when (or (and substr (s-blank? (s-trim substr)))
+                        (s-contains? "\n" backword))
+                (setq end pos))))
+          (if end
+              (kill-region cp end)
+            (if space-pos
+                (kill-region cp space-pos)
+              (backward-kill-word 1))))
+      (kill-region cp (- cp 1)))         ;; word is non-english word
+    ))
+
+(defun ryanmarcus/backward-kill-word ()
+  "Remove all whitespace if the character behind the cursor is whitespace, otherwise remove a word."
+  (interactive)
+  (if (looking-back "[ \n]")
+      ;; delete horizontal space before us and then check to see if we
+      ;; are looking at a newline
+      (progn (delete-horizontal-space 't)
+             (while (looking-back "[ \n]")
+               (backward-delete-char 1)))
+    ;; otherwise, just do the normal kill word.
+    (backward-kill-word 1)))
 
 (defun duplicate-thing (comment)
   "Duplicates the current line, or the region if active. If an argument is
@@ -113,8 +157,6 @@ given, the duplicated region will be commented out."
         (newline))
       (insert (buffer-substring start end))
       (when comment (comment-region start end)))))
-
-
 
 (defun spacemacs/maximize-vertically ()
   "Delete all windows above and below the current window."
@@ -233,6 +275,33 @@ A prefix arg for filling means justify (as for `fill-paragraph')."
   (let ((fillp  (not (eq last-command 'fill-paragraph))))
     (apply (setq this-command  (if fillp 'fill-paragraph 'unfill-paragraph))
            (and fillp  arg  '(full t)))))
+
+(defun toggle-window-split ()
+  (interactive)
+  (if (= (count-windows) 2)
+      (let* ((this-win-buffer (window-buffer))
+	     (next-win-buffer (window-buffer (next-window)))
+	     (this-win-edges (window-edges (selected-window)))
+	     (next-win-edges (window-edges (next-window)))
+	     (this-win-2nd (not (and (<= (car this-win-edges)
+					 (car next-win-edges))
+				     (<= (cadr this-win-edges)
+					 (cadr next-win-edges)))))
+	     (splitter
+	      (if (= (car this-win-edges)
+		     (car (window-edges (next-window))))
+		  'split-window-horizontally
+		'split-window-vertically)))
+	(delete-other-windows)
+	(let ((first-win (selected-window)))
+	  (funcall splitter)
+	  (if this-win-2nd (other-window 1))
+	  (set-window-buffer (selected-window) this-win-buffer)
+	  (set-window-buffer (next-window) next-win-buffer)
+	  (select-window first-win)
+	  (if this-win-2nd (other-window 1))))))
+
+(global-set-key (kbd "C-x 5") 'toggle-window-split)
 
 
 
