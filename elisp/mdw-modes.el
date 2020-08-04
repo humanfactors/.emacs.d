@@ -593,4 +593,6 @@
   (general-define-key "C-'" 'avy-goto-word-1)
   (general-define-key "C-;" 'avy-goto-char))
 
+(use-package xahk-mode)
+
 (provide 'mdw-modes)
