@@ -305,5 +305,52 @@ A prefix arg for filling means justify (as for `fill-paragraph')."
 
 
 
+;; This section from https://gitlab.com/fommil/dotfiles/blob/master/.emacs.d/init.el
+
+(defun unfill-paragraph (&optional region)
+  ;; http://www.emacswiki.org/emacs/UnfillParagraph
+  "Transforms a paragraph in REGION into a single line of text."
+  (interactive)
+  (let ((fill-column (point-max)))
+    (fill-paragraph nil region)))
+
+(defun unfill-buffer ()
+  "Unfill the buffer for function `visual-line-mode'."
+  (interactive)
+  (let ((fill-column (point-max)))
+    (fill-region 0 (point-max))))
+
+(defun revert-buffer-no-confirm ()
+  ;; http://www.emacswiki.org/emacs-en/download/misc-cmds.el
+  "Revert buffer without confirmation."
+  (interactive)
+  (revert-buffer t t))
+
+(defun safe-kill-emacs ()
+  "Only exit Emacs if this is a small session, otherwise prompt."
+  (interactive)
+  (if (daemonp)
+      ;; intentionally not save-buffers-kill-terminal as it has an
+      ;; impact on other client sessions.
+      (delete-frame)
+    ;; would be better to filter non-hidden buffers
+    (let ((count-buffers (length (buffer-list))))
+      (if (< count-buffers 11)
+          (save-buffers-kill-emacs)
+        (message-box "use 'M-x exit'")))))
+
+(defun dot-emacs ()
+  "Go directly to .emacs, do not pass Go, do not collect $200."
+  (interactive)
+  (message "Stop procrastinating and do some work!")
+  (find-file "~/.emacs.d/init.el"))
+
+
+(global-set-key (kbd "M-Q") 'unfill-paragraph)
+(global-set-key (kbd "C-x C-c") 'safe-kill-emacs)
+(global-set-key (kbd "<f6>") 'dot-emacs)
+
+;; end fommil/dotfiles/
+
 (provide 'mdw-utilities)
 ;; End of mdw-utilities.el

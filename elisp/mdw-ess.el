@@ -41,62 +41,58 @@
 
 
 (use-package ess
-	:ensure t
-	:defer t
-	:commands R julia
-	:init
-	(require 'ess-site)
-	;; (require 'ess-view)
-	;; (require 'ess-R-data-view)
-	:config
-	(defun ess-eval-word ()
-		(interactive)
-		(let ((x (ess-edit-word-at-point)))
-			(ess-eval-linewise (concat x))))
-	(setq comint-move-point-for-output t)
-	(setq comint-scroll-show-maximum-output t)
-	(setq comint-scroll-to-bottom-on-input t)
-	(setq comint-scroll-to-bottom-on-output t)
-	(setq ess-auto-width 'window)
-	(setq ess-disable-underscore-assign t)
-	(setq ess-eval-visibly 'nowait)
-	(setq ess-fancy-comments nil)
-	(setq ess-indent-level 2)
-	(setq ess-indent-with-fancy-comments nil)
-	(setq ess-offset-arguments 'prev-line)
-	(setq ess-smart-S-assign-key nil)
-	(setq ess-history-directory "~/.emacs-saves/")
-	(setq ess-tab-complete-in-script t)
-	(setq inferior-R-args "--no-restore-history --no-restore --quiet --no-save")
-	(setq tab-width 2)
-	(setq ess-style 'RStudio)
-	(setq ess-ask-for-ess-directory nil)
-	(setq ess-help-own-frame 'one)
+  :ensure t
+  :defer t
+  :commands R julia
+  :init
+  (require 'ess-site)
+  ;; (require 'ess-view)
+  ;; (require 'ess-R-data-view)
+  :config
+  (defun ess-eval-word ()
+    (interactive)
+    (let ((x (ess-edit-word-at-point)))
+      (ess-eval-linewise (concat x))))
+  (setq comint-move-point-for-output t)
+  (setq comint-scroll-show-maximum-output t)
+  (setq comint-scroll-to-bottom-on-input t)
+  (setq comint-scroll-to-bottom-on-output t)
+  (setq ess-auto-width 'window)
+  (setq ess-disable-underscore-assign t)
+  (setq ess-eval-visibly 'nowait)
+  (setq ess-fancy-comments nil)
+  (setq ess-indent-level 2)
+  (setq ess-indent-with-fancy-comments nil)
+  (setq ess-offset-arguments 'prev-line)
+  (setq ess-smart-S-assign-key nil)
+  (setq ess-history-directory "~/.emacs-saves/")
+  (setq ess-tab-complete-in-script t)
+  (setq inferior-R-args "--no-restore-history --no-restore --quiet --no-save")
+  (setq tab-width 2)
+  (setq ess-style 'RStudio)
+  (setq ess-ask-for-ess-directory nil)
+  (setq ess-help-own-frame 'one)
 
-	;; Keybinds for R modes, including custom functions
-	:bind(:map ess-r-mode-map
-						 ("C-c r" . ess-eval-word)
-						 ("C-S-m" . then_R_operator)
-						 ("C-'" . tide-insert-assign)
-						 ("C-S-<f10>" . inferior-ess-reload)
-						 ("C-<return>" . ess-eval-region-or-function-or-paragraph-and-step)
-						 ("C-<kp-enter>" . ess-eval-region-or-function-or-paragraph-and-step)
-						 ("C-M-<return>" . newline-and-indent))
-	:bind(:map inferior-ess-r-mode-map
-						 ("C-S-m" . then_R_operator)
-						 ("C-S-<f10>" . inferior-ess-reload)
-						 ("C-l" . comint-clear-buffer)))
-
-
+  ;; Keybinds for R modes, including custom functions
+  :bind(:map ess-r-mode-map
+	     ("C-c r" . ess-eval-word)
+	     ("C-S-m" . then_R_operator)
+	     ("C-'" . tide-insert-assign)
+	     ("C-S-<f10>" . inferior-ess-reload)
+	     ("C-<return>" . ess-eval-region-or-function-or-paragraph-and-step)
+	     ("C-<kp-enter>" . ess-eval-region-or-function-or-paragraph-and-step)
+	     ("C-M-<return>" . newline-and-indent))
+  :bind(:map inferior-ess-r-mode-map
+	     ("C-S-m" . then_R_operator)
+	     ("C-S-<f10>" . inferior-ess-reload)
+	     ("C-l" . comint-clear-buffer)))
 
 (use-package ess-view
-	:ensure t
-	:after ess)
+  :ensure t
+  :after ess)
 
-
-(use-package ess-data-view
-	:ensure t
-	:after ess)
+(use-package ess-R-data-view
+  :after ess)
 
 (defun aj/r-insert-chunk (header)
 	"Insert an r-chunk in markdown mode."

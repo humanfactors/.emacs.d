@@ -1,6 +1,6 @@
 ;; General mode configuation
 
-;; smart-parens
+
 
 (use-package evil
   :ensure t ;; install the evil package if not installed
@@ -31,21 +31,22 @@
 
 
 
-
+;; smart-parens
 (use-package smartparens
-  :ensure t
-  :config
-  (show-smartparens-global-mode t)
-  (add-hook 'prog-mode-hook 'turn-on-smartparens-mode)
-  (add-hook 'LaTeX-mode-hook 'turn-on-smartparens-mode)
-  (add-hook 'markdown-mode-hook 'turn-on-smartparens-mode)
-  (add-hook 'ess-mode-hook 'turn-on-smartparens-mode)
-  (add-hook 'org-mode-hook 'turn-on-smartparens-mode)
-  (require 'smartparens-config)
+  :diminish smartparens-mode
+  :config (require 'smartparens-config)
+  (smartparens-global-mode 1)
+  (show-paren-mode t)
+  :init
   (define-key smartparens-mode-map (kbd "M-C-(") 'sp-wrap-round)
   (define-key smartparens-mode-map (kbd "M-C-[") 'sp-wrap-square)
   (define-key smartparens-mode-map (kbd "M-C-{") 'sp-wrap-curly)
-  :diminish smartparens-mode)
+  :bind
+  (:map
+   smartparens-mode-map
+   ;; ("M-<delete>" . sp-unwrap-sexp)
+   ("s-{" . sp-rewrap-sexp)))
+
   ;; (("C-M-f" . sp-forward-sexp)
   ;;  ("C-M-b" . sp-backward-sexp)
   ;;  ("C-M-n" . sp-up-sexp)
