@@ -31,10 +31,16 @@
 
 
 
+
 (use-package smartparens
   :ensure t
   :config
-  (smartparens-global-mode t)
+  (show-smartparens-global-mode t)
+  (add-hook 'prog-mode-hook 'turn-on-smartparens-mode)
+  (add-hook 'LaTeX-mode-hook 'turn-on-smartparens-mode)
+  (add-hook 'markdown-mode-hook 'turn-on-smartparens-mode)
+  (add-hook 'ess-mode-hook 'turn-on-smartparens-mode)
+  (add-hook 'org-mode-hook 'turn-on-smartparens-mode)
   (require 'smartparens-config)
   (define-key smartparens-mode-map (kbd "M-C-(") 'sp-wrap-round)
   (define-key smartparens-mode-map (kbd "M-C-[") 'sp-wrap-square)
