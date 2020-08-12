@@ -24,19 +24,19 @@ Uses `bjk-timestamp-format' for formatting the date/time."
   (interactive)
   (when-system gnu/linux
     (if default-directory
-        (browse-url-of-file (expand-file-name default-directory))
+	(browse-url-of-file (expand-file-name default-directory))
       (error "No `default-directory' to open")))
   (when-system windows-nt
     (require 'w32-browser)
     (if default-directory
-        (w32explore (expand-file-name default-directory))
+	(w32explore (expand-file-name default-directory))
       (error "No `default-directory' to open"))))
 
 (defun mdw/insert-global-set-key (key command)
   (interactive (list (read-key-sequence "Key sequence: ")
-                     (read-command "Command: ")))
+		     (read-command "Command: ")))
   (prin1 `(global-set-key (kbd ,(key-description key)) ',command)
-         (current-buffer)))
+	 (current-buffer)))
 
 
 (defun move-line (n)
@@ -73,7 +73,7 @@ Uses `bjk-timestamp-format' for formatting the date/time."
 (defun what-face (pos)
   (interactive "d")
   (let ((face (or (get-char-property (point) 'read-face-name)
-                  (get-char-property (point) 'face))))
+		  (get-char-property (point) 'face))))
     (if face (message "Face: %s" face) (message "No face at %d" pos))))
 
 
@@ -83,13 +83,13 @@ word or non-word."
   (interactive)
   (if (thing-at-point 'word) (backward-kill-word 1)
     (let* ((orig-point              (point))
-           (orig-line               (line-number-at-pos))
-           (backward-word-point     (progn (backward-word) (point)))
-           (backward-non-word-point (progn (goto-char orig-point) (backward-non-word) (point)))
-           (min-point               (max backward-word-point backward-non-word-point)))
+	   (orig-line               (line-number-at-pos))
+	   (backward-word-point     (progn (backward-word) (point)))
+	   (backward-non-word-point (progn (goto-char orig-point) (backward-non-word) (point)))
+	   (min-point               (max backward-word-point backward-non-word-point)))
       (if (< (line-number-at-pos min-point) orig-line) (progn (goto-char min-point) (end-of-line) (delete-horizontal-space))
-        (delete-region min-point orig-point)
-        (goto-char min-point)))))
+	(delete-region min-point orig-point)
+	(goto-char min-point)))))
 
 (defun backward-non-word ()
   "Move backward until encountering the beginning of a non-word."
@@ -104,32 +104,32 @@ word or non-word."
   "Customize/Smart backward-kill-word."
   (interactive)
   (let* ((cp (point))
-         (backword)
-         (end)
-         (space-pos)
-         (backword-char (if (bobp)
-                            ""           ;; cursor in begin of buffer
-                          (buffer-substring cp (- cp 1)))))
+	 (backword)
+	 (end)
+	 (space-pos)
+	 (backword-char (if (bobp)
+			    ""           ;; cursor in begin of buffer
+			  (buffer-substring cp (- cp 1)))))
     (if (equal (length backword-char) (string-width backword-char))
-        (progn
-          (save-excursion
-            (setq backword (buffer-substring (point) (progn (forward-word -1) (point)))))
-          (setq ab/debug backword)
-          (save-excursion
-            (when (and backword          ;; when backword contains space
-                       (s-contains? " " backword))
-              (setq space-pos (ignore-errors (search-backward " ")))))
-          (save-excursion
-            (let* ((pos (ignore-errors (search-backward-regexp "\n")))
-                   (substr (when pos (buffer-substring pos cp))))
-              (when (or (and substr (s-blank? (s-trim substr)))
-                        (s-contains? "\n" backword))
-                (setq end pos))))
-          (if end
-              (kill-region cp end)
-            (if space-pos
-                (kill-region cp space-pos)
-              (backward-kill-word 1))))
+	(progn
+	  (save-excursion
+	    (setq backword (buffer-substring (point) (progn (forward-word -1) (point)))))
+	  (setq ab/debug backword)
+	  (save-excursion
+	    (when (and backword          ;; when backword contains space
+		       (s-contains? " " backword))
+	      (setq space-pos (ignore-errors (search-backward " ")))))
+	  (save-excursion
+	    (let* ((pos (ignore-errors (search-backward-regexp "\n")))
+		   (substr (when pos (buffer-substring pos cp))))
+	      (when (or (and substr (s-blank? (s-trim substr)))
+			(s-contains? "\n" backword))
+		(setq end pos))))
+	  (if end
+	      (kill-region cp end)
+	    (if space-pos
+		(kill-region cp space-pos)
+	      (backward-kill-word 1))))
       (kill-region cp (- cp 1)))         ;; word is non-english word
     ))
 
@@ -140,8 +140,8 @@ word or non-word."
       ;; delete horizontal space before us and then check to see if we
       ;; are looking at a newline
       (progn (delete-horizontal-space 't)
-             (while (looking-back "[ \n]")
-               (backward-delete-char 1)))
+	     (while (looking-back "[ \n]")
+	       (backward-delete-char 1)))
     ;; otherwise, just do the normal kill word.
     (backward-kill-word 1)))
 
@@ -151,10 +151,10 @@ given, the duplicated region will be commented out."
   (interactive "P")
   (save-excursion
     (let ((start (if (region-active-p) (region-beginning) (point-at-bol)))
-          (end   (if (region-active-p) (region-end) (point-at-eol))))
+	  (end   (if (region-active-p) (region-end) (point-at-eol))))
       (goto-char end)
       (unless (region-active-p)
-        (newline))
+	(newline))
       (insert (buffer-substring start end))
       (when comment (comment-region start end)))))
 
@@ -183,11 +183,11 @@ given, the duplicated region will be commented out."
   (interactive)
   (save-excursion
     (if (and (= 1 (length (window-list)))
-             (assoc ?_ register-alist))
-        (jump-to-register ?_)
+	     (assoc ?_ register-alist))
+	(jump-to-register ?_)
       (progn
-        (window-configuration-to-register ?_)
-        (delete-other-windows)))))
+	(window-configuration-to-register ?_)
+	(delete-other-windows)))))
 
 
 ;; from @bmag
@@ -196,17 +196,17 @@ given, the duplicated region will be commented out."
   (interactive)
   (if (= (count-windows) 2)
       (let* ((window-tree (car (window-tree)))
-             (current-split-vertical-p (car window-tree))
-             (first-window (nth 2 window-tree))
-             (second-window (nth 3 window-tree))
-             (second-window-state (window-state-get second-window))
-             (splitter (if current-split-vertical-p
-                           #'split-window-horizontally
-                         #'split-window-vertically)))
-        (delete-other-windows first-window)
-        ;; `window-state-put' also re-selects the window if needed, so we don't
-        ;; need to call `select-window'
-        (window-state-put second-window-state (funcall splitter)))
+	     (current-split-vertical-p (car window-tree))
+	     (first-window (nth 2 window-tree))
+	     (second-window (nth 3 window-tree))
+	     (second-window-state (window-state-get second-window))
+	     (splitter (if current-split-vertical-p
+			   #'split-window-horizontally
+			 #'split-window-vertically)))
+	(delete-other-windows first-window)
+	;; `window-state-put' also re-selects the window if needed, so we don't
+	;; need to call `select-window'
+	(window-state-put second-window-state (funcall splitter)))
     (error "Can't toggle window layout when the number of windows isn't two.")))
 
 (defun spacemacs/window-layout-toggle ()
@@ -214,13 +214,13 @@ given, the duplicated region will be commented out."
   (interactive)
   (if (= (count-windows) 2)
     (let* ((window-tree (car (window-tree)))
-           (current-split-vertical-p (car window-tree))
-           (first-window (nth 2 window-tree))
-           (second-window (nth 3 window-tree))
-           (second-window-state (window-state-get second-window))
-           (splitter (if current-split-vertical-p
-                         #'split-window-horizontally
-                       #'split-window-vertically)))
+	   (current-split-vertical-p (car window-tree))
+	   (first-window (nth 2 window-tree))
+	   (second-window (nth 3 window-tree))
+	   (second-window-state (window-state-get second-window))
+	   (splitter (if current-split-vertical-p
+			 #'split-window-horizontally
+		       #'split-window-vertically)))
       (delete-other-windows first-window)
       ;; `window-state-put' also re-selects the window if needed, so we don't
       ;; need to call `select-window'
@@ -230,9 +230,9 @@ given, the duplicated region will be commented out."
 
 (defun insert-global-set-key (key command)
   (interactive (list (read-key-sequence "Key sequence: ")
-                     (read-command "Command: ")))
+		     (read-command "Command: ")))
   (prin1 `(global-set-key (kbd ,(key-description key)) ',command)
-         (current-buffer)))
+	 (current-buffer)))
 
 (defun mdw/standard-drinks (abv quant)
   (interactive(list (read-number "ABV in %")
@@ -243,7 +243,7 @@ given, the duplicated region will be commented out."
 ;; (defun jmi/set-buffer-local-family (font-family)
   ;; "Sets font in current buffer"
   ;; (interactive "sFont Family: ")
-  ;; (defface tmp-buffer-local-face 
+  ;; (defface tmp-buffer-local-face
     ;; '((t :family font-family))
     ;; "Temporary buffer-local face")
   ;; (buffer-face-set 'tmp-buffer-local-face))
@@ -261,7 +261,7 @@ given, the duplicated region will be commented out."
 ;; (add-hook 'markdown-mode-hook (lambda () (variable-pitch-mode t))
 
 
-;;; It is the opposite of fill-paragraph    
+;;; It is the opposite of fill-paragraph
 (defun unfill-paragraph ()
   "Takes a multi-line paragraph and makes it into a single line of text."
   (interactive)
@@ -274,7 +274,7 @@ A prefix arg for filling means justify (as for `fill-paragraph')."
   (interactive "P")
   (let ((fillp  (not (eq last-command 'fill-paragraph))))
     (apply (setq this-command  (if fillp 'fill-paragraph 'unfill-paragraph))
-           (and fillp  arg  '(full t)))))
+	   (and fillp  arg  '(full t)))))
 
 (defun toggle-window-split ()
   (interactive)
@@ -326,18 +326,19 @@ A prefix arg for filling means justify (as for `fill-paragraph')."
   (interactive)
   (revert-buffer t t))
 
-(defun safe-kill-emacs ()
-  "Only exit Emacs if this is a small session, otherwise prompt."
-  (interactive)
-  (if (daemonp)
-      ;; intentionally not save-buffers-kill-terminal as it has an
-      ;; impact on other client sessions.
-      (delete-frame)
-    ;; would be better to filter non-hidden buffers
-    (let ((count-buffers (length (buffer-list))))
-      (if (< count-buffers 11)
-          (save-buffers-kill-emacs)
-        (message-box "use 'M-x exit'")))))
+;; (defun safe-kill-emacs ()
+;;   "Only exit Emacs if this is a small session, otherwise prompt."
+;;   (interactive)
+;;   (if (daemonp)
+;;       ;; intentionally not save-buffers-kill-terminal as it has an
+;;       ;; impact on other client sessions.
+;;       (delete-frame)
+;;     ;; would be better to filter non-hidden buffers
+;;     (let ((count-buffers (length (buffer-list))))
+;;       (if (< count-buffers 11)
+;;	  (save-buffers-kill-emacs)
+;;	(message-box "use 'M-x exit'")))))
+;; (global-set-key (kbd "C-x C-c") 'safe-kill-emacs)
 
 (defun dot-emacs ()
   "Go directly to .emacs, do not pass Go, do not collect $200."
@@ -347,7 +348,6 @@ A prefix arg for filling means justify (as for `fill-paragraph')."
 
 
 (global-set-key (kbd "M-Q") 'unfill-paragraph)
-(global-set-key (kbd "C-x C-c") 'safe-kill-emacs)
 (global-set-key (kbd "<f6>") 'dot-emacs)
 
 ;; end fommil/dotfiles/

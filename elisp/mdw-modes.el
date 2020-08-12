@@ -29,23 +29,23 @@
   (defalias 'evil-insert-state 'evil-emacs-state)
   (evil-mode 1))
 
-
-
 ;; smart-parens
-(use-package smartparens
-  :diminish smartparens-mode
-  :config (require 'smartparens-config)
-  (smartparens-global-mode 1)
-  (show-paren-mode t)
-  :init
-  (define-key smartparens-mode-map (kbd "M-C-(") 'sp-wrap-round)
-  (define-key smartparens-mode-map (kbd "M-C-[") 'sp-wrap-square)
-  (define-key smartparens-mode-map (kbd "M-C-{") 'sp-wrap-curly)
-  :bind
-  (:map
-   smartparens-mode-map
-   ;; ("M-<delete>" . sp-unwrap-sexp)
-   ("s-{" . sp-rewrap-sexp)))
+;; (use-package smartparens
+;;   :diminish smartparens-mode
+;;   ;; :config (require 'smartparens-config)
+;;   :config
+;;   (smartparens-global-mode 1)
+;;   (show-paren-mode t)
+;;   (require 'smartparens-config)
+;;   :init
+;;   (define-key smartparens-mode-map (kbd "M-C-(") 'sp-wrap-round)
+;;   (define-key smartparens-mode-map (kbd "M-C-[") 'sp-wrap-square)
+;;   (define-key smartparens-mode-map (kbd "M-C-{") 'sp-wrap-curly))
+;;   ;; :bind
+  ;; (:map
+  ;;  smartparens-mode-map
+  ;;  ;; ("M-<delete>" . sp-unwrap-sexp)
+  ;;  ("s-{" . sp-rewrap-sexp)))
 
   ;; (("C-M-f" . sp-forward-sexp)
   ;;  ("C-M-b" . sp-backward-sexp)
@@ -58,28 +58,45 @@
   ;;  ("M-r" . sp-splice-sexp-killing-around)
   ;;  ("C-M-t" . sp-transpose-sexp))
 
+
+(use-package smartparens
+  :defer t
+  :init
+  (bind-key "C-M-f" #'sp-forward-sexp smartparens-mode-map)
+  (bind-key "C-M-b" #'sp-backward-sexp smartparens-mode-map)
+  (bind-key "C-)" #'sp-forward-slurp-sexp smartparens-mode-map)
+  (bind-key "C-(" #'sp-backward-slurp-sexp smartparens-mode-map)
+  (bind-key "M-)" #'sp-forward-barf-sexp smartparens-mode-map)
+  (bind-key "M-(" #'sp-backward-barf-sexp smartparens-mode-map)
+  (bind-key "C-S-s" #'sp-splice-sexp)
+  (bind-key "C-M-<backspace>" #'backward-kill-sexp)
+  :config
+  (smartparens-global-mode t)
+  :config
+  (setq sp-show-pair-from-inside nil)
+  (require 'smartparens-config)
+  :diminish smartparens-mode)
+
+
+
 (use-package writeroom-mode
   :ensure t
   :defer t
   :config
   (with-eval-after-load 'writeroom-mode
-  (define-key writeroom-mode-map (kbd "C-M-<") #'writeroom-decrease-width)
-  (define-key writeroom-mode-map (kbd "C-M->") #'writeroom-increase-width)
-  (define-key writeroom-mode-map (kbd "C-M-=") #'writeroom-adjust-width))
+    (define-key writeroom-mode-map (kbd "C-M-<") #'writeroom-decrease-width)
+    (define-key writeroom-mode-map (kbd "C-M->") #'writeroom-increase-width)
+    (define-key writeroom-mode-map (kbd "C-M-=") #'writeroom-adjust-width))
   (setq writeroom-mode-line t)
   (setq writeroom-mode-line t)
-  :bind (
-	 ("<f7> w" . writeroom-mode)
-	 )
-  )
+  :bind (("<f7> w" . writeroom-mode)))
 
 ;; ag.el
 (use-package ag
   :ensure t
   :init
   (when-system windows-nt
-    (setq ag-executable "ag.exe"))
-  )
+    (setq ag-executable "ag.exe")))
 
 (use-package undo-tree
   :ensure t
@@ -88,9 +105,11 @@
   :config
   (global-undo-tree-mode))
 
-(require 'w32-browser)
+(when-system windows-nt
+  (progn(require 'w32-browser)))
 
-(use-package general)
+(use-package general
+  :ensure t)
 
 ;; Ace Window
 (use-package ace-window
@@ -107,13 +126,14 @@
   :bind (("C-s" . swiper)
 	 ("C-r" . swiper)))
 
-(use-package emojify
-  :ensure t
-  :config
-  (setq emojify-emoji-styles "unicode")
-  (setq emojify-display-style "unicode")
-  (setq  emojify-prog-contexts "comments")
-  (add-hook 'after-init-hook #'global-emojify-mode))
+;; (use-package emojify
+;;   :defer t
+;;   :ensure t
+;;   :config
+;;   (setq emojify-emoji-styles "unicode")
+;;   (setq emojify-display-style "unicode")
+;;   (setq  emojify-prog-contexts "comments")
+;;   (add-hook 'after-init-hook #'global-emojify-mode))
 
 (use-package ivy
   :diminish
@@ -160,6 +180,7 @@
   (which-key-mode 1))
 
 (use-package company
+  :defer t
   :ensure t
   :init
   (add-hook 'after-init-hook 'global-company-mode)
@@ -272,6 +293,7 @@
 
 
 (use-package clojure-mode
+  :defer t
   :ensure t
   :mode (("\\.clj\\'" . clojure-mode)
 	 ("\\.edn\\'" . clojure-mode))
@@ -284,8 +306,8 @@
 
   )
 
-(use-package cider
-  :ensure t)
+;; (use-package cider
+;;   :ensure t)
 
 
 (use-package reftex
@@ -295,6 +317,7 @@
   (setq reftex-cite-prompt-optional-args t)) ;; Prompt for empty optional arguments in cite
 
 (use-package company-auctex
+  :defer t
   :ensure t
   :init (company-auctex-init))
 
@@ -336,25 +359,6 @@
   :ensure t
   :bind ( :map  LaTeX-mode-map
 		("C-\ l b" . ivy-bibtex)))
-
-(use-package smartparens
-  :hook prog-mode
-  :init
-  (bind-key "C-M-f" #'sp-forward-sexp smartparens-mode-map)
-  (bind-key "C-M-b" #'sp-backward-sexp smartparens-mode-map)
-  (bind-key "C-)" #'sp-forward-slurp-sexp smartparens-mode-map)
-  (bind-key "C-(" #'sp-backward-slurp-sexp smartparens-mode-map)
-  (bind-key "M-)" #'sp-forward-barf-sexp smartparens-mode-map)
-  (bind-key "M-(" #'sp-backward-barf-sexp smartparens-mode-map)
-  (bind-key "C-S-s" #'sp-splice-sexp)
-  (bind-key "C-M-<backspace>" #'backward-kill-sexp)
-  :config
-  (smartparens-global-mode t)
-  :config
-  (setq sp-show-pair-from-inside nil)
-  (require 'smartparens-config)
-  :diminish smartparens-mode
-  )
 
 
 (use-package treemacs

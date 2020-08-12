@@ -3,7 +3,7 @@
 ;;; Code:
 
 ;; Setting themes
-(require 'cl)
+;; (require 'cl)
 
 ;; Set default font
 (add-to-list 'default-frame-alist '(font . "Fira Code 13"))
@@ -51,6 +51,7 @@
   (doom-themes-org-config))
 
 (use-package rainbow-mode
+  :defer t
   :ensure t
   :config
   (add-hook 'prog-mode-hook #'rainbow-mode))
