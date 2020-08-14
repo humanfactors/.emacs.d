@@ -6,6 +6,10 @@
   :defer t
   :ensure org-plus-contrib
   :config
+  (require 'org-tempo)
+
+  (add-hook 'org-mode-hook 'auto-save-mode)
+
   (setf org-blank-before-new-entry '((heading . auto) (plain-list-item . nil)))
   (setq org-hierarchical-todo-statistics t)
   (setq org-bullets-mode nil)
@@ -20,20 +24,40 @@
   (custom-set-faces
    '(org-done ((t (:weight normal :strike-through t)))))
   (custom-set-faces
-   '(org-level-1 ((t (:inherit outline-1 :height 1.3))))
-   '(org-level-2 ((t (:inherit outline-2 :height 1.2))))
-   '(org-level-3 ((t (:inherit outline-3 :height 1.1))))
-   '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
-   '(org-level-5 ((t (:inherit outline-5 :height 1.0)))))
+   '(org-level-1 ((t (:inherit outline-1 :height 1.5 :weight bold))))
+   '(org-level-2 ((t (:inherit outline-2 :height 1.25))))
+   '(org-level-3 ((t (:inherit outline-3 :height 1.15))))
+   '(org-level-4 ((t (:inherit outline-4 :height 1.1 :slant italic))))
+   '(org-level-5 ((t (:inherit outline-5 :height 1.0 :slant italic))))
+   '(org-quote ((t (:inherit org-quote :background "#363848")))))
+
+  ;; Electric pair things for orgmode only
+  (electric-pair-mode 1)
+  (defvar org-electric-pairs '((?\* . ?\*) (?/ . ?/) (?= . ?=)
+			       (?\_ . ?\_) (?~ . ?~) (?+ . ?+)) "Electric pairs for org-mode.")
+  (defun org-add-electric-pairs ()
+    (setq-local electric-pair-pairs (append electric-pair-pairs org-electric-pairs))
+    (setq-local electric-pair-text-pairs electric-pair-pairs))
+  (add-hook 'org-mode-hook 'org-add-electric-pairs)
+
+  ;; This is it mate
   (setq org-directory "~/Dropbox/org/"
 	org-support-shift-select 1)
 
   (setq org-agenda-files (list "~/Dropbox/org/"
 			       "~/Dropbox/org/Committees/"))
 
-  (add-to-list 'org-structure-template-alist
-	       (list "ti" "#+TITLE: ?\n"))
 
+  (tempo-define-template "title"
+	       '("#+TITLE: ?\n" >)
+	       "<ti"
+	       "Insert a title")
+
+
+  (tempo-define-template "datetime"
+	       '("#+DATE: ?\n" >)
+	       "<date"
+	       "Insert a title")
 
   (setq-default org-display-custom-times t)
   (setq org-time-stamp-custom-formats '("<%a %b %e %Y>" . "<%a %b %e %Y %H:%M>"))
