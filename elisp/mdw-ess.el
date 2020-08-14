@@ -1,45 +1,6 @@
 ;; ESS (R and Julia) Configuration
 ;; Rstudio Style, Emacs Pain.
 
-(defun then_R_operator ()
-	"R - %>% operator or 'then' pipe operator"
-	(interactive)
-	(just-one-space 1)
-	(insert "%>%")
-	(reindent-then-newline-and-indent))
-
-(defun tide-insert-assign ()
-	"Insert an assignment <-"
-	(interactive)
-	(insert "<- "))
-
-;; Mark a word at a point ==============================================
-;; http://www.emacswiki.org/emacs/ess-edit.el
-(defun ess-edit-word-at-point ()
-	(save-excursion
-		(buffer-substring
-		 (+ (point) (skip-chars-backward "a-zA-Z0-9._"))
-		 (+ (point) (skip-chars-forward "a-zA-Z0-9._")))))
-
-(defun fm/r()
-	"start R with a reasonable layout."
-	(interactive)
-	;; Create new window right of the current one
-	;; Current window is 80 characters (columns) wide
-	(split-window-right 120)
-	;; Go to next window
-	(other-window 1)
-	;; Create new window below current one
-	(split-window-below)
-	;; Start R in current window
-	(R)
-	;; Go to previous window
-	(other-window -1)
-	;; never open any buffer in window with shell
-	(set-window-dedicated-p (nth 1 (window-list)) t))
-
-
-
 (use-package ess
   :ensure t
   :defer t
@@ -48,6 +9,45 @@
   (require 'ess-site)
   ;; (require 'ess-view)
   ;; (require 'ess-R-data-view)
+
+  (defun then_R_operator ()
+    "R - %>% operator or 'then' pipe operator"
+    (interactive)
+    (just-one-space 1)
+    (insert "%>%")
+    (reindent-then-newline-and-indent))
+
+  (defun tide-insert-assign ()
+    "Insert an assignment <-"
+    (interactive)
+    (insert "<- "))
+
+  ;; Mark a word at a point ==============================================
+  ;; http://www.emacswiki.org/emacs/ess-edit.el
+  (defun ess-edit-word-at-point ()
+    (save-excursion
+      (buffer-substring
+       (+ (point) (skip-chars-backward "a-zA-Z0-9._"))
+       (+ (point) (skip-chars-forward "a-zA-Z0-9._")))))
+
+  (defun fm/r()
+    "start R with a reasonable layout."
+    (interactive)
+    ;; Create new window right of the current one
+    ;; Current window is 80 characters (columns) wide
+    (split-window-right 120)
+    ;; Go to next window
+    (other-window 1)
+    ;; Create new window below current one
+    (split-window-below)
+    ;; Start R in current window
+    (R)
+    ;; Go to previous window
+    (other-window -1)
+    ;; never open any buffer in window with shell
+    (set-window-dedicated-p (nth 1 (window-list)) t))
+
+
   :config
   (defun ess-eval-word ()
     (interactive)
@@ -89,31 +89,33 @@
 
 (use-package ess-view
   :ensure t
+  :defer t
   :after ess)
 
 (use-package ess-R-data-view
+  :defer t
   :after ess)
 
 (defun aj/r-insert-chunk (header)
-	"Insert an r-chunk in markdown mode."
-	(interactive "sLabel: ")
-	(insert (concat "```{r " header "}\n\n```"))
-	(forward-line -1))
+  "Insert an r-chunk in markdown mode."
+  (interactive "sLabel: ")
+  (insert (concat "```{r " header "}\n\n```"))
+  (forward-line -1))
 
 (defun R-scratch ()
-	(interactive)
-	(progn
-		(delete-other-windows)
-		(setq new-buf (get-buffer-create "scratch.R"))
-		(switch-to-buffer new-buf)
-		(R-mode)
-		(setq w1 (selected-window))
-		(setq w1name (buffer-name))
-		(setq w2 (split-window w1 nil t))
-		(if (not (member "*R*" (mapcar (function buffer-name) (buffer-list))))
+  (interactive)
+  (progn
+    (delete-other-windows)
+    (setq new-buf (get-buffer-create "scratch.R"))
+    (switch-to-buffer new-buf)
+    (R-mode)
+    (setq w1 (selected-window))
+    (setq w1name (buffer-name))
+    (setq w2 (split-window w1 nil t))
+    (if (not (member "*R*" (mapcar (function buffer-name) (buffer-list))))
 	(R))
-		(set-window-buffer w2 "*R*")
-		(set-window-buffer w1 w1name)))
+    (set-window-buffer w2 "*R*")
+    (set-window-buffer w1 w1name)))
 
 (global-set-key (kbd "C-x 9") 'R-scratch)
 
