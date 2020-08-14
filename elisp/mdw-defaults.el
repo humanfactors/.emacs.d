@@ -32,6 +32,9 @@
 (setq-default cursor-type 'bar)
 (blink-cursor-mode 0)
 
+;; Why this doesn't focus, I have no idea
+(setq help-window-select t)
+
 ;; Fringes
 (fringe-mode '(25 . 0))
 
@@ -69,12 +72,22 @@
 (setq-default fill-column 120)
 (setq visual-fill-column-width 120)
 (auto-fill-mode 0)
-(electric-pair-mode 1)
 (setq word-wrap 1)
 
+
+(setq delete-by-moving-to-trash t)
+;; Electric Pair Mode
+(electric-pair-mode 1)
+;; Pasting
+(setq electric-pair-inhibit-predicate
+      (lambda (c)
+	(if (char-equal c ?\<) t (electric-pair-default-inhibit c))))
+
+
+
 ;; Copy Pasting
-(setq select-enable-primary t)
-(setq select-enable-clipboard t)
+;; (setq select-enable-primary t)
+;; (setq select-enable-clipboard t)
 (setq save-interprogram-paste-before-kill t)
 
 ;; Dired doens't need to be filled unless it's insanity
