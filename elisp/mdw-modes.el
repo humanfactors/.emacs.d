@@ -103,7 +103,7 @@
   :bind (("C-z" . undo-tree-undo)
 	("C-S-Z" . undo-tree-redo))
   :config
-  (global-undo-tree-mode))
+  (global-undo-tree-mode 1))
 
 (when-system windows-nt
   (progn(require 'w32-browser)))
@@ -124,6 +124,7 @@
 (use-package swiper
   :after ivy
   :bind (("C-s" . swiper)
+	 ("C-f" . swiper)
 	 ("C-r" . swiper)))
 
 ;; (use-package emojify
