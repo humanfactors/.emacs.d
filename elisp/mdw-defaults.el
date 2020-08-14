@@ -64,7 +64,7 @@
 (setq create-lockfiles nil)
 ;; (setq make-backup-files nil)
 
-;; Editing 
+;; Editing
 (setq fill-column 120)
 (setq-default fill-column 120)
 (setq visual-fill-column-width 120)
@@ -79,8 +79,8 @@
 
 ;; Dired doens't need to be filled unless it's insanity
 (add-hook 'dired-mode-hook
-          (lambda () 
-             (setq fill-column 140)))
+	  (lambda ()
+	     (setq fill-column 140)))
 
 
 (setq dired-dnd-protocol-alist nil) ; Dired disable drag n drop copy
@@ -127,9 +127,9 @@
 ;; initial window
 (setq initial-frame-alist
       '(
-        (width . 140) ; character
-        (height . 40) ; lines
-        ))
+	(width . 140) ; character
+	(height . 40) ; lines
+	))
 
 ;; Initial buffer
 ;; (setf initial-buffer-choice (lambda () (dired "~/Dropbox/org")))
@@ -138,4 +138,3 @@
 
 (provide 'mdw-defaults)
 ;;; mdw-defaults.el ends here
-

@@ -1,6 +1,6 @@
 ;; General mode configuation
 
-;; smart-parens
+
 
 (use-package evil
   :ensure t ;; install the evil package if not installed
@@ -16,7 +16,7 @@
   (setcdr evil-insert-state-map nil)
   (setq evil-insert-state-map (make-sparse-keymap))
   (setq evil-emacs-state-cursor '(bar)) ;; I want my bar back
-  
+
   ;; (setq evil-insert-state-map (make-sparse-keymap))
   ;; (define-key evil-emacs-state-map (kbd "<f12>") 'evil-normal-state)
 
@@ -29,17 +29,24 @@
   (defalias 'evil-insert-state 'evil-emacs-state)
   (evil-mode 1))
 
+;; smart-parens
+;; (use-package smartparens
+;;   :diminish smartparens-mode
+;;   ;; :config (require 'smartparens-config)
+;;   :config
+;;   (smartparens-global-mode 1)
+;;   (show-paren-mode t)
+;;   (require 'smartparens-config)
+;;   :init
+;;   (define-key smartparens-mode-map (kbd "M-C-(") 'sp-wrap-round)
+;;   (define-key smartparens-mode-map (kbd "M-C-[") 'sp-wrap-square)
+;;   (define-key smartparens-mode-map (kbd "M-C-{") 'sp-wrap-curly))
+;;   ;; :bind
+  ;; (:map
+  ;;  smartparens-mode-map
+  ;;  ;; ("M-<delete>" . sp-unwrap-sexp)
+  ;;  ("s-{" . sp-rewrap-sexp)))
 
-
-(use-package smartparens
-  :ensure t
-  :config
-  (smartparens-global-mode t)
-  (require 'smartparens-config)
-  (define-key smartparens-mode-map (kbd "M-C-(") 'sp-wrap-round)
-  (define-key smartparens-mode-map (kbd "M-C-[") 'sp-wrap-square)
-  (define-key smartparens-mode-map (kbd "M-C-{") 'sp-wrap-curly)
-  :diminish smartparens-mode)
   ;; (("C-M-f" . sp-forward-sexp)
   ;;  ("C-M-b" . sp-backward-sexp)
   ;;  ("C-M-n" . sp-up-sexp)
@@ -51,39 +58,58 @@
   ;;  ("M-r" . sp-splice-sexp-killing-around)
   ;;  ("C-M-t" . sp-transpose-sexp))
 
+
+(use-package smartparens
+  :defer t
+  :init
+  (bind-key "C-M-f" #'sp-forward-sexp smartparens-mode-map)
+  (bind-key "C-M-b" #'sp-backward-sexp smartparens-mode-map)
+  (bind-key "C-)" #'sp-forward-slurp-sexp smartparens-mode-map)
+  (bind-key "C-(" #'sp-backward-slurp-sexp smartparens-mode-map)
+  (bind-key "M-)" #'sp-forward-barf-sexp smartparens-mode-map)
+  (bind-key "M-(" #'sp-backward-barf-sexp smartparens-mode-map)
+  (bind-key "C-S-s" #'sp-splice-sexp)
+  (bind-key "C-M-<backspace>" #'backward-kill-sexp)
+  :config
+  (smartparens-global-mode t)
+  :config
+  (setq sp-show-pair-from-inside nil)
+  (require 'smartparens-config)
+  :diminish smartparens-mode)
+
+
+
 (use-package writeroom-mode
   :ensure t
   :defer t
   :config
   (with-eval-after-load 'writeroom-mode
-  (define-key writeroom-mode-map (kbd "C-M-<") #'writeroom-decrease-width)
-  (define-key writeroom-mode-map (kbd "C-M->") #'writeroom-increase-width)
-  (define-key writeroom-mode-map (kbd "C-M-=") #'writeroom-adjust-width))
+    (define-key writeroom-mode-map (kbd "C-M-<") #'writeroom-decrease-width)
+    (define-key writeroom-mode-map (kbd "C-M->") #'writeroom-increase-width)
+    (define-key writeroom-mode-map (kbd "C-M-=") #'writeroom-adjust-width))
   (setq writeroom-mode-line t)
   (setq writeroom-mode-line t)
-  :bind (
-	 ("<f7> w" . writeroom-mode)
-	 )
-  )
+  :bind (("<f7> w" . writeroom-mode)))
 
 ;; ag.el
 (use-package ag
   :ensure t
   :init
   (when-system windows-nt
-    (setq ag-executable "ag.exe"))
-  )
+    (setq ag-executable "ag.exe")))
 
 (use-package undo-tree
   :ensure t
   :bind (("C-z" . undo-tree-undo)
-        ("C-S-Z" . undo-tree-redo))
+	("C-S-Z" . undo-tree-redo))
   :config
   (global-undo-tree-mode))
 
-(require 'w32-browser)
+(when-system windows-nt
+  (progn(require 'w32-browser)))
 
-(use-package general)
+(use-package general
+  :ensure t)
 
 ;; Ace Window
 (use-package ace-window
@@ -98,20 +124,21 @@
 (use-package swiper
   :after ivy
   :bind (("C-s" . swiper)
-         ("C-r" . swiper)))
+	 ("C-r" . swiper)))
 
-(use-package emojify
-  :ensure t
-  :config
-  (setq emojify-emoji-styles "unicode")
-  (setq emojify-display-style "unicode")
-  (setq  emojify-prog-contexts "comments")
-  (add-hook 'after-init-hook #'global-emojify-mode))
+;; (use-package emojify
+;;   :defer t
+;;   :ensure t
+;;   :config
+;;   (setq emojify-emoji-styles "unicode")
+;;   (setq emojify-display-style "unicode")
+;;   (setq  emojify-prog-contexts "comments")
+;;   (add-hook 'after-init-hook #'global-emojify-mode))
 
 (use-package ivy
   :diminish
   :bind (("C-c C-r" . ivy-resume)
-         ("C-x B" . ivy-switch-buffer-other-window))
+	 ("C-x B" . ivy-switch-buffer-other-window))
   :custom
   (ivy-count-format "(%d/%d) ")
   (ivy-use-virtual-buffers t)
@@ -153,14 +180,15 @@
   (which-key-mode 1))
 
 (use-package company
+  :defer t
   :ensure t
   :init
   (add-hook 'after-init-hook 'global-company-mode)
   :config
     (setq company-idle-delay              0.3
-          company-minimum-prefix-length   3
-          company-show-numbers            t
-          company-dabbrev-downcase        nil))
+	  company-minimum-prefix-length   3
+	  company-show-numbers            t
+	  company-dabbrev-downcase        nil))
 
 
 (use-package projectile
@@ -213,50 +241,7 @@
 	(setq projectile-find-dir-includes-top-level t)
 	(setq counsel-projectile-find-dir-includes-top-level t)
 	(counsel-projectile-mode +1)
-	(setq ivy-read-action-format-function 'ivy-read-action-format-columns)
-)
-
-
-(use-package ess-r-mode
-  :ensure ess
-  :defer t
-  :preface
-  (defun then_R_operator ()
-    "R - %>% operator or 'then' pipe operator"
-    (interactive)
-    (just-one-space 1)
-    (insert "%>%")
-    (reindent-then-newline-and-indent))
-  (defun tide-insert-assign ()
-    "Insert an assignment <-"
-    (interactive)
-    (insert "<- "))
-  ;; Mark a word at a point ==============================================
-  ;; http://www.emacswiki.org/emacs/ess-edit.el
-  (defun ess-edit-word-at-point ()
-    (save-excursion
-      (buffer-substring
-      (+ (point) (skip-chars-backward "a-zA-Z0-9._"))
-      (+ (point) (skip-chars-forward "a-zA-Z0-9._")))))
-
-  (defun ess-eval-word ()
-    (interactive)
-    (let ((x (ess-edit-word-at-point)))
-      (ess-eval-linewise (concat x))))
-  :init
-  (setq ess-tab-complete-in-script t)
-  (setq ess-indent-with-fancy-comments nil)
-  (setq ess-disable-underscore-assign t)
-  (setq ess-smart-S-assign-key nil)
-  (setq ess-eval-visibly 'nowait)
-  (setq ess-indent-level 2)
-  (setq tab-width 2)
-  (setq ess-fancy-comments nil)
-  :config
-  (define-key ess-r-mode-map  (kbd "C-c r") 'ess-eval-word)
-  (define-key ess-r-mode-map  (kbd "C-S-M") 'then_R_operator)
-  (define-key ess-r-mode-map  (kbd "C-'") 'tide-insert-assign))
-
+	(setq ivy-read-action-format-function 'ivy-read-action-format-columns))
 
 ;; Markdown
 (use-package markdown-mode
@@ -270,35 +255,48 @@
   (setq markdown-list-indent-width 4)
   (add-to-list 'auto-mode-alist '("\\.Rmd\\'" . markdown-mode))
   (add-to-list 'auto-mode-alist '("\\.rmd\\'" . markdown-mode))
+  :custom-face
+  (markdown-code-face ((t nil)))
   :config
   ;; Fix inline codeblocks being split in markdown mode in Rmarkdown documents when filling
   (add-hook 'fill-nobreak-predicate
-            #'markdown-inline-code-at-point-p))
+	    #'markdown-inline-code-at-point-p))
 
 (use-package visual-fill-column
   :ensure t
-  :config
+  :init
   (add-hook 'visual-line-mode-hook #'visual-fill-column-mode)
   (global-visual-line-mode 1))
 
 
 (use-package deft
   :ensure t
+  :commands deft
   :defer t
-  :config
+  :init
   (setq deft-extensions '("org" "md" "tex" "txt"))
   (setq deft-use-filter-string-for-filename t)
   (setq deft-use-filename-as-title t)
   (setq deft-org-mode-title-prefix t)
   (setq deft-directory "~/Dropbox/Notes")
   (setq deft-text-mode 'org-mode)
-  (define-key deft-mode-map (kbd "C-c C-m") 'deft-new-file-named))
+  :bind (:map deft-mode-map ("C-c C-m" . deft-new-file-named)))
+
+
+(use-package smart-hungry-delete
+  :ensure t
+  :bind (("<backspace>" . smart-hungry-delete-backward-char)
+		 ("C-d" . smart-hungry-delete-forward-char))
+  :defer nil ;; dont defer so we can add our functions to hooks
+  :config (smart-hungry-delete-add-default-hooks)
+  )
 
 
 (use-package clojure-mode
+  :defer t
   :ensure t
   :mode (("\\.clj\\'" . clojure-mode)
-         ("\\.edn\\'" . clojure-mode))
+	 ("\\.edn\\'" . clojure-mode))
   ;; :init
   ;; (add-hook 'clojure-mode-hook #'yas-minor-mode)
   ;; (add-hook 'clojure-mode-hook #'linum-mode)
@@ -308,8 +306,8 @@
 
   )
 
-(use-package cider
-  :ensure t)
+;; (use-package cider
+;;   :ensure t)
 
 
 (use-package reftex
@@ -319,8 +317,13 @@
   (setq reftex-cite-prompt-optional-args t)) ;; Prompt for empty optional arguments in cite
 
 (use-package company-auctex
+  :defer t
   :ensure t
   :init (company-auctex-init))
+
+(use-package company-bibtex
+  :commands company-bibtex
+  :config (add-to-list 'company-backends #'company-bibtex))
 
 (use-package auctex-latexmk
   :ensure t
@@ -331,6 +334,7 @@
 
 (use-package tex
   :ensure auctex
+  ;; :commands TeX-latex-mode
   :mode ("\\.tex\\'" . latex-mode)
   :config (progn
 	    (setq TeX-source-correlate-mode t)
@@ -356,27 +360,10 @@
   :bind ( :map  LaTeX-mode-map
 		("C-\ l b" . ivy-bibtex)))
 
-(use-package smartparens
-  :init
-  (bind-key "C-M-f" #'sp-forward-sexp smartparens-mode-map)
-  (bind-key "C-M-b" #'sp-backward-sexp smartparens-mode-map)
-  (bind-key "C-)" #'sp-forward-slurp-sexp smartparens-mode-map)
-  (bind-key "C-(" #'sp-backward-slurp-sexp smartparens-mode-map)
-  (bind-key "M-)" #'sp-forward-barf-sexp smartparens-mode-map)
-  (bind-key "M-(" #'sp-backward-barf-sexp smartparens-mode-map)
-  (bind-key "C-S-s" #'sp-splice-sexp)
-  (bind-key "C-M-<backspace>" #'backward-kill-sexp)
-  :config
-  (smartparens-global-mode t)
-  :config
-  (setq sp-show-pair-from-inside nil)
-  (require 'smartparens-config)
-  :diminish smartparens-mode
-  )
-
 
 (use-package treemacs
   :ensure t
+  :hook dired
   :defer t
   :init
   (with-eval-after-load 'winum
@@ -384,71 +371,76 @@
   :config
   (progn
     (setq treemacs-collapse-dirs                 (if treemacs-python-executable 3 0)
-          treemacs-deferred-git-apply-delay      0.5
-          treemacs-directory-name-transformer    #'identity
-          treemacs-display-in-side-window        t
-          treemacs-eldoc-display                 t
-          treemacs-file-event-delay              5000
-          treemacs-file-extension-regex          treemacs-last-period-regex-value
-          treemacs-file-follow-delay             0.2
-          treemacs-file-name-transformer         #'identity
-          treemacs-follow-after-init             t
-          treemacs-git-command-pipe              ""
-          treemacs-goto-tag-strategy             'refetch-index
-          treemacs-indentation                   2
-          treemacs-indentation-string            " "
-          treemacs-is-never-other-window         nil
-          treemacs-max-git-entries               5000
-          treemacs-missing-project-action        'ask
-          treemacs-move-forward-on-expand        nil
-          treemacs-no-png-images                 nil
-          treemacs-no-delete-other-windows       t
-          treemacs-project-follow-cleanup        nil
-          treemacs-persist-file                  (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
-          treemacs-position                      'left
-          treemacs-recenter-distance             0.1
-          treemacs-recenter-after-file-follow    nil
-          treemacs-recenter-after-tag-follow     nil
-          treemacs-recenter-after-project-jump   'always
-          treemacs-recenter-after-project-expand 'on-distance
-          treemacs-show-cursor                   nil
-          treemacs-show-hidden-files             t
-          treemacs-silent-filewatch              nil
-          treemacs-silent-refresh                nil
-          treemacs-sorting                       'alphabetic-asc
-          treemacs-space-between-root-nodes      t
-          treemacs-tag-follow-cleanup            t
-          treemacs-tag-follow-delay              1.5
-          treemacs-user-mode-line-format         nil
-          treemacs-user-header-line-format       nil
-          treemacs-width                         35)
+	  treemacs-deferred-git-apply-delay      0.5
+	  treemacs-directory-name-transformer    #'identity
+	  treemacs-display-in-side-window        t
+	  treemacs-eldoc-display                 t
+	  treemacs-file-event-delay              5000
+	  treemacs-file-extension-regex          treemacs-last-period-regex-value
+	  treemacs-file-follow-delay             0.2
+	  treemacs-file-name-transformer         #'identity
+	  treemacs-follow-after-init             t
+	  treemacs-git-command-pipe              ""
+	  treemacs-goto-tag-strategy             'refetch-index
+	  treemacs-indentation                   2
+	  treemacs-indentation-string            " "
+	  treemacs-is-never-other-window         nil
+	  treemacs-max-git-entries               5000
+	  treemacs-missing-project-action        'ask
+	  treemacs-move-forward-on-expand        nil
+	  treemacs-no-png-images                 nil
+	  treemacs-no-delete-other-windows       t
+	  treemacs-project-follow-cleanup        nil
+	  treemacs-persist-file                  (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
+	  treemacs-position                      'left
+	  treemacs-recenter-distance             0.1
+	  treemacs-recenter-after-file-follow    nil
+	  treemacs-recenter-after-tag-follow     nil
+	  treemacs-recenter-after-project-jump   'always
+	  treemacs-recenter-after-project-expand 'on-distance
+	  treemacs-show-cursor                   nil
+	  treemacs-show-hidden-files             t
+	  treemacs-silent-filewatch              nil
+	  treemacs-silent-refresh                nil
+	  treemacs-sorting                       'alphabetic-asc
+	  treemacs-space-between-root-nodes      t
+	  treemacs-tag-follow-cleanup            t
+	  treemacs-tag-follow-delay              1.5
+	  treemacs-user-mode-line-format         nil
+	  treemacs-user-header-line-format       nil
+	  treemacs-width                         35)
 
     ;; The default width and height of the icons is 22 pixels. If you are
     ;; using a Hi-DPI display, uncomment this to double the icon size.
     ;;(treemacs-resize-icons 44)
 
 
-    (when-system windows-nt (setq treemacs-python-executable "C:\\Users\\micha\\AppData\\Local\\Programs\\Python\\Python38"))
+    (when-system windows-nt (setq treemacs-python-executable (treemacs--find-python3)))
+
+    ;; "python.exe"
 
     (treemacs-follow-mode t)
     (treemacs-filewatch-mode t)
     (treemacs-fringe-indicator-mode t)
     (pcase (cons (not (null (executable-find "git")))
-                 (not (null treemacs-python-executable)))
+		 (NOT (null treemacs-python-executable)))
       (`(t . t)
        (treemacs-git-mode 'deferred))
       (`(t . _)
        (treemacs-git-mode 'simple))))
   :bind
+  (:map treemacs-mode-map
+	("D" . treemacs-delete)
+	("d" . nil))
   (:map global-map
-        ("<f8>" . 'treemacs)
-        ("C-\ t" . 'treemacs)
-        ("M-0"       . treemacs-select-window)
-        ("C-x t 1"   . treemacs-delete-other-windows)
-        ("C-x t t"   . treemacs)
-        ("C-x t B"   . treemacs-bookmark)
-        ("C-x t C-t" . treemacs-find-file)
-        ("C-x t M-t" . treemacs-find-tag)))
+	("<f8>" . 'treemacs)
+	("C-\ t" . 'treemacs)
+	("M-0"       . treemacs-select-window)
+	("C-x t 1"   . treemacs-delete-other-windows)
+	("C-x t t"   . treemacs)
+	("C-x t B"   . treemacs-bookmark)
+	("C-x t C-t" . treemacs-find-file)
+	("C-x t M-t" . treemacs-find-tag)))
 
 (use-package treemacs-evil
   :after treemacs evil
@@ -494,12 +486,27 @@
 (use-package org-ref
   :ensure t
   :after (biblio)
-  :init
+  :commands (org-ref-bibtex-next-entry
+	     org-ref-bibtex-previous-entry
+	     org-ref-open-in-browser
+	     org-ref-open-bibtex-notes
+	     org-ref-open-bibtex-pdf
+	     org-ref-bibtex-hydra/body
+	     org-ref-bibtex-hydra/org-ref-bibtex-new-entry/body-and-exit
+	     org-ref-sort-bibtex-entry
+	     arxiv-add-bibtex-entry
+	     arxiv-get-pdf-add-bibtex-entry
+	     doi-utils-add-bibtex-entry-from-doi
+	     isbn-to-bibtex
+	     pubmed-insert-bibtex-from-pmid)
+  :config
   (add-hook 'bibtex-mode-hook '(require 'org-ref-bibtex)))
 
 (use-package avy
   :config
   (general-define-key "C-'" 'avy-goto-word-1)
   (general-define-key "C-;" 'avy-goto-char))
+
+(use-package xahk-mode)
 
 (provide 'mdw-modes)

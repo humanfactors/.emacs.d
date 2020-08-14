@@ -28,10 +28,12 @@
 (add-to-list 'load-path "~/.emacs.d/elisp/deps")
 
 ;; The Mdubziverse
-(require 'mdw-packages)
-(require 'mdw-defaults)
+(message "Loading Config")
+(require 'mdw-packages)  ; Kind of redundant with use-package... So should fix this
+(require 'mdw-defaults)	 ; In theory this should work on almost any emacs config
+(require 'mdw-vibes)	 ; Appearance and fonts.. Ya know, vibes?
 (require 'mdw-utilities) ; Always ensure utilities loads before keybinds
-(require 'mdw-modes) ; Always ensure modes loads before keybinds
-(require 'mdw-keybinds)
-(require 'mdw-vibes)
-(require 'mdw-org)
+(require 'mdw-modes)	 ; Always ensure modes loads before keybinds
+(require 'mdw-ess)	 ; R etc
+(require 'mdw-org)	 ; Orgmode customisations
+(require 'mdw-keybinds)	 ; Customisations that aren't in use-package definitions
