@@ -10,6 +10,16 @@
 (global-set-key (kbd "C-x k") 'kill-this-buffer)
 (global-set-key (kbd "M-D") 'duplicate-thing)
 
+
+;; Yanks and shit
+(defun yank-pop-forwards (arg)
+  (interactive "p")
+  (yank-pop (- arg)))
+
+(global-set-key (kbd "M-S-Y") 'yank-pop-forwards) ; M-Y (Meta-Shift-Y)
+(global-set-key (kbd "C-S-V") 'yank-pop-forwards)
+(global-set-key (kbd "C-v") 'yank)
+
 ;; I hate the emacs backward and forward delte defaults
 (global-set-key (kbd "C-<backspace>") 'ryanmarcus/backward-kill-word)
 (global-set-key (kbd "M-<backspace>") 'backward-kill-word)
@@ -18,11 +28,6 @@
 ;; & deletes one. This sets backspace to delete 1 character instead of 1 column.
 (global-set-key (kbd "DEL") 'backward-delete-char)
 
-
-(defun yank-pop-forwards (arg)
-  (interactive "p")
-  (yank-pop (- arg)))
-(global-set-key "\M-Y" 'yank-pop-forwards) ; M-Y (Meta-Shift-Y)
 
 ;; Buffer Nav
 (global-set-key (kbd "M-<prior>") `previous-buffer)
@@ -57,14 +62,14 @@
   (let ((func (intern (concat "openfile-" filename))))
     `(progn
        (defun ,func ()
-         (interactive) (find-file ,dir))
+	 (interactive) (find-file ,dir))
        (global-set-key (kbd ,keybind) ',func))))
 
 (defmacro mdw/define-openfile-funconly (filename dir)
   (let ((func (intern (concat "openfile-" filename))))
     `(progn
        (defun ,func ()
-         (interactive) (find-file ,dir)))))
+	 (interactive) (find-file ,dir)))))
 
 (defmacro me/define-openfile-funconly (filename dir)
   (let ((func (intern (concat "openfile-" filename))))
@@ -73,9 +78,9 @@
 (defmacro me/define-openfiles (files)
   `(progn
      ,@(mapcar (lambda (item)
-                 `(me/define-openfile-funconly ,(car item) ,(cadr item)))
-               files)))
-               
+		 `(me/define-openfile-funconly ,(car item) ,(cadr item)))
+	       files)))
+
 (if (string= (system-name) "NOTHINGUNDONE")
     (progn
       (me/define-openfiles
@@ -177,18 +182,18 @@
 ;;   ("j" windmove-down nil)
 ;;   ("k" windmove-up nil)
 ;;   ("l" windmove-right nil)
-  
+
 ;;   ("left" windmove-left nil)
 ;;   ("down" windmove-down nil)
 ;;   ("up" windmove-up nil)
 ;;   ("right" windmove-right nil)
-  
-  
+
+
 ;;   ("H" hydra-move-splitter-left nil)
 ;;   ("J" hydra-move-splitter-down nil)
 ;;   ("K" hydra-move-splitter-up nil)
 ;;   ("L" hydra-move-splitter-right nil)
-  
+
 ;;   ("|" (lambda ()
 ;;          (interactive)
 ;;          (split-window-right)
@@ -213,4 +218,3 @@
 
 (provide 'mdw-keybinds)
 ;;; mdw-keybinds.el ends here
-
