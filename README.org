@@ -25,3 +25,7 @@ I don't have a vim insert state.
 [[file:docs/preview.png]]
 #+ATTR_HTML: :alt When I need to shut up and fucking write something (example here only).
 [[file:docs/writing-preview.png]]
+
+* Notes to Self
+
+- =C-u M-^= - delete-indentation and pull up
