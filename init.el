@@ -36,4 +36,5 @@
 (require 'mdw-modes)	 ; Always ensure modes loads before keybinds
 (require 'mdw-ess)	 ; R etc
 (require 'mdw-org)	 ; Orgmode customisations
+(require 'mdw-spacemacs) ; Spacemacs ganking
 (require 'mdw-keybinds)	 ; Customisations that aren't in use-package definitions
