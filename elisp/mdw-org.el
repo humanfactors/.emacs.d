@@ -31,14 +31,14 @@
 		    '(org-quote ((t (:inherit org-quote :background "#363848")))))
 
   ;; Electric pair things for orgmode only
-  (electric-pair-mode 1)
-  (defvar org-electric-pairs '((?\* . ?\*) (?/ . ?/) (?= . ?=) (?\_ . ?\_) (?~ . ?~) (?+ . ?+))
-    "Electric pairs for org-mode.")
+  ;; (electric-pair-mode 1)
+  ;; (defvar org-electric-pairs '((?\* . ?\*) (?/ . ?/) (?= . ?=) (?\_ . ?\_) (?~ . ?~) (?+ . ?+))
+  ;;   "Electric pairs for org-mode.")
 
-  (defun org-add-electric-pairs ()
-    (setq-local electric-pair-pairs (append electric-pair-pairs org-electric-pairs))
-    (setq-local electric-pair-text-pairs electric-pair-pairs))
-  (add-hook 'org-mode-hook 'org-add-electric-pairs)
+  ;; (defun org-add-electric-pairs ()
+  ;;   (setq-local electric-pair-pairs (append electric-pair-pairs org-electric-pairs))
+  ;;   (setq-local electric-pair-text-pairs electric-pair-pairs))
+  ;; (add-hook 'org-mode-hook 'org-add-electric-pairs)
 
   ;; This is it mate
   (setq org-directory "~/Dropbox/org/"
