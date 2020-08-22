@@ -24,3 +24,4 @@ transient/history.el
 emojis
 *.ttf
 bookmarks
+image-dired/.image-dired_db
