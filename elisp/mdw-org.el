@@ -33,7 +33,7 @@
   ;; Electric pair things for orgmode only
   ;; (electric-pair-mode 1)
   ;; (defvar org-electric-pairs '((?\* . ?\*) (?/ . ?/) (?= . ?=) (?\_ . ?\_) (?~ . ?~) (?+ . ?+))
-    ;; "Electric pairs for org-mode.")
+  ;;   "Electric pairs for org-mode.")
 
   ;; (defun org-add-electric-pairs ()
   ;;   (setq-local electric-pair-pairs (append electric-pair-pairs org-electric-pairs))
