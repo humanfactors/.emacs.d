@@ -101,7 +101,7 @@
    "C-c i" (mdw|org-emphasize mdw/org-italic ?/)
    "C-c l" (mdw|org-emphasize mdw/org-literal ?=)
    "<f7> b" 'mdw/org-indir-buffer-open-full
-   "<f7> o" 'org-tree-to-indirect-buffer)
+   "<f7> o" 'org-tree-to-indirect-buffer))
 
   ;; '(org-headline-done
 ;;            ((((class color) (min-colors 16) (background dark))
