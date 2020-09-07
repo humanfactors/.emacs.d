@@ -35,7 +35,8 @@
   (beacon-mode 1)
   (setq beacon-color "#50fa7b"
 	beacon-lighter ""
-	beacon-blink-duration 0.3))
+	beacon-blink-duration 0.2
+	beacon-size 18))
 
 (use-package doom-themes
   :config
