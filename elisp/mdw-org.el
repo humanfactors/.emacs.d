@@ -87,13 +87,23 @@
   (mdw|org-emphasize mdw/org-underline ?_)
   (mdw|org-emphasize mdw/org-strike-through ?+)
 
+  (defun mdw/org-indir-buffer-open-full ()
+    (interactive)
+    (progn
+      (org-tree-to-indirect-buffer)
+      (other-window 1)
+      (delete-other-windows)))
+
   (general-define-key
    :keymaps 'org-mode-map
    "C-c b" (mdw|org-emphasize mdw/org-bold ?*)
    "C-c `" (mdw|org-emphasize mdw/org-code ?~)
    "C-c i" (mdw|org-emphasize mdw/org-italic ?/)
-   "C-c l" (mdw|org-emphasize mdw/org-literal ?=)))
-;; '(org-headline-done
+   "C-c l" (mdw|org-emphasize mdw/org-literal ?=)
+   "<f7> b" 'mdw/org-indir-buffer-open-full
+   "<f7> o" 'org-tree-to-indirect-buffer)
+
+  ;; '(org-headline-done
 ;;            ((((class color) (min-colors 16) (background dark))
 ;;               (:foreground "LightSalmon" :strike-through t)))))
 
