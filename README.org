@@ -6,7 +6,7 @@ This is an personal, customised and quite unoptimised config ― but it's mine.
 
 Emacs drives me crazy a lot of the time and I'm not really a huge fan of Emacs lisp. However, it's really hard to get out of my life (and I don't want to). My =.emacs.d= is heavily inspired by Spacemacs and is built mainly around Windows & Linux. It's made for scentific use, and aims to be: quick, minimal, logical, and maintainable.
 
-Honestly, I really just use this for taking notes, orgmode, and LaTex.
+Honestly, I really just use this for orgmode, R, LaTex... and Emacs.
 
 This configuration is opionated, but actually pretty close to defaults. Things move rapidly on master. It's not built for others to directly use.
 
