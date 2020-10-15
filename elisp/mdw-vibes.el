@@ -7,10 +7,9 @@
 
 ;; Set default font
 (add-to-list 'default-frame-alist '(font . "Iosevka Slab"))
-;; (add-to-list 'default-frame-alist '(font . "Roboto Mono for Powerline"))
+;; (add-to-list 'default-frame-alist '(font . "RobotoMono NF"))
 
 (set-face-attribute 'default nil
-		    ;; :family "Roboto Mono for Powerline"
 		    :family "Iosevka Slab"
 		    :height 135
 		    :weight 'normal
