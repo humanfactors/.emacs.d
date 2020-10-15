@@ -25,3 +25,4 @@ emojis
 *.ttf
 bookmarks
 image-dired/.image-dired_db
+.emacs.desktop
