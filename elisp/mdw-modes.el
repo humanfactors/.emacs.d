@@ -237,11 +237,12 @@
 	(setq projectile-sort-order 'recentf)
 	(setq projectile-indexing-method 'hybrid)
 	(setq projectile-enable-caching t)
+	(setq projectile-find-dir-includes-top-level t)
 	(setq projectile-completion-system 'ivy)
 	(setq projectile-switch-project-action #'projectile-find-dir)
 	(setq projectile-find-dir-includes-top-level t)
-	(setq counsel-projectile-find-dir-includes-top-level t)
 	(counsel-projectile-mode +1)
+	(setq counsel-projectile-find-dir-includes-top-level t)
 	(setq ivy-read-action-format-function 'ivy-read-action-format-columns))
 
 ;; Markdown
