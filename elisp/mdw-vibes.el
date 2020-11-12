@@ -15,6 +15,8 @@
 		    :weight 'normal
 		    :width 'normal)
 
+(fringe-mode 8)
+
 (add-hook 'before-save-hook 'whitespace-cleanup)
 (setq inhibit-compacting-font-caches t)
 (setq find-file-visit-truename t)
