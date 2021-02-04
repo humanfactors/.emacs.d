@@ -29,3 +29,4 @@ I don't have a vim insert state.
 * Notes to Self
 
 - =C-u M-^= - delete-indentation and pull up
+=(global-set-key (kbd "C-c C-\\") 'xah-shrink-whitespaces)=
