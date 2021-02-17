@@ -9,6 +9,8 @@
 (add-to-list 'default-frame-alist '(font . "Iosevka Slab"))
 ;; (add-to-list 'default-frame-alist '(font . "RobotoMono NF"))
 
+(display-battery-mode 1)
+
 (set-face-attribute 'default nil
 		    :family "Iosevka Slab"
 		    :height 135
