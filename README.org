@@ -1,8 +1,8 @@
 #+TITLE: Michael David's =.emacs.d=
 
-#+html: <img align="right" src="docs/resize.png?raw=true" alt="Logo" width="300"/> 
+#+html: <img align="right" src="docs/resize.png?raw=true" alt="Logo" width="300"/>
 
-This is an personal, customised and quite unoptimised config ― but it's mine. 
+This is an personal, customised and quite unoptimised config ― but it's mine.
 
 Emacs drives me crazy a lot of the time and I'm not really a huge fan of Emacs lisp. However, it's really hard to get out of my life (and I don't want to). My =.emacs.d= is heavily inspired by Spacemacs and is built mainly around Windows & Linux. It's made for scentific use, and aims to be: quick, minimal, logical, and maintainable.
 
@@ -29,4 +29,10 @@ I don't have a vim insert state.
 * Notes to Self
 
 - =C-u M-^= - delete-indentation and pull up
-=(global-set-key (kbd "C-c C-\\") 'xah-shrink-whitespaces)=
+- =(global-set-key (kbd "C-c C-\\") 'xah-shrink-whitespaces)=
+
+#+begin_src emacs-lisp
+(use-package expand-region
+  :bind (("M-[" . er/expand-region)
+         ("C-(" . er/mark-outside-pairs)))
+#+end_src

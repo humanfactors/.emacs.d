@@ -101,7 +101,7 @@
 (use-package undo-tree
   :ensure t
   :bind (("C-z" . undo-tree-undo)
-	("C-S-Z" . undo-tree-redo))
+    ("C-S-Z" . undo-tree-redo))
   :config
   (global-undo-tree-mode 1))
 
@@ -124,8 +124,8 @@
 (use-package swiper
   :after ivy
   :bind (("C-s" . swiper)
-	 ("C-f" . swiper)
-	 ("C-r" . swiper)))
+     ("C-f" . swiper)
+     ("C-r" . swiper)))
 
 ;; (use-package emojify
 ;;   :defer t
@@ -139,7 +139,7 @@
 (use-package ivy
   :diminish
   :bind (("C-c C-r" . ivy-resume)
-	 ("C-x B" . ivy-switch-buffer-other-window))
+     ("C-x B" . ivy-switch-buffer-other-window))
   :custom
   (ivy-count-format "(%d/%d) ")
   (ivy-use-virtual-buffers t)
@@ -153,6 +153,7 @@
   (setq ivy-initial-inputs-alist nil)
   (global-set-key (kbd "M-x") 'counsel-M-x)
   (define-key ivy-minibuffer-map (kbd "M-y") 'ivy-next-line)
+  (setq enable-recursive-minibuffers t)
   (ivy-mode))
 
 (use-package counsel
@@ -187,63 +188,63 @@
   (add-hook 'after-init-hook 'global-company-mode)
   :config
     (setq company-idle-delay              0.3
-	  company-minimum-prefix-length   3
-	  company-show-numbers            t
-	  company-dabbrev-downcase        nil))
+      company-minimum-prefix-length   3
+      company-show-numbers            t
+      company-dabbrev-downcase        nil))
 
 
 (use-package projectile
-	:preface
-	(defun ivy-read-action-format-columns (actions)
-	  "Create a docstring from ACTIONS, using several columns if needed to preserve `ivy-height'.
+    :preface
+    (defun ivy-read-action-format-columns (actions)
+      "Create a docstring from ACTIONS, using several columns if needed to preserve `ivy-height'.
 
-	ACTIONS is a list.  Each list item is a list of 3 items: key (a string), cmd and doc (a string)."
-	(let ((length (length actions))
-		(i 0)
-		(max-rows (- ivy-height 1))
-		rows cols col lwidth rwidth)
-		(while (< i length)
-		(setq col (cl-subseq actions i (min length (cl-incf i max-rows))))
-		(setq lwidth (apply 'max (mapcar (lambda (x)
-						(length (nth 0 x)))
-						col)))
-		(setq rwidth (apply 'max (mapcar (lambda (x)
-						(length (nth 2 x)))
-						col)))
-		(setq col (mapcar (lambda (x)
-				(format (format "%%%ds: %%-%ds" lwidth rwidth)
-					(propertize (car x) 'face 'ivy-action)
-					(nth 2 x)))
-				col))
-		(cond
-		((null rows)
-		(setq rows (length col)))
-		((< (length col) rows)
-		(setq col (append col (make-list (- rows (length col)) "")))))
-		(push col cols))
-		(format "%s\n%s\n"
-				(if (eq this-command 'ivy-read-action)
-			"Select action: "
-				(ivy-state-current ivy-last))
-			(mapconcat 'identity
-				(apply 'cl-mapcar
-					(lambda (&rest args)
-					(mapconcat 'identity args " | "))
-					(nreverse cols))
-				"\n"))))
-	:config
-	(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-	(setq projectile-project-search-path '("~/Code"))
-	(setq projectile-sort-order 'recentf)
-	(setq projectile-indexing-method 'hybrid)
-	(setq projectile-enable-caching t)
-	(setq projectile-find-dir-includes-top-level t)
-	(setq projectile-completion-system 'ivy)
-	(setq projectile-switch-project-action #'projectile-find-dir)
-	(setq projectile-find-dir-includes-top-level t)
-	(counsel-projectile-mode +1)
-	(setq counsel-projectile-find-dir-includes-top-level t)
-	(setq ivy-read-action-format-function 'ivy-read-action-format-columns))
+    ACTIONS is a list.  Each list item is a list of 3 items: key (a string), cmd and doc (a string)."
+    (let ((length (length actions))
+        (i 0)
+        (max-rows (- ivy-height 1))
+        rows cols col lwidth rwidth)
+        (while (< i length)
+        (setq col (cl-subseq actions i (min length (cl-incf i max-rows))))
+        (setq lwidth (apply 'max (mapcar (lambda (x)
+                        (length (nth 0 x)))
+                        col)))
+        (setq rwidth (apply 'max (mapcar (lambda (x)
+                        (length (nth 2 x)))
+                        col)))
+        (setq col (mapcar (lambda (x)
+                (format (format "%%%ds: %%-%ds" lwidth rwidth)
+                    (propertize (car x) 'face 'ivy-action)
+                    (nth 2 x)))
+                col))
+        (cond
+        ((null rows)
+        (setq rows (length col)))
+        ((< (length col) rows)
+        (setq col (append col (make-list (- rows (length col)) "")))))
+        (push col cols))
+        (format "%s\n%s\n"
+                (if (eq this-command 'ivy-read-action)
+            "Select action: "
+                (ivy-state-current ivy-last))
+            (mapconcat 'identity
+                (apply 'cl-mapcar
+                    (lambda (&rest args)
+                    (mapconcat 'identity args " | "))
+                    (nreverse cols))
+                "\n"))))
+    :config
+    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+    (setq projectile-project-search-path '("~/Code"))
+    (setq projectile-sort-order 'recentf)
+    (setq projectile-indexing-method 'hybrid)
+    (setq projectile-enable-caching t)
+    (setq projectile-find-dir-includes-top-level t)
+    (setq projectile-completion-system 'ivy)
+    (setq projectile-switch-project-action #'projectile-find-dir)
+    (setq projectile-find-dir-includes-top-level t)
+    (counsel-projectile-mode +1)
+    (setq counsel-projectile-find-dir-includes-top-level t)
+    (setq ivy-read-action-format-function 'ivy-read-action-format-columns))
 
 ;; Markdown
 (use-package markdown-mode
@@ -262,7 +263,7 @@
   :config
   ;; Fix inline codeblocks being split in markdown mode in Rmarkdown documents when filling
   (add-hook 'fill-nobreak-predicate
-	    #'markdown-inline-code-at-point-p))
+        #'markdown-inline-code-at-point-p))
 
 (use-package visual-fill-column
   :ensure t
@@ -282,13 +283,14 @@
   (setq deft-org-mode-title-prefix t)
   (setq deft-directory "~/Dropbox/Notes")
   (setq deft-text-mode 'org-mode)
-  :bind (:map deft-mode-map ("C-c C-m" . deft-new-file-named)))
-
+  :bind (:map deft-mode-map
+          ("C-c C-m" . deft-new-file-named)
+          ("<backspace>" . deft-filter-decrement)))
 
 (use-package smart-hungry-delete
   :ensure t
   :bind (("<backspace>" . smart-hungry-delete-backward-char)
-		 ("C-d" . smart-hungry-delete-forward-char))
+         ("C-d" . smart-hungry-delete-forward-char))
   :defer nil ;; dont defer so we can add our functions to hooks
   :config (smart-hungry-delete-add-default-hooks)
   )
@@ -298,7 +300,7 @@
   :defer t
   :ensure t
   :mode (("\\.clj\\'" . clojure-mode)
-	 ("\\.edn\\'" . clojure-mode))
+     ("\\.edn\\'" . clojure-mode))
   ;; :init
   ;; (add-hook 'clojure-mode-hook #'yas-minor-mode)
   ;; (add-hook 'clojure-mode-hook #'linum-mode)
@@ -339,28 +341,28 @@
   ;; :commands TeX-latex-mode
   :mode ("\\.tex\\'" . latex-mode)
   :config (progn
-	    (setq TeX-source-correlate-mode t)
-	    (setq TeX-source-correlate-method 'synctex)
-	    (setq TeX-auto-save t)
-	    (setq TeX-parse-self t)
-	    (setq reftex-plug-into-AUCTeX t)
-	    (setq TeX-view-program-selection '((output-pdf "Evince")))
-	    (add-hook 'LaTeX-mode-hook 'TeX-source-correlate-mode)
-	    (add-hook 'LaTeX-mode-hook 'auto-fill-mode)
-	    (add-hook 'LaTeX-mode-hook 'flyspell-mode)
-	    (add-hook 'LaTeX-mode-hook 'yas-minor-mode-on)
-	    (add-hook 'LaTeX-mode-hook 'flyspell-buffer)
-	    (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-	    (add-hook 'LaTeX-mode-hook
-		      (lambda ()
-			(reftex-mode t)
-			(flyspell-mode t)))))
+        (setq TeX-source-correlate-mode t)
+        (setq TeX-source-correlate-method 'synctex)
+        (setq TeX-auto-save t)
+        (setq TeX-parse-self t)
+        (setq reftex-plug-into-AUCTeX t)
+        (setq TeX-view-program-selection '((output-pdf "Evince")))
+        (add-hook 'LaTeX-mode-hook 'TeX-source-correlate-mode)
+        (add-hook 'LaTeX-mode-hook 'auto-fill-mode)
+        (add-hook 'LaTeX-mode-hook 'flyspell-mode)
+        (add-hook 'LaTeX-mode-hook 'yas-minor-mode-on)
+        (add-hook 'LaTeX-mode-hook 'flyspell-buffer)
+        (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+        (add-hook 'LaTeX-mode-hook
+              (lambda ()
+            (reftex-mode t)
+            (flyspell-mode t)))))
 
 (use-package ivy-bibtex
   :defer t
   :ensure t
   :bind ( :map  LaTeX-mode-map
-		("C-\ l b" . ivy-bibtex)))
+        ("C-\ l b" . ivy-bibtex)))
 
 
 (use-package treemacs
@@ -373,44 +375,44 @@
   :config
   (progn
     (setq treemacs-collapse-dirs                 (if treemacs-python-executable 3 0)
-	  treemacs-deferred-git-apply-delay      0.5
-	  treemacs-directory-name-transformer    #'identity
-	  treemacs-display-in-side-window        t
-	  treemacs-eldoc-display                 t
-	  treemacs-file-event-delay              5000
-	  treemacs-file-extension-regex          treemacs-last-period-regex-value
-	  treemacs-file-follow-delay             0.2
-	  treemacs-file-name-transformer         #'identity
-	  treemacs-follow-after-init             t
-	  treemacs-git-command-pipe              ""
-	  treemacs-goto-tag-strategy             'refetch-index
-	  treemacs-indentation                   2
-	  treemacs-indentation-string            " "
-	  treemacs-is-never-other-window         nil
-	  treemacs-max-git-entries               5000
-	  treemacs-missing-project-action        'ask
-	  treemacs-move-forward-on-expand        nil
-	  treemacs-no-png-images                 nil
-	  treemacs-no-delete-other-windows       t
-	  treemacs-project-follow-cleanup        nil
-	  treemacs-persist-file                  (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
-	  treemacs-position                      'left
-	  treemacs-recenter-distance             0.1
-	  treemacs-recenter-after-file-follow    nil
-	  treemacs-recenter-after-tag-follow     nil
-	  treemacs-recenter-after-project-jump   'always
-	  treemacs-recenter-after-project-expand 'on-distance
-	  treemacs-show-cursor                   nil
-	  treemacs-show-hidden-files             t
-	  treemacs-silent-filewatch              nil
-	  treemacs-silent-refresh                nil
-	  treemacs-sorting                       'alphabetic-asc
-	  treemacs-space-between-root-nodes      t
-	  treemacs-tag-follow-cleanup            t
-	  treemacs-tag-follow-delay              1.5
-	  treemacs-user-mode-line-format         nil
-	  treemacs-user-header-line-format       nil
-	  treemacs-width                         35)
+      treemacs-deferred-git-apply-delay      0.5
+      treemacs-directory-name-transformer    #'identity
+      treemacs-display-in-side-window        t
+      treemacs-eldoc-display                 t
+      treemacs-file-event-delay              5000
+      treemacs-file-extension-regex          treemacs-last-period-regex-value
+      treemacs-file-follow-delay             0.2
+      treemacs-file-name-transformer         #'identity
+      treemacs-follow-after-init             t
+      treemacs-git-command-pipe              ""
+      treemacs-goto-tag-strategy             'refetch-index
+      treemacs-indentation                   2
+      treemacs-indentation-string            " "
+      treemacs-is-never-other-window         nil
+      treemacs-max-git-entries               5000
+      treemacs-missing-project-action        'ask
+      treemacs-move-forward-on-expand        nil
+      treemacs-no-png-images                 nil
+      treemacs-no-delete-other-windows       t
+      treemacs-project-follow-cleanup        nil
+      treemacs-persist-file                  (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
+      treemacs-position                      'left
+      treemacs-recenter-distance             0.1
+      treemacs-recenter-after-file-follow    nil
+      treemacs-recenter-after-tag-follow     nil
+      treemacs-recenter-after-project-jump   'always
+      treemacs-recenter-after-project-expand 'on-distance
+      treemacs-show-cursor                   nil
+      treemacs-show-hidden-files             t
+      treemacs-silent-filewatch              nil
+      treemacs-silent-refresh                nil
+      treemacs-sorting                       'alphabetic-asc
+      treemacs-space-between-root-nodes      t
+      treemacs-tag-follow-cleanup            t
+      treemacs-tag-follow-delay              1.5
+      treemacs-user-mode-line-format         nil
+      treemacs-user-header-line-format       nil
+      treemacs-width                         35)
 
     ;; The default width and height of the icons is 22 pixels. If you are
     ;; using a Hi-DPI display, uncomment this to double the icon size.
@@ -425,24 +427,24 @@
     (treemacs-filewatch-mode t)
     (treemacs-fringe-indicator-mode t)
     (pcase (cons (not (null (executable-find "git")))
-		 (NOT (null treemacs-python-executable)))
+         (not (null treemacs-python-executable)))
       (`(t . t)
        (treemacs-git-mode 'deferred))
       (`(t . _)
        (treemacs-git-mode 'simple))))
   :bind
   (:map treemacs-mode-map
-	("D" . treemacs-delete)
-	("d" . nil))
+    ("D" . treemacs-delete)
+    ("d" . nil))
   (:map global-map
-	("<f8>" . 'treemacs)
-	("C-\ t" . 'treemacs)
-	("M-0"       . treemacs-select-window)
-	("C-x t 1"   . treemacs-delete-other-windows)
-	("C-x t t"   . treemacs)
-	("C-x t B"   . treemacs-bookmark)
-	("C-x t C-t" . treemacs-find-file)
-	("C-x t M-t" . treemacs-find-tag)))
+    ("<f8>" . 'treemacs)
+    ("C-\ t" . 'treemacs)
+    ("M-0"       . treemacs-select-window)
+    ("C-x t 1"   . treemacs-delete-other-windows)
+    ("C-x t t"   . treemacs)
+    ("C-x t B"   . treemacs-bookmark)
+    ("C-x t C-t" . treemacs-find-file)
+    ("C-x t M-t" . treemacs-find-tag)))
 
 (use-package treemacs-evil
   :after treemacs evil
@@ -489,18 +491,18 @@
   :ensure t
   :after (biblio)
   :commands (org-ref-bibtex-next-entry
-	     org-ref-bibtex-previous-entry
-	     org-ref-open-in-browser
-	     org-ref-open-bibtex-notes
-	     org-ref-open-bibtex-pdf
-	     org-ref-bibtex-hydra/body
-	     org-ref-bibtex-hydra/org-ref-bibtex-new-entry/body-and-exit
-	     org-ref-sort-bibtex-entry
-	     arxiv-add-bibtex-entry
-	     arxiv-get-pdf-add-bibtex-entry
-	     doi-utils-add-bibtex-entry-from-doi
-	     isbn-to-bibtex
-	     pubmed-insert-bibtex-from-pmid)
+         org-ref-bibtex-previous-entry
+         org-ref-open-in-browser
+         org-ref-open-bibtex-notes
+         org-ref-open-bibtex-pdf
+         org-ref-bibtex-hydra/body
+         org-ref-bibtex-hydra/org-ref-bibtex-new-entry/body-and-exit
+         org-ref-sort-bibtex-entry
+         arxiv-add-bibtex-entry
+         arxiv-get-pdf-add-bibtex-entry
+         doi-utils-add-bibtex-entry-from-doi
+         isbn-to-bibtex
+         pubmed-insert-bibtex-from-pmid)
   :config
   (add-hook 'bibtex-mode-hook '(require 'org-ref-bibtex)))
 
@@ -508,6 +510,11 @@
   :config
   (general-define-key "C-'" 'avy-goto-word-1)
   (general-define-key "C-;" 'avy-goto-char))
+
+(use-package expand-region
+  :bind (("M-[" . er/expand-region)
+         ("C-(" . er/mark-outside-pairs)))
+
 
 (use-package xahk-mode)
 

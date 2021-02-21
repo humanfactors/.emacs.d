@@ -2,7 +2,16 @@
 ;;
 ;;; Code:
 
-;; Setup custom file
+;; Profile emacs startup
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (message "*** Emacs loaded in %s with %d garbage collections."
+                     (format "%.2f seconds"
+                             (float-time
+                              (time-subtract after-init-time before-init-time)))
+                     gcs-done)))
+
+
 
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
@@ -34,7 +43,7 @@
 (require 'mdw-vibes)	 ; Appearance and fonts.. Ya know, vibes?
 (require 'mdw-utilities) ; Always ensure utilities loads before keybinds
 (require 'mdw-modes)	 ; Always ensure modes loads before keybinds
-(require 'mdw-ess)	 ; R etc
-(require 'mdw-org)	 ; Orgmode customisations
+(require 'mdw-ess)       ; R etc
+(require 'mdw-org)       ; Orgmode customisations
 (require 'mdw-spacemacs) ; Spacemacs ganking
 (require 'mdw-keybinds)	 ; Customisations that aren't in use-package definitions

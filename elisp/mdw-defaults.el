@@ -11,7 +11,9 @@
 
 ;; Editing config
 (setq mouse-yank-at-point nil) ;; Fixes bug associated with middle click paste for spell check
-(setq tab-width 4) ; or any other preferred value
+(setq-default tab-width 2) ; or any other preferred value
+(setq-default indent-tabs-mode nil)
+(setq-default evil-shift-width tab-width)
 
 ;; Recent files
 (require 'recentf)
@@ -83,7 +85,7 @@
 ;; Pasting
 (setq electric-pair-inhibit-predicate
       (lambda (c)
-	(if (char-equal c ?\<) t (electric-pair-default-inhibit c))))
+        (if (char-equal c ?\<) t (electric-pair-default-inhibit c))))
 
 
 
@@ -94,11 +96,15 @@
 
 ;; Dired doens't need to be filled unless it's insanity
 (add-hook 'dired-mode-hook
-	  (lambda ()
-	     (setq fill-column 140)))
+      (lambda ()
+         (setq fill-column 140)))
 
 
 (setq dired-dnd-protocol-alist nil) ; Dired disable drag n drop copy
+
+;; Reduce warnings
+(setq ad-redefinition-action 'accept)
+(setq large-file-warning-threshold nil)
 
 ;; Quality of Life
 (setq ring-bell-function 'ignore)
@@ -108,14 +114,6 @@
 (setq echo-keystrokes 0.1)
 (setq pcomplete-ignore-case t) ;; ignore case when auto completing in shell
 (setq ns-pop-up-frames nil) ;; open files in same frame (don't create new separate ones)
-
-
-;; Allow 20MB of memory (instead of 0.76MB default) before calling
-;; garbage collection. This means GC runs less often, which speeds
-;; up some operations
-(setq gc-cons-threshold-original gc-cons-threshold)
-(setq gc-cons-threshold (* 1024 1024 100))
-
 
 
 ;; Mouse wheel
@@ -142,9 +140,9 @@
 ;; initial window
 (setq initial-frame-alist
       '(
-	(width . 140) ; character
-	(height . 40) ; lines
-	))
+    (width . 140) ; character
+    (height . 40) ; lines
+    ))
 
 ;; Initial buffer
 ;; (setf initial-buffer-choice (lambda () (dired "~/Dropbox/org")))
