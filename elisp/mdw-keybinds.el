@@ -85,15 +85,10 @@
     (progn
       (me/define-openfiles
        (("manuscripts" "d:/Dropbox/org/Manuscripts.org")
-  ("forrest" "d:/Dropbox/org/Forrest.org")
-  ("AHK" "d:/Dropbox/Code/AHK")
-  ("notes" "d:/Dropbox/org")
-  ("manuscripts" "d:/Dropbox/org/Manuscripts.org")
-  ("forrest" "d:/Dropbox/org/Forrest.org")
-  ("AHK" "d:/Dropbox/Code/AHK")
-  ("notes" "d:/Dropbox/org")
-  ("code" "~/Code/")
-  ("emacs-dir" "~/.emacs.d/")))
+        ("AHK" "d:/Dropbox/Code/AHK")
+        ("notes" "d:/Dropbox/org")
+        ("code" "~/Code/")
+        ("emacs-dir" "~/.emacs.d/")))
       (mdw/define-openfile "org" "d:/Dropbox/org" "C-x M-o")
       (mdw/define-openfile "dropboxmain" "d:/Dropbox" "C-x M-1")
       (mdw/define-openfile "home" "~/" "C-x M-h"))
@@ -155,7 +150,11 @@
  "<f5>" 'deft
  "m" 'openfile-manuscripts
  "f" 'openfile-forrest
- )
+ "n" '((lambda () (interactive) (ispell-change-dictionary "nl"))
+       :which-key "nederlands")
+ "e" '((lambda () (interactive) (ispell-change-dictionary "en_US"))
+       :which-key "engels"))
+
 
 (general-define-key
  :prefix "C-c"
