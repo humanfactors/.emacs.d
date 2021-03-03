@@ -28,13 +28,24 @@
   (evil-define-key '(normal insert visual) org-mode-map (kbd "C-j") 'org-next-visible-heading)
   (evil-define-key '(normal insert visual) org-mode-map (kbd "C-k") 'org-previous-visible-heading)
 
+  (set-face-attribute 'org-document-title nil :font "Source Sans Pro" :weight 'bold :height 1.5)
+  ;; (set-face-attribute (car face) nil :font "Source Sans Pro" :weight 'regular :height (cdr face))
+  ;; (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+  ;; (set-face-attribute 'org-table nil  :inherit 'fixed-pitch)
+  ;; (set-face-attribute 'org-formula nil  :inherit 'fixed-pitch)
+  ;; (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+  ;; (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+  ;; (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+  ;; (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+
+
   (custom-set-faces '(org-done ((t (:weight normal :strike-through t)))))
   (custom-set-faces '(org-level-1 ((t (:inherit outline-1 :height 1.5 :weight bold))))
-            '(org-level-2 ((t (:inherit outline-2 :height 1.25))))
-            '(org-level-3 ((t (:inherit outline-3 :height 1.15))))
-            '(org-level-4 ((t (:inherit outline-4 :height 1.1 :slant italic))))
-            '(org-level-5 ((t (:inherit outline-5 :height 1.0 :slant italic))))
-            '(org-quote ((t (:inherit org-quote :background "#363848")))))
+                    '(org-level-2 ((t (:inherit outline-2 :height 1.25))))
+                    '(org-level-3 ((t (:inherit outline-3 :height 1.15))))
+                    '(org-level-4 ((t (:inherit outline-4 :height 1.1 :slant italic))))
+                    '(org-level-5 ((t (:inherit outline-5 :height 1.0 :slant italic))))
+                    '(org-quote ((t (:inherit org-quote :background "#363848")))))
 
   ;; Electric pair things for orgmode only
   ;; (electric-pair-mode 1)
@@ -48,48 +59,48 @@
 
   ;; This is it mate
   (setq org-directory "~/Dropbox/org/"
-    org-support-shift-select 1
-    org-agenda-files (list "~/Dropbox/org/"
-                   "~/Dropbox/org/Committees/"))
+        org-support-shift-select 1
+        org-agenda-files (list "~/Dropbox/org/"
+                               "~/Dropbox/org/Committees/"))
   (tempo-define-template "title"
-             '("#+TITLE: ?\n" >)
-             "<ti"
-             "Insert a title")
+                         '("#+TITLE: ?\n" >)
+                         "<ti"
+                         "Insert a title")
 
   (tempo-define-template "datetime"
-             '("#+DATE: ?\n" >)
-             "<date"
-             "Insert a title")
+                         '("#+DATE: ?\n" >)
+                         "<date"
+                         "Insert a title")
   :init
   (defun org-wrap-quote ()
     (interactive)
     (let ((start (min (point) (mark)))
-      (end (max (point) (mark))))
+          (end (max (point) (mark))))
       (goto-char end)
       (unless (bolp)
-    (newline))
+        (newline))
       (insert "#+END_QUOTE\n")
       (goto-char start)
       (unless (bolp)
-    (newline))
+        (newline))
       (insert "#+BEGIN_QUOTE\n")))
 
   (defun org-wrap-source ()
     (interactive)
     (let ((start (min (point) (mark)))
-      (end (max (point) (mark))))
+          (end (max (point) (mark))))
       (goto-char end)
       (unless (bolp)
-    (newline))
+        (newline))
       (insert "#+END_SRC\n")
       (goto-char start)
       (unless (bolp)
-    (newline))
+        (newline))
       (insert "#+BEGIN_SRC\n")))
   (defmacro mdw|org-emphasize (fname char)
     "Make function for setting the emphasis in org mode"
     `(defun ,fname () (interactive)
-        (org-emphasize ,char)))
+            (org-emphasize ,char)))
   (mdw|org-emphasize mdw/org-underline ?_)
   (mdw|org-emphasize mdw/org-strike-through ?+)
 
@@ -109,7 +120,7 @@
    "<f7> b" 'mdw/org-indir-buffer-open-full
    "<f7> o" 'org-tree-to-indirect-buffer))
 
-  ;; '(org-headline-done
+;; '(org-headline-done
 ;;            ((((class color) (min-colors 16) (background dark))
 ;;               (:foreground "LightSalmon" :strike-through t)))))
 

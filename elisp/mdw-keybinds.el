@@ -62,14 +62,14 @@
   (let ((func (intern (concat "openfile-" filename))))
     `(progn
        (defun ,func ()
-	 (interactive) (find-file ,dir))
+   (interactive) (find-file ,dir))
        (global-set-key (kbd ,keybind) ',func))))
 
 (defmacro mdw/define-openfile-funconly (filename dir)
   (let ((func (intern (concat "openfile-" filename))))
     `(progn
        (defun ,func ()
-	 (interactive) (find-file ,dir)))))
+   (interactive) (find-file ,dir)))))
 
 (defmacro me/define-openfile-funconly (filename dir)
   (let ((func (intern (concat "openfile-" filename))))
@@ -78,22 +78,22 @@
 (defmacro me/define-openfiles (files)
   `(progn
      ,@(mapcar (lambda (item)
-		 `(me/define-openfile-funconly ,(car item) ,(cadr item)))
-	       files)))
+     `(me/define-openfile-funconly ,(car item) ,(cadr item)))
+         files)))
 
 (if (string= (system-name) "NOTHINGUNDONE")
     (progn
       (me/define-openfiles
        (("manuscripts" "d:/Dropbox/org/Manuscripts.org")
-	("forrest" "d:/Dropbox/org/Forrest.org")
-	("AHK" "d:/Dropbox/Code/AHK")
-	("notes" "d:/Dropbox/org")
-	("manuscripts" "d:/Dropbox/org/Manuscripts.org")
-	("forrest" "d:/Dropbox/org/Forrest.org")
-	("AHK" "d:/Dropbox/Code/AHK")
-	("notes" "d:/Dropbox/org")
-	("code" "~/Code/")
-	("emacs-dir" "~/.emacs.d/")))
+  ("forrest" "d:/Dropbox/org/Forrest.org")
+  ("AHK" "d:/Dropbox/Code/AHK")
+  ("notes" "d:/Dropbox/org")
+  ("manuscripts" "d:/Dropbox/org/Manuscripts.org")
+  ("forrest" "d:/Dropbox/org/Forrest.org")
+  ("AHK" "d:/Dropbox/Code/AHK")
+  ("notes" "d:/Dropbox/org")
+  ("code" "~/Code/")
+  ("emacs-dir" "~/.emacs.d/")))
       (mdw/define-openfile "org" "d:/Dropbox/org" "C-x M-o")
       (mdw/define-openfile "dropboxmain" "d:/Dropbox" "C-x M-1")
       (mdw/define-openfile "home" "~/" "C-x M-h"))
@@ -168,6 +168,9 @@
 (global-set-key (kbd "C-x C-<down>") 'windmove-down)
 (global-set-key (kbd "C-x C-<left>") 'windmove-left)
 (global-set-key (kbd "C-x C-<right>") 'windmove-right)
+
+;; New buffer things
+  (global-set-key (kbd "C-\\ b") 'evil-buffer-new)
 
 ;; M-up and M-down move lines
 
