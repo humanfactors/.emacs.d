@@ -116,7 +116,9 @@
  "h i" 'read-command
  "v" 'mdw/open-directory-in-system-viewer
  "n" 'neotree-toggle
- )
+ "b" 'evil-buffer-new
+ "RET" 'switch-to-dashboard
+)
 
 
 
@@ -168,8 +170,7 @@
 (global-set-key (kbd "C-x C-<left>") 'windmove-left)
 (global-set-key (kbd "C-x C-<right>") 'windmove-right)
 
-;; New buffer things
-  (global-set-key (kbd "C-\\ b") 'evil-buffer-new)
+;; New buffer thing
 
 ;; M-up and M-down move lines
 

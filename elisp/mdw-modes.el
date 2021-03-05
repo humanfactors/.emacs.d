@@ -529,6 +529,23 @@
 ;; (use-package ivy-rich
   ;; :init (ivy-rich-mode 1))
 
+(use-package dashboard
+  :ensure t
+  :config
+  (setq dashboard-banner-logo-title "Hello Michael, Welcome to Emacs.")
+  (setq dashboard-items '((recents  . 10)
+                        (bookmarks . 5)
+                        (projects . 5)))
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+
+  (defun switch-to-dashboard ()
+    (interactive)
+    (require 'dashboard)
+    (switch-to-buffer "*dashboard*")
+    (dashboard-insert-startupify-lists))
+  (dashboard-setup-startup-hook))
+
 
 (use-package xahk-mode)
 
