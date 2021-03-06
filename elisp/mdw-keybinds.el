@@ -48,6 +48,7 @@
 ;; Appearance
 (define-key global-map (kbd "<f7><f7>") 'visual-fill-column-mode)
 (define-key global-map (kbd "<f7> n") 'display-line-numbers-mode)
+
 (global-set-key [C-wheel-up] 'text-scale-increase)
 (global-set-key [C-wheel-down] 'text-scale-decrease)
 
@@ -94,6 +95,7 @@
       (mdw/define-openfile "home" "~/" "C-x M-h"))
   nil)
 
+(mdw/define-openfile-funconly "keybinds" "~/.emacs.d/elisp/mdw-keybinds.el")
 (mdw/define-openfile-funconly "manuscripts" "~/Dropbox/org/Manuscripts.org")
 (mdw/define-openfile-funconly "forrest" "~/Dropbox/org/Forrest.org")
 (mdw/define-openfile-funconly "AHK" "~/Dropbox/Code/AHK")
@@ -107,9 +109,13 @@
 
 
 ;; Define application keybinds (e.g., deft)
+
 (global-unset-key (kbd "C-\\"))
+
 (general-define-key
- :prefix "C-\\"
+ :keymaps '(normal insert emacs)
+ :prefix "SPC"
+ :non-normal-prefix "C-\\"
  "d" 'deft
  "h e" 'elisp-index-search
  "h f" 'find-function
@@ -121,10 +127,11 @@
 )
 
 
-
 ;; Define file prefix keybinds
 (general-define-key
- :prefix "C-\\ o"
+ :keymaps '(normal insert emacs)
+ :prefix "SPC o"
+ :non-normal-prefix "C-\\ o"
  :prefix-command 'opendirs
  "o" 'openfile-org
  "e" 'openfile-emacs-dir
@@ -138,7 +145,9 @@
 
 ;; Define file prefix keybinds
 (general-define-key
- :prefix "C-\\ k"
+  :keymaps '(normal insert emacs)
+ :prefix "SPC k"
+ :non-normal-prefix "C-\\ k"
  :prefix-command 'keybind-utilites
  "f" 'free-keys
  "i" 'mdw/insert-global-set-key
@@ -155,8 +164,10 @@
  "n" '((lambda () (interactive) (ispell-change-dictionary "nl"))
        :which-key "nederlands")
  "e" '((lambda () (interactive) (ispell-change-dictionary "en_US"))
-       :which-key "engels"))
+       :which-key "engels")
 
+ "k" 'openfile-keybinds
+ )
 
 (general-define-key
  :prefix "C-c"
