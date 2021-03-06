@@ -65,6 +65,7 @@
 
 ; Ensure use-package is required
 (require 'use-package)
+(require 'org)
 (setq use-package-always-ensure t)
 
 (provide 'mdw-packages)

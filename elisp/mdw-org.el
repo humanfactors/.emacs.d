@@ -1,7 +1,4 @@
 ;; MDW Org Configuration
-
-(require 'org)
-
 (custom-set-faces
  '(org-done ((t (:weight normal
                  :strike-through t)))))
