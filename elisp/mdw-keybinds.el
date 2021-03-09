@@ -48,6 +48,7 @@
 ;; Appearance
 (define-key global-map (kbd "<f7><f7>") 'visual-fill-column-mode)
 (define-key global-map (kbd "<f7> n") 'display-line-numbers-mode)
+
 (global-set-key [C-wheel-up] 'text-scale-increase)
 (global-set-key [C-wheel-down] 'text-scale-decrease)
 
@@ -62,14 +63,14 @@
   (let ((func (intern (concat "openfile-" filename))))
     `(progn
        (defun ,func ()
-	 (interactive) (find-file ,dir))
+   (interactive) (find-file ,dir))
        (global-set-key (kbd ,keybind) ',func))))
 
 (defmacro mdw/define-openfile-funconly (filename dir)
   (let ((func (intern (concat "openfile-" filename))))
     `(progn
        (defun ,func ()
-	 (interactive) (find-file ,dir)))))
+   (interactive) (find-file ,dir)))))
 
 (defmacro me/define-openfile-funconly (filename dir)
   (let ((func (intern (concat "openfile-" filename))))
@@ -78,27 +79,23 @@
 (defmacro me/define-openfiles (files)
   `(progn
      ,@(mapcar (lambda (item)
-		 `(me/define-openfile-funconly ,(car item) ,(cadr item)))
-	       files)))
+     `(me/define-openfile-funconly ,(car item) ,(cadr item)))
+         files)))
 
 (if (string= (system-name) "NOTHINGUNDONE")
     (progn
       (me/define-openfiles
        (("manuscripts" "d:/Dropbox/org/Manuscripts.org")
-	("forrest" "d:/Dropbox/org/Forrest.org")
-	("AHK" "d:/Dropbox/Code/AHK")
-	("notes" "d:/Dropbox/org")
-	("manuscripts" "d:/Dropbox/org/Manuscripts.org")
-	("forrest" "d:/Dropbox/org/Forrest.org")
-	("AHK" "d:/Dropbox/Code/AHK")
-	("notes" "d:/Dropbox/org")
-	("code" "~/Code/")
-	("emacs-dir" "~/.emacs.d/")))
+        ("AHK" "d:/Dropbox/Code/AHK")
+        ("notes" "d:/Dropbox/org")
+        ("code" "~/Code/")
+        ("emacs-dir" "~/.emacs.d/")))
       (mdw/define-openfile "org" "d:/Dropbox/org" "C-x M-o")
       (mdw/define-openfile "dropboxmain" "d:/Dropbox" "C-x M-1")
       (mdw/define-openfile "home" "~/" "C-x M-h"))
   nil)
 
+(mdw/define-openfile-funconly "keybinds" "~/.emacs.d/elisp/mdw-keybinds.el")
 (mdw/define-openfile-funconly "manuscripts" "~/Dropbox/org/Manuscripts.org")
 (mdw/define-openfile-funconly "forrest" "~/Dropbox/org/Forrest.org")
 (mdw/define-openfile-funconly "AHK" "~/Dropbox/Code/AHK")
@@ -112,22 +109,29 @@
 
 
 ;; Define application keybinds (e.g., deft)
+
 (global-unset-key (kbd "C-\\"))
+
 (general-define-key
- :prefix "C-\\"
+ :keymaps '(normal insert emacs)
+ :prefix "SPC"
+ :non-normal-prefix "C-\\"
  "d" 'deft
  "h e" 'elisp-index-search
  "h f" 'find-function
  "h i" 'read-command
  "v" 'mdw/open-directory-in-system-viewer
  "n" 'neotree-toggle
- )
-
+ "b" 'evil-buffer-new
+ "RET" 'switch-to-dashboard
+)
 
 
 ;; Define file prefix keybinds
 (general-define-key
- :prefix "C-\\ o"
+ :keymaps '(normal insert emacs)
+ :prefix "SPC o"
+ :non-normal-prefix "C-\\ o"
  :prefix-command 'opendirs
  "o" 'openfile-org
  "e" 'openfile-emacs-dir
@@ -141,7 +145,9 @@
 
 ;; Define file prefix keybinds
 (general-define-key
- :prefix "C-\\ k"
+  :keymaps '(normal insert emacs)
+ :prefix "SPC k"
+ :non-normal-prefix "C-\\ k"
  :prefix-command 'keybind-utilites
  "f" 'free-keys
  "i" 'mdw/insert-global-set-key
@@ -155,6 +161,12 @@
  "<f5>" 'deft
  "m" 'openfile-manuscripts
  "f" 'openfile-forrest
+ "n" '((lambda () (interactive) (ispell-change-dictionary "nl"))
+       :which-key "nederlands")
+ "e" '((lambda () (interactive) (ispell-change-dictionary "en_US"))
+       :which-key "engels")
+
+ "k" 'openfile-keybinds
  )
 
 (general-define-key
@@ -168,6 +180,8 @@
 (global-set-key (kbd "C-x C-<down>") 'windmove-down)
 (global-set-key (kbd "C-x C-<left>") 'windmove-left)
 (global-set-key (kbd "C-x C-<right>") 'windmove-right)
+
+;; New buffer thing
 
 ;; M-up and M-down move lines
 

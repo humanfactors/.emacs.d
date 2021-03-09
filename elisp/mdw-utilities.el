@@ -353,5 +353,21 @@ Version 2018-04-02T14:38:04-07:00"
 
 (global-set-key (kbd "C-c C-\\") 'xah-shrink-whitespaces)
 
+;; (define-key org-mode-map "\C-ck" #'endless/insert-key)
+(defun endless/insert-key (key)
+  "Ask for a key then insert its description.
+Will work on both org-mode and any mode that accepts plain html."
+  (interactive "kType key sequence: ")
+  (let* ((is-org-mode (derived-mode-p 'org-mode))
+         (tag (if is-org-mode
+                  "@@html:<kbd>%s</kbd>@@"
+                "<kbd>%s</kbd>")))
+    (if (null (equal key "\r"))
+        (insert
+         (format tag (help-key-description key nil)))
+      (insert (format tag ""))
+      (forward-char (if is-org-mode -8 -6)))))
+
+
 (provide 'mdw-utilities)
 ;; End of mdw-utilities.el

@@ -36,3 +36,25 @@ I don't have a vim insert state.
   :bind (("M-[" . er/expand-region)
          ("C-(" . er/mark-outside-pairs)))
 #+end_src
+
+https://github.com/noctuid/general.el#which-key-integration
+
+#+begin_src emacs-lisp
+(general-define-key
+ :prefix "SPC"
+ :keymaps 'normal
+ ;; unbind SPC and give it a title for which-key (see echo area)
+ "" '(nil :which-key "my lieutenant general prefix")
+ ;; bind nothing but give SPC f a description for which-key
+ "f" '(:ignore t :which-key "file prefix")
+ ;; use a cons as a replacement
+ "g" '(:ignore t :wk ("g-key" . "git prefix"))
+ ;; toggle lispy; use a function as a replacement to show if currently on
+ "l" '(lispy-mode :wk my-lispy-which-key-display)
+ ;; for a keymap, only the keys will be matched;
+ ;; :no-match-binding is not necessary
+ "p" '(:keymap projectile-command-map :wk "projectile prefix")
+ ;; don't display this keybinding at all
+ "z" '(hidden-command :wk t)
+ ...)
+#+end_src
