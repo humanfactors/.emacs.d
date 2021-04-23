@@ -3,7 +3,7 @@
 (require 'org)
 
 (use-package org
-  :defer t
+  :demand
   :ensure org-plus-contrib
   :config
   (require 'org-tempo)
