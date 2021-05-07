@@ -1,32 +1,47 @@
-#+TITLE: Michael David's =.emacs.d=
+#+TITLE: Michael's .emacs.d
 
 #+html: <img align="right" src="docs/resize.png?raw=true" alt="Logo" width="300"/>
 
-This is an personal, customised and quite unoptimised config ― but it's mine.
 
-Emacs drives me crazy a lot of the time and I'm not really a huge fan of Emacs lisp. However, it's really hard to get out of my life (and I don't want to). My =.emacs.d= is heavily inspired by Spacemacs and is built mainly around Windows & Linux. It's made for scentific use, and aims to be: quick, minimal, logical, and maintainable.
+This is my personal Emacs configuration. It is heavily customised and has a lot of room for optimization. Nevertheless, I believe it is relatively well organised, with a modular design. It is geared towards Windows (1st) and Linux (2nd). It's made for scentific use, and aims to be: quick, minimal, logical, and maintainable.
 
-Honestly, I really just use this for orgmode, R, LaTex... and Emacs lisp.
+I do not "live in Emacs", but I do use it almost every day (for better or worse). To be honest, Emacs is one of those tools that can send me up the wall, and I'm no  expert with Emacs Lisp. Yet, I am caught in the spiral and Emacs will remain with me, so I maintain this configuration.
 
-This configuration is opionated, but actually pretty close to defaults. Things move rapidly on master. It's not built for others to directly use.
+I dream of the day Emacs has rich-text buffer support (e.g., copy paste with formatting) and multi-threading. My dream will probably never come true.
 
-* Keymap / Notes
+** Features
 
-My config uses Evil, but note I only have two input modes:
+- ✅ Modular design and automatic setup
+- ✅ Evil-mode, but retains full Emacs defaults in insert mode
+- ✅ Fully useable R config
+- ✅ Confusing set of custom binds and functions I've added over the years
+- ✅ Legacy code I'm too worried to remove
+- ✅ Ripped features straight from Spacemacs, Doom and friends.
 
-- Emacs mode (default)
-- A modified normal mode (vim)
+** Usage Notes
+The configuration files are in =./elisp/=  and each =.el= is somewhat cryptically named, but the load order of the files is shown in =.init.el=.
 
-I don't have a vim insert state.
+- 📦 =mdw-packages.el= ⇨ Initial installation of core packages — first time setup.
+- 🛠 =mdw-defaults.el= ⇨ Defaults that are /in theory/ directly portable to a vanilla Emacs config
+- 🎨 =mdw-vibes.el= ⇨ Theme, fonts and anything pretty.
+- 🛠 =mdw-utilities.el= ⇨ Misc accumulated functions from the internet or old configs
+- 📦 =mdw-modes.el= ⇨ All use-package configurations and mode configuration, including
+- 🗒 =mdw-org.el= ⇨ Orgmode stuff
+- 🛠 =mdw-ess.el= ⇨ R settings
+- ⌨ =mdw-keybinds.el= ⇨ All keybinds, including general-define-key stuff.
 
-* Preview
+** Preview
 
 #+ATTR_HTML: :alt A really messy code base
 [[file:docs/preview.png]]
 #+ATTR_HTML: :alt When I need to shut up and fucking write something (example here only).
 [[file:docs/writing-preview.png]]
 
-* Notes to Self
+* Notes most likely for me
+
+Note that while Evil is installed, Emacs is the default. Evil insert mode reverts to Emacs mode. Therefore, I don't have a vim insert state.
+
+*** Keybinds etc
 
 - =C-u M-^= - delete-indentation and pull up
 - =(global-set-key (kbd "C-c C-\\") 'xah-shrink-whitespaces)=
