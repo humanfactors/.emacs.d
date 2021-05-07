@@ -620,6 +620,10 @@
     (dashboard-insert-startupify-lists))
   (dashboard-setup-startup-hook))
 
+(use-package unicode-fonts
+   :ensure t
+   :config
+    (unicode-fonts-setup))
 
 (use-package xahk-mode)
 
