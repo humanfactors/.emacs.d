@@ -38,6 +38,9 @@
   ;; (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
   ;; (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
 
+  (font-lock-add-keywords 'org-mode
+                          '(("^ *\\([-]\\) "
+                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
   (custom-set-faces '(org-done ((t (:weight normal :strike-through t)))))
   (custom-set-faces '(org-level-1 ((t (:inherit outline-1 :height 1.5 :weight bold))))
