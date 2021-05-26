@@ -178,7 +178,7 @@
   :init
   (add-hook 'after-init-hook 'global-company-mode)
   :config
-    (setq company-idle-delay              0.3
+    (setq company-idle-delay              0.5
       company-minimum-prefix-length   3
       company-show-numbers            t
       company-dabbrev-downcase        nil))
