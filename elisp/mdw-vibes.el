@@ -26,6 +26,8 @@
 (setq inhibit-compacting-font-caches t)
 (setq find-file-visit-truename t)
 
+(setq ispell-local-dictionary "en_GB")
+
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1)

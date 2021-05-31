@@ -10,7 +10,8 @@
   (add-hook 'org-mode-hook 'auto-save-mode)
   (add-hook 'org-mode-hook 'turn-on-flyspell)
   (setq-default org-display-custom-times t)
-  (setq org-time-stamp-custom-formats '("<%a %b %e %Y>" . "<%a %b %e %Y %H:%M>"))
+  ;; (setq org-time-stamp-custom-formats '("<%a %b %e %Y>" . "<%a %b %e %Y %H:%M>"))
+  (setq org-time-stamp-custom-formats nil)
   (setf org-blank-before-new-entry '((heading . auto) (plain-list-item . nil)))
   (setq org-hierarchical-todo-statistics t)
   (setq org-bullets-mode nil)
@@ -66,8 +67,7 @@
   ;; This is it mate
   (setq org-directory "~/Dropbox/org/"
         org-support-shift-select 1
-        org-agenda-files (list "~/Dropbox/org/"
-                               "~/Dropbox/org/Committees/"))
+        org-agenda-files (list "~/Dropbox/org/WritingLog.org"))
   (tempo-define-template "title"
                          '("#+TITLE: ?\n" >)
                          "<ti"
