@@ -171,6 +171,8 @@
        :which-key "nederlands")
  "e" '((lambda () (interactive) (ispell-change-dictionary "en_US"))
        :which-key "engels")
+ "g" '((lambda () (interactive) (ispell-change-dictionary "en_GB"))
+       :which-key "engels_brit")
 
  "k" 'openfile-keybinds
  )
