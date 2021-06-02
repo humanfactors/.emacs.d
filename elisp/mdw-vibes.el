@@ -26,6 +26,8 @@
 (setq inhibit-compacting-font-caches t)
 (setq find-file-visit-truename t)
 
+(setq ispell-local-dictionary "en_GB")
+
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1)
@@ -49,9 +51,11 @@
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t ; if nil, bold is universally disabled
     doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-dracula t)
-  (setq doom-dracula-padded-modeline t
-    doom-dracula-colorful-headers t)
+  (load-theme 'doom-nord-light t)
+  (setq doom-nord-light-padded-modeline t)
+  ;; (load-theme 'doom-dracula t)
+  ;; (setq doom-dracula-padded-modeline t
+    ;; doom-dracula-colorful-headers t)
   (doom-themes-org-config))
 
 (use-package rainbow-mode

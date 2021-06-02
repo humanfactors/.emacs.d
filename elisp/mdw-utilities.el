@@ -181,7 +181,7 @@ given, the duplicated region will be commented out."
  (defun my-variable-serif ()
    "Sets a fixed width (monospace) font in current buffer"
    (interactive)
-   (setq buffer-face-mode-face '(:family "Open Sans" :height 140))
+   (setq buffer-face-mode-face '(:family "Arial" :height 140))
    (buffer-face-mode))
 
 (global-set-key (kbd "<f7> c") 'variable-pitch-mode)

@@ -27,3 +27,5 @@ bookmarks
 image-dired/.image-dired_db
 .emacs.desktop
 url/cookies
+var/pcache/unicode-fonts
+var/pcache/ucs-utils

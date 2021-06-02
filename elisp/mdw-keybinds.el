@@ -87,7 +87,7 @@
       (me/define-openfiles
        (("manuscripts" "d:/Dropbox/org/Manuscripts.org")
         ("AHK" "d:/Dropbox/Code/AHK")
-        ("notes" "d:/Dropbox/org")
+        ("notes" "d:/Dropbox/notes")
         ("code" "~/Code/")
         ("emacs-dir" "~/.emacs.d/")))
       (mdw/define-openfile "org" "d:/Dropbox/org" "C-x M-o")
@@ -117,15 +117,21 @@
  :prefix "SPC"
  :non-normal-prefix "C-\\"
  "d" 'deft
- "h e" 'elisp-index-search
- "h f" 'find-function
- "h i" 'read-command
  "v" 'mdw/open-directory-in-system-viewer
  "n" 'neotree-toggle
  "b" 'evil-buffer-new
  "RET" 'switch-to-dashboard
 )
 
+(general-define-key
+ :keymaps '(normal insert emacs)
+ :prefix "SPC h"
+ :non-normal-prefix "C-\\ h"
+ :prefix-command 'elisp-help
+ "e" 'elisp-index-search
+ "f" 'find-function
+ "i" 'read-command
+ )
 
 ;; Define file prefix keybinds
 (general-define-key
@@ -165,6 +171,8 @@
        :which-key "nederlands")
  "e" '((lambda () (interactive) (ispell-change-dictionary "en_US"))
        :which-key "engels")
+ "g" '((lambda () (interactive) (ispell-change-dictionary "en_GB"))
+       :which-key "engels_brit")
 
  "k" 'openfile-keybinds
  )
