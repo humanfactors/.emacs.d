@@ -75,17 +75,17 @@
 
   ;; Keybinds for R modes, including custom functions
   :bind(:map ess-r-mode-map
-	     ("C-c r" . ess-eval-word)
-	     ("C-S-m" . then_R_operator)
-	     ("C-'" . tide-insert-assign)
-	     ("C-S-<f10>" . inferior-ess-reload)
-	     ("C-<return>" . ess-eval-region-or-function-or-paragraph-and-step)
-	     ("C-<kp-enter>" . ess-eval-region-or-function-or-paragraph-and-step)
-	     ("C-M-<return>" . newline-and-indent))
+       ("C-c r" . ess-eval-word)
+       ("C-S-m" . then_R_operator)
+       ("C-'" . tide-insert-assign)
+       ("C-S-<f10>" . inferior-ess-reload)
+       ("C-<return>" . ess-eval-region-or-function-or-paragraph-and-step)
+       ("C-<kp-enter>" . ess-eval-region-or-function-or-paragraph-and-step)
+       ("C-M-<return>" . newline-and-indent))
   :bind(:map inferior-ess-r-mode-map
-	     ("C-S-m" . then_R_operator)
-	     ("C-S-<f10>" . inferior-ess-reload)
-	     ("C-l" . comint-clear-buffer)))
+       ("C-S-m" . then_R_operator)
+       ("C-S-<f10>" . inferior-ess-reload)
+       ("C-l" . comint-clear-buffer)))
 
 (use-package ess-view
   :ensure t
@@ -113,7 +113,7 @@
     (setq w1name (buffer-name))
     (setq w2 (split-window w1 nil t))
     (if (not (member "*R*" (mapcar (function buffer-name) (buffer-list))))
-	(R))
+  (R))
     (set-window-buffer w2 "*R*")
     (set-window-buffer w1 w1name)))
 

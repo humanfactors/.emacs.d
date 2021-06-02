@@ -178,7 +178,7 @@
   :init
   (add-hook 'after-init-hook 'global-company-mode)
   :config
-    (setq company-idle-delay              0.3
+    (setq company-idle-delay              0.5
       company-minimum-prefix-length   3
       company-show-numbers            t
       company-dabbrev-downcase        nil))
@@ -237,56 +237,56 @@
     (setq counsel-projectile-find-dir-includes-top-level t)
     (setq ivy-read-action-format-function 'ivy-read-action-format-columns))
 
-;; 	:preface
-;; 	(defun ivy-read-action-format-columns (actions)
-;; 	  "Create a docstring from ACTIONS, using several columns if needed to preserve `ivy-height'.
+;;  :preface
+;;  (defun ivy-read-action-format-columns (actions)
+;;    "Create a docstring from ACTIONS, using several columns if needed to preserve `ivy-height'.
 
-;; 	ACTIONS is a list.  Each list item is a list of 3 items: key (a string), cmd and doc (a string)."
-;; 	(let ((length (length actions))
-;; 		(i 0)
-;; 		(max-rows (- ivy-height 1))
-;; 		rows cols col lwidth rwidth)
-;; 		(while (< i length)
-;; 		(setq col (cl-subseq actions i (min length (cl-incf i max-rows))))
-;; 	(setq lwidth (apply 'max (mapcar (lambda (x)
-;; 						(length (nth 0 x)))
-;; 						col)))
-;; 		(setq rwidth (apply 'max (mapcar (lambda (x)
-;; 						(length (nth 2 x)))
-;; 						col)))
-;; 		(setq col (mapcar (lambda (x)
-;; 				(format (format "%%%ds: %%-%ds" lwidth rwidth)
-;; 					(propertize (car x) 'face 'ivy-action)
-;; 					(nth 2 x)))
-;; 				col))
-;; 		(cond
-;; 		((null rows)
-;; 		(setq rows (length col)))
-;; 		((< (length col) rows)
-;; 		(setq col (append col (make-list (- rows (length col)) "")))))
-;; 		(push col cols))
-;; 		(format "%s\n%s\n"
-;; 				(if (eq this-command 'ivy-read-action)
-;; 			"Select action: "
-;; 				(ivy-state-current ivy-last))
-;; 			(mapconcat 'identity
-;; 				(apply 'cl-mapcar
-;; 					(lambda (&rest args)
-;; 					(mapconcat 'identity args " | "))
-;; 					(nreverse cols))
-;; 				"\n"))))
-;; 	:config
-;; 	(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-;; 	(setq projectile-project-search-path '("~/Code"))
-;; 	(setq projectile-sort-order 'recentf)
-;; 	(setq projectile-indexing-method 'hybrid)
-;; 	(setq projectile-enable-caching t)
-;; 	(setq projectile-completion-system 'ivy)
-;; 	(setq projectile-switch-project-action #'projectile-find-dir)
-;; 	(setq projectile-find-dir-includes-top-level t)
-;; 	(setq counsel-projectile-find-dir-includes-top-level t)
-;; 	(counsel-projectile-mode +1)
-;; 	(setq ivy-read-action-format-function 'ivy-read-action-format-columns)
+;;  ACTIONS is a list.  Each list item is a list of 3 items: key (a string), cmd and doc (a string)."
+;;  (let ((length (length actions))
+;;    (i 0)
+;;    (max-rows (- ivy-height 1))
+;;    rows cols col lwidth rwidth)
+;;    (while (< i length)
+;;    (setq col (cl-subseq actions i (min length (cl-incf i max-rows))))
+;;  (setq lwidth (apply 'max (mapcar (lambda (x)
+;;            (length (nth 0 x)))
+;;            col)))
+;;    (setq rwidth (apply 'max (mapcar (lambda (x)
+;;            (length (nth 2 x)))
+;;            col)))
+;;    (setq col (mapcar (lambda (x)
+;;        (format (format "%%%ds: %%-%ds" lwidth rwidth)
+;;          (propertize (car x) 'face 'ivy-action)
+;;          (nth 2 x)))
+;;        col))
+;;    (cond
+;;    ((null rows)
+;;    (setq rows (length col)))
+;;    ((< (length col) rows)
+;;    (setq col (append col (make-list (- rows (length col)) "")))))
+;;    (push col cols))
+;;    (format "%s\n%s\n"
+;;        (if (eq this-command 'ivy-read-action)
+;;      "Select action: "
+;;        (ivy-state-current ivy-last))
+;;      (mapconcat 'identity
+;;        (apply 'cl-mapcar
+;;          (lambda (&rest args)
+;;          (mapconcat 'identity args " | "))
+;;          (nreverse cols))
+;;        "\n"))))
+;;  :config
+;;  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+;;  (setq projectile-project-search-path '("~/Code"))
+;;  (setq projectile-sort-order 'recentf)
+;;  (setq projectile-indexing-method 'hybrid)
+;;  (setq projectile-enable-caching t)
+;;  (setq projectile-completion-system 'ivy)
+;;  (setq projectile-switch-project-action #'projectile-find-dir)
+;;  (setq projectile-find-dir-includes-top-level t)
+;;  (setq counsel-projectile-find-dir-includes-top-level t)
+;;  (counsel-projectile-mode +1)
+;;  (setq ivy-read-action-format-function 'ivy-read-action-format-columns)
 ;; )
 
 ;; Markdown
@@ -410,8 +410,6 @@
 
 (use-package treemacs
   :ensure t
-  :hook dired
-  :defer t
   :init
   (with-eval-after-load 'winum
     (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
@@ -498,8 +496,8 @@
   :ensure t)
 
 (use-package treemacs-icons-dired
-  :after treemacs dired
   :ensure t
+  :hook (dired-mode . treemacs-icons-dired-mode)
   :config (treemacs-icons-dired-mode))
 
 (use-package treemacs-magit
@@ -559,29 +557,29 @@
 ;; (global-set-key (kbd "M-/") 'hippie-expand) ;; replace dabbrev-expand
 ;; (setq hippie-expand-try-functions-list
 ;;       '(
-;; 	;; Try to expand yasnippet
-;; 	yas-hippie-try-expand
-;; 	;; Try to expand word "dynamically", searching the current buffer.
-;; 	try-expand-dabbrev
-;; 	;; Try to expand word "dynamically", searching all other buffers.
-;; 	try-expand-dabbrev-all-buffers
-;; 	;; Try to expand word "dynamically", searching the kill ring.
-;; 	try-expand-dabbrev-from-kill
-;; 	;; Try to complete text as a file name, as many characters as unique.
-;; 	try-complete-file-name-partially
-;; 	;; Try to complete text as a file name.
-;; 	try-complete-file-name
-;; 	;; Try to expand word before point according to all abbrev tables.
-;; 	try-expand-all-abbrevs
-;; 	;; Try to complete the current line to an entire line in the buffer.
-;; 	try-expand-list
-;; 	;; Try to complete the current line to an entire line in the buffer.
-;; 	try-expand-line
-;; 	;; Try to complete as an Emacs Lisp symbol, as many characters as
-;; 	;; unique.
-;; 	try-complete-lisp-symbol-partially
-;; 	;; Try to complete word as an Emacs Lisp symbol.
-;; 	try-complete-lisp-symbol))
+;;  ;; Try to expand yasnippet
+;;  yas-hippie-try-expand
+;;  ;; Try to expand word "dynamically", searching the current buffer.
+;;  try-expand-dabbrev
+;;  ;; Try to expand word "dynamically", searching all other buffers.
+;;  try-expand-dabbrev-all-buffers
+;;  ;; Try to expand word "dynamically", searching the kill ring.
+;;  try-expand-dabbrev-from-kill
+;;  ;; Try to complete text as a file name, as many characters as unique.
+;;  try-complete-file-name-partially
+;;  ;; Try to complete text as a file name.
+;;  try-complete-file-name
+;;  ;; Try to expand word before point according to all abbrev tables.
+;;  try-expand-all-abbrevs
+;;  ;; Try to complete the current line to an entire line in the buffer.
+;;  try-expand-list
+;;  ;; Try to complete the current line to an entire line in the buffer.
+;;  try-expand-line
+;;  ;; Try to complete as an Emacs Lisp symbol, as many characters as
+;;  ;; unique.
+;;  try-complete-lisp-symbol-partially
+;;  ;; Try to complete word as an Emacs Lisp symbol.
+;;  try-complete-lisp-symbol))
 
 ;; (general-define-key "C-;" 'company-complete)
 
@@ -621,6 +619,10 @@
     (dashboard-insert-startupify-lists))
   (dashboard-setup-startup-hook))
 
+(use-package unicode-fonts
+   :ensure t
+   :config
+    (unicode-fonts-setup))
 
 (use-package xahk-mode)
 

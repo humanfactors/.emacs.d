@@ -44,6 +44,7 @@
 
 ;; Little modes and fixes
 (auto-save-mode 0)
+(setq bookmark-save-flag 1) ;; everytime bookmark is changed, automatically save it
 (delete-selection-mode 1)
 (tool-bar-mode -1)
 (when (not (display-graphic-p))
@@ -63,6 +64,10 @@
    version-control t
    vc-follow-symlinks t)
 
+(unless (file-exists-p "~/.saves/")
+  (make-directory "~/.saves/"))
+(unless (file-exists-p "~/.emacs-saves/")
+  (make-directory "~/.emacs-saves/"))
 (setq backup-directory-alist '(("." . "~/.saves/")))    ; don't litter my fs tree
 (setq auto-save-file-name-transforms
       `((".*" "~/.emacs-saves/" t)))

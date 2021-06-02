@@ -3,14 +3,15 @@
 (require 'org)
 
 (use-package org
-  :defer t
+  :demand
   :ensure org-plus-contrib
   :config
   (require 'org-tempo)
   (add-hook 'org-mode-hook 'auto-save-mode)
   (add-hook 'org-mode-hook 'turn-on-flyspell)
   (setq-default org-display-custom-times t)
-  (setq org-time-stamp-custom-formats '("<%a %b %e %Y>" . "<%a %b %e %Y %H:%M>"))
+  ;; (setq org-time-stamp-custom-formats '("<%a %b %e %Y>" . "<%a %b %e %Y %H:%M>"))
+  (setq org-time-stamp-custom-formats nil)
   (setf org-blank-before-new-entry '((heading . auto) (plain-list-item . nil)))
   (setq org-hierarchical-todo-statistics t)
   (setq org-bullets-mode nil)
@@ -38,6 +39,9 @@
   ;; (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
   ;; (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
 
+  (font-lock-add-keywords 'org-mode
+                          '(("^ *\\([-]\\) "
+                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
   (custom-set-faces '(org-done ((t (:weight normal :strike-through t)))))
   (custom-set-faces '(org-level-1 ((t (:inherit outline-1 :height 1.5 :weight bold))))
@@ -63,8 +67,7 @@
   ;; This is it mate
   (setq org-directory "~/Dropbox/org/"
         org-support-shift-select 1
-        org-agenda-files (list "~/Dropbox/org/"
-                               "~/Dropbox/org/Committees/"))
+        org-agenda-files (list "~/Dropbox/org/WritingLog.org"))
   (tempo-define-template "title"
                          '("#+TITLE: ?\n" >)
                          "<ti"
