@@ -410,7 +410,6 @@
 
 (use-package treemacs
   :ensure t
-  :hook dired
   :init
   (with-eval-after-load 'winum
     (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
@@ -497,8 +496,8 @@
   :ensure t)
 
 (use-package treemacs-icons-dired
-  :after treemacs dired
   :ensure t
+  :hook (dired-mode . treemacs-icons-dired-mode)
   :config (treemacs-icons-dired-mode))
 
 (use-package treemacs-magit
