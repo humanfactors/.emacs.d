@@ -117,13 +117,20 @@
  :prefix "SPC"
  :non-normal-prefix "C-\\"
  "d" 'deft
- "h e" 'elisp-index-search
- "h f" 'find-function
- "h i" 'read-command
  "v" 'mdw/open-directory-in-system-viewer
  "n" 'neotree-toggle
  "b" 'evil-buffer-new
  "RET" 'switch-to-dashboard
+ )
+
+(general-define-key
+ :keymaps '(normal insert emacs)
+ :prefix "SPC h"
+ :non-normal-prefix "C-\\ h"
+ :prefix-command 'help-utils
+ "e" 'elisp-index-search
+ "f" 'find-function
+ "i" 'read-command
 )
 
 
@@ -140,6 +147,8 @@
  "k" 'openfile-AHK
  "c" 'openfile-code
  "n" 'openfile-notes
+ "m" 'openfile-manuscripts
+ "f" 'openfile-forrest
  )
 
 
