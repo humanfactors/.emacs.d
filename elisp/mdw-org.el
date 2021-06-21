@@ -51,8 +51,8 @@
                     '(org-level-5 ((t (:inherit outline-5 :height 1.0 :slant italic))))
                     '(org-quote ((t (:inherit org-quote :background "#363848")))))
 
-(setq-default org-display-custom-times t)
-(setq org-time-stamp-custom-formats '("<%a %b %e %Y>" . "<%a %b %e %Y %H:%M>"))
+(setq-default org-display-custom-times nil)
+;; (setq org-time-stamp-custom-formats '("<%a %b %e %Y>" . "<%a %b %e %Y %H:%M>"))
 
   ;; Electric pair things for orgmode only
   ;; (electric-pair-mode 1)
