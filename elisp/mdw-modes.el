@@ -29,6 +29,11 @@
   (defalias 'evil-insert-state 'evil-emacs-state)
   (evil-mode 1))
 
+(use-package evil-surround
+  :ensure t
+  :config
+  (global-evil-surround-mode 1))
+
 ;; smart-parens
 ;; (use-package smartparens
 ;;   :diminish smartparens-mode
