@@ -70,7 +70,7 @@
   (setq inferior-R-args "--no-restore-history --no-restore --quiet --no-save")
   (setq tab-width 2)
   (setq ess-style 'RStudio)
-  (setq ess-ask-for-ess-directory nil)
+  (setq ess-ask-for-ess-directory t)
   (setq ess-help-own-frame 'one)
 
   ;; Keybinds for R modes, including custom functions
@@ -78,6 +78,7 @@
        ("C-c r" . ess-eval-word)
        ("C-S-m" . then_R_operator)
        ("C-'" . tide-insert-assign)
+       ("C-M-," . ess-eval-paragraph)
        ("C-S-<f10>" . inferior-ess-reload)
        ("C-<return>" . ess-eval-region-or-function-or-paragraph-and-step)
        ("C-<kp-enter>" . ess-eval-region-or-function-or-paragraph-and-step)
@@ -87,14 +88,12 @@
        ("C-S-<f10>" . inferior-ess-reload)
        ("C-l" . comint-clear-buffer)))
 
-(use-package ess-view
+(use-package ess-view-data
   :ensure t
   :defer t
-  :after ess)
+  :after ess-site
+  :commands R)
 
-(use-package ess-R-data-view
-  :defer t
-  :after ess)
 
 (defun aj/r-insert-chunk (header)
   "Insert an r-chunk in markdown mode."
