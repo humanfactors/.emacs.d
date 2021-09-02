@@ -60,15 +60,15 @@
   (define-key smartparens-mode-map (kbd "M-C-{") 'sp-wrap-curly)
   (bind-key "C-M-f" #'sp-forward-sexp smartparens-mode-map)
   (bind-key "C-M-b" #'sp-backward-sexp smartparens-mode-map)
-  (bind-key "C-)" #'sp-forward-slurp-sexp smartparens-mode-map)
-  (bind-key "C-(" #'sp-backward-slurp-sexp smartparens-mode-map)
-  (bind-key "M-)" #'sp-forward-barf-sexp smartparens-mode-map)
-  (bind-key "M-(" #'sp-backward-barf-sexp smartparens-mode-map)
+  (bind-key "M-i" #'sp-change-inner)
+  ;; (bind-key "C-)" #'sp-forward-slurp-sexp smartparens-mode-map)
+  ;; (bind-key "C-(" #'sp-backward-slurp-sexp smartparens-mode-map)
+  ;; (bind-key "M-)" #'sp-forward-barf-sexp smartparens-mode-map)
+  ;; (bind-key "M-(" #'sp-backward-barf-sexp smartparens-mode-map)
   (bind-key "C-S-s" #'sp-splice-sexp)
   (bind-key "C-M-<backspace>" #'backward-kill-sexp)
   :config
   (smartparens-global-mode t)
-  :config
   (setq sp-show-pair-from-inside nil)
   (require 'smartparens-config)
   :diminish smartparens-mode)
@@ -591,7 +591,7 @@
 
 (use-package expand-region
   :bind (("M-[" . er/expand-region)
-         ("C-(" . er/mark-outside-pairs)))
+         ("M-]" . er/mark-outside-pairs)))
 
 (use-package helpful
   :commands (helpful-callable helpful-variable helpful-command helpful-key)
