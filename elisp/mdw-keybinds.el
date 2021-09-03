@@ -11,6 +11,12 @@
 (global-set-key (kbd "M-D") 'duplicate-thing)
 
 
+;;dired
+(add-hook
+ 'dired-mode-hook
+ (lambda()
+   (define-key dired-mode-map "j" 'ido-find-file)))
+
 ;; Yanks and shit
 (defun yank-pop-forwards (arg)
   (interactive "p")
