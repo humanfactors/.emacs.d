@@ -3,7 +3,13 @@
 ;;; Code:
 
 (global-set-key (kbd "<S-return>") 'end-of-line-and-indented-new-line)
-(global-set-key (kbd "M-<f4>") 'save-buffers-kill-emacs)
+
+(defun delete-frame-or-kill-emacs ()
+  "Delete the selected frame.  If the last one, kill Emacs."
+  (interactive)
+  (condition-case nil (delete-frame) (error (save-buffers-kill-emacs))))
+
+(global-set-key (kbd "M-<f4>") 'delete-frame-or-kill-emacs)
 
 ;; Editing
 (global-set-key (kbd "C-x K") 'kill-buffer-and-window)
