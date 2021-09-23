@@ -13,7 +13,7 @@
   ;; (setq org-time-stamp-custom-formats '("<%a %b %e %Y>" . "<%a %b %e %Y %H:%M>"))
   (setq org-time-stamp-custom-formats nil)
   (setf org-blank-before-new-entry '((heading . auto) (plain-list-item . nil)))
-  (setq org-hierarchical-todo-statistics t)
+  ;; (setq org-hierarchical-todo-statistics t)
   (setq org-bullets-mode nil)
   (setq org-indent-mode nil)
   (setq org-hide-leading-stars nil)
@@ -21,7 +21,7 @@
   (setq org-cycle-separator-lines 1)
   (setq org-indent-mode-turns-on-hiding-stars nil)
   (setq org-hide-leading-stars-before-indent-mode nil)
-  (setq org-startup-indented t)
+  (setq org-startup-indented nil)
   (setq org-src-fontify-natively t
         org-edit-src-content-indentation 2)
   (setq org-ellipsis " ▾")
@@ -115,7 +115,7 @@
     (progn
       (org-tree-to-indirect-buffer)
       (other-window 1)
-      (delete-other-windows)))
+        (delete-other-windows)))
 
   (general-define-key
    :keymaps 'org-mode-map
