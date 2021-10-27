@@ -29,3 +29,6 @@ image-dired/.image-dired_db
 url/cookies
 var/pcache/unicode-fonts
 var/pcache/ucs-utils
+*.eln
+network-security.data
+*.tmp

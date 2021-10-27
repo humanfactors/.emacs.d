@@ -32,6 +32,11 @@
 ;; y or n is fine
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+;; Do you really want to quit?
+(add-hook 'kill-emacs-query-functions
+          (lambda () (y-or-n-p "Do you really want to exit Emacs? "))
+          'append)
+
 ; BLINK BLINK BLINK NO NO NO
 (setq-default cursor-type 'bar)
 (blink-cursor-mode 0)

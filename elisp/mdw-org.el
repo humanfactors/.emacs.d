@@ -115,10 +115,13 @@
     (progn
       (org-tree-to-indirect-buffer)
       (other-window 1)
-        (delete-other-windows)))
+      (delete-other-windows)))
+
+  (define-key org-mode-map ())
 
   (general-define-key
    :keymaps 'org-mode-map
+   "C-'" nil
    "C-c b" (mdw|org-emphasize mdw/org-bold ?*)
    "C-c `" (mdw|org-emphasize mdw/org-code ?~)
    "C-c i" (mdw|org-emphasize mdw/org-italic ?/)
