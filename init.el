@@ -7,10 +7,12 @@
           (lambda ()
             (message "*** Emacs loaded in %s with %d garbage collections."
                      (format "%.2f seconds"
-                             (float-time
-                              (time-subtract after-init-time before-init-time)))
+                             (float-time (time-subtract after-init-time before-init-time)))
                      gcs-done)))
 
+(defun time-since-init (load-file)
+  (let ((elapsed (float-time (time-subtract (current-time) before-init-time))))
+        (message "loading %s...done (%.3fs)" load-file elapsed)))
 
 
 ;; Added by Package.el.  This must come before configurations of
@@ -38,12 +40,23 @@
 
 ;; The Mdubziverse
 (message "Loading Config")
+
 (require 'mdw-packages)  ; Kind of redundant with use-package... So should fix this
+(time-since-init "mdw-packages")
 (require 'mdw-defaults)	 ; In theory this should work on almost any emacs config
+(time-since-init "mdw-defaults")
 (require 'mdw-vibes)	 ; Appearance and fonts.. Ya know, vibes?
+(time-since-init "mdw-vibes")
 (require 'mdw-utilities) ; Always ensure utilities loads before keybinds
+(time-since-init "mdw-utilities")
 (require 'mdw-modes)	 ; Always ensure modes loads before keybinds
+(time-since-init "mdw-modes")
 (require 'mdw-org)       ; Orgmode customisations
+(time-since-init "mdw-org")
 (require 'mdw-ess)       ; R etc
+(time-since-init "mdw-ess")
 (require 'mdw-spacemacs) ; Spacemacs ganking
+(time-since-init "mdw-spacemacs")
 (require 'mdw-keybinds)	 ; Customisations that aren't in use-package definitions
+(time-since-init "mdw-keybinds")
+

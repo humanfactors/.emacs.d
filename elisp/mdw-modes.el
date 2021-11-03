@@ -5,6 +5,7 @@
 (use-package evil
   :ensure t ;; install the evil package if not installed
   :init ;; tweak evil's configuration before loading it
+  (setq evil-respect-visual-line-mode t)
   (setq evil-search-module 'evil-search)
   (setq evil-ex-complete-emacs-commands t)
   (setq evil-disable-insert-state-bindings t)
@@ -415,6 +416,7 @@
 
 (use-package treemacs
   :ensure t
+  :defer t
   :init
   (with-eval-after-load 'winum
     (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
@@ -629,6 +631,6 @@
    :config
     (unicode-fonts-setup))
 
-(use-package xahk-mode)
+;; (use-package xahk-mode)
 
 (provide 'mdw-modes)

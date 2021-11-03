@@ -21,31 +21,31 @@
 (setq my-packages
     '(
         ;; rainbow-mode         ;; Highlight colors in code
-        ace-window
-        ag
-        company              ;; Auto completion
-        counsel
-        counsel-projectile
-        deft
+        ;; ace-window
+        ;; ag
+        ;; company              ;; Auto completion
+        ;; counsel
+        ;; counsel-projectile
+        ;; deft
         ;; dracula-theme
-        doom-themes
-        doom-modeline
+        ;; doom-themes
+        ;; doom-modeline
         beacon
         ess
         expand-region        ;; Select larger and larger region
-        free-keys            ;; Show what key combinations that are not taken
-        general
-        ivy
-        markdown-mode
-        org
-        neotree
-        projectile
-        rainbow-delimiters   ;; Colorful parens
+        ;; free-keys            ;; Show what key combinations that are not taken
+        ;; general
+        ;; ivy
+        ;; markdown-mode
+        ;; org
+        ;; neotree
+        ;; projectile
+        ;; rainbow-delimiters   ;; Colorful parens
         smartparens          ;; Slurp and barf
-        smex                 ;; Better help in minibuffer
+        ;; smex                 ;; Better help in minibuffer
         use-package
         ;; spacemacs-theme
-        swiper                ;; Better search in buffer
+        ;; swiper                ;; Better search in buffer
         undo-tree            ;; Show a graph of edits that can be undone
         visual-fill-column
         which-key

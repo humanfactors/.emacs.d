@@ -117,8 +117,6 @@
       (other-window 1)
       (delete-other-windows)))
 
-  (define-key org-mode-map ())
-
   (general-define-key
    :keymaps 'org-mode-map
    "C-'" nil
