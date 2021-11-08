@@ -76,7 +76,8 @@
   ;; Keybinds for R modes, including custom functions
   :bind(:map ess-r-mode-map
        ("C-c r" . ess-eval-word)
-       ("C-S-m" . then_R_operator)
+       ("\C-S-M" . then_R_operator)
+       ("<return>" . newline)
        ("C-'" . tide-insert-assign)
        ("C-M-," . ess-eval-paragraph)
        ("C-S-<f10>" . inferior-ess-reload)
