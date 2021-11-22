@@ -379,6 +379,7 @@
   :config (add-to-list 'company-backends #'company-bibtex))
 
 (use-package auctex-latexmk
+  :defer t
   :ensure t
   :config
   (auctex-latexmk-setup)
@@ -386,6 +387,7 @@
 
 
 (use-package tex
+  :defer t
   :ensure auctex
   ;; :commands TeX-latex-mode
   :mode ("\\.tex\\'" . latex-mode)
@@ -416,7 +418,7 @@
 
 (use-package treemacs
   :ensure t
-  :defer t
+  :defer 10
   :init
   (with-eval-after-load 'winum
     (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
@@ -535,24 +537,24 @@
 ;;       org-ref-pdf-directory "~/Papers/"
 ;;       org-ref-bibliography-notes "~/Papers/notes.org")
 
-(use-package org-ref
-  :ensure t
-  :after (biblio)
-  :commands (org-ref-bibtex-next-entry
-         org-ref-bibtex-previous-entry
-         org-ref-open-in-browser
-         org-ref-open-bibtex-notes
-         org-ref-open-bibtex-pdf
-         org-ref-bibtex-hydra/body
-         org-ref-bibtex-hydra/org-ref-bibtex-new-entry/body-and-exit
-         org-ref-sort-bibtex-entry
-         arxiv-add-bibtex-entry
-         arxiv-get-pdf-add-bibtex-entry
-         doi-utils-add-bibtex-entry-from-doi
-         isbn-to-bibtex
-         pubmed-insert-bibtex-from-pmid)
-  :config
-  (add-hook 'bibtex-mode-hook '(require 'org-ref-bibtex)))
+;; (use-package org-ref
+;;   :ensure t
+;;   :after (biblio)
+;;   :commands (org-ref-bibtex-next-entry
+;;          org-ref-bibtex-previous-entry
+;;          org-ref-open-in-browser
+;;          org-ref-open-bibtex-notes
+;;          org-ref-open-bibtex-pdf
+;;          org-ref-bibtex-hydra/body
+;;          org-ref-bibtex-hydra/org-ref-bibtex-new-entry/body-and-exit
+;;          org-ref-sort-bibtex-entry
+;;          arxiv-add-bibtex-entry
+;;          arxiv-get-pdf-add-bibtex-entry
+;;          doi-utils-add-bibtex-entry-from-doi
+;;          isbn-to-bibtex
+;;          pubmed-insert-bibtex-from-pmid)
+;;   :config
+;;   (add-hook 'bibtex-mode-hook '(require 'org-ref-bibtex)))
 
 (use-package avy
   :config
@@ -626,10 +628,10 @@
     (dashboard-insert-startupify-lists))
   (dashboard-setup-startup-hook))
 
-(use-package unicode-fonts
-   :ensure t
-   :config
-    (unicode-fonts-setup))
+;; (use-package unicode-fonts
+   ;; :ensure t
+   ;; :config
+    ;; (unicode-fonts-setup))
 
 ;; (use-package xahk-mode)
 
