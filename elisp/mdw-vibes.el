@@ -45,17 +45,21 @@
     beacon-blink-duration 0.2
     beacon-size 18))
 
-;; (use-package doom-themes
-;;   :config
-;;   ;; Global settings (defaults)
-;;   (setq doom-themes-enable-bold t ; if nil, bold is universally disabled
-;;     doom-themes-enable-italic t) ; if nil, italics is universally disabled
-;;   (load-theme 'doom-nord-light t)
-;;   (setq doom-nord-light-padded-modeline t)
-;;   ;; (load-theme 'doom-dracula t)
-;;   ;; (setq doom-dracula-padded-modeline t
-;;     ;; doom-dracula-colorful-headers t)
-;;   (doom-themes-org-config))
+(use-package doom-themes
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t ; if nil, bold is universally disabled
+    doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (load-theme 'doom-fairy-floss t)
+  (setq doom-fairy-floss-padded-modeline t)
+
+  (custom-set-faces
+   `(markdown-code-face ((t (:background ,(doom-color 'bg))))))
+   
+  ;; (load-theme 'doom-dracula t)
+  ;; (setq doom-dracula-padded-modeline t
+    ;; doom-dracula-colorful-headers t)
+  (doom-themes-org-config))
 
 (use-package rainbow-mode
   :defer t

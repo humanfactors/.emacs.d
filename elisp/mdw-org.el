@@ -67,7 +67,7 @@
   ;; This is it mate
   (setq org-directory "~/Dropbox/org/"
         org-support-shift-select 1
-        org-agenda-files (list "~/Dropbox/org/WritingLog.org"))
+        org-agenda-files (list "~/Dropbox/org/WritingLog.org" "~/Dropbox/org/Agenda.org"))
   (tempo-define-template "title"
                          '("#+TITLE: ?\n" >)
                          "<ti"

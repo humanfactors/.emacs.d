@@ -6,11 +6,12 @@
 ;; Setup package manager
 (require 'package)
 
+(setq native-comp-deferred-compilation t)
+
+
 (setq package-enable-at-startup nil)
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")
                          ("melpa" . "https://melpa.org/packages/")))
-
 
 ;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 ;; (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
@@ -23,21 +24,21 @@
         ;; rainbow-mode         ;; Highlight colors in code
         ;; ace-window
         ;; ag
-        ;; company              ;; Auto completion
-        ;; counsel
+        company              ;; Auto completion
+        counsel
         ;; counsel-projectile
         ;; deft
         ;; dracula-theme
         ;; doom-themes
         ;; doom-modeline
         beacon
-        ess
+        ;; ess
         expand-region        ;; Select larger and larger region
         ;; free-keys            ;; Show what key combinations that are not taken
         ;; general
         ;; ivy
         ;; markdown-mode
-        ;; org
+        org
         ;; neotree
         ;; projectile
         ;; rainbow-delimiters   ;; Colorful parens

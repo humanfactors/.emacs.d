@@ -1,6 +1,9 @@
 ;; General mode configuation
 
 
+(use-package general
+  :ensure t)
+
 
 (use-package evil
   :ensure t ;; install the evil package if not installed
@@ -105,9 +108,6 @@
 (when-system windows-nt
   (progn(require 'w32-browser)))
 
-(use-package general
-  :ensure t)
-
 ;; Ace Window
 (use-package ace-window
   :config
@@ -168,7 +168,6 @@
   (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
   (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
   (counsel-mode))
-
 
 ;; (global-set-key  "\M-y" 'yank-pop) ; Unrequired fix for crappy popmenu
 
@@ -239,9 +238,14 @@
     (setq projectile-completion-system 'ivy)
     (setq projectile-switch-project-action #'projectile-find-dir)
     (setq projectile-find-dir-includes-top-level t)
-    (counsel-projectile-mode +1)
     (setq counsel-projectile-find-dir-includes-top-level t)
     (setq ivy-read-action-format-function 'ivy-read-action-format-columns))
+
+
+(use-package counsel-projectile
+  :ensure t
+  :config
+  (counsel-projectile-mode))
 
 ;;  :preface
 ;;  (defun ivy-read-action-format-columns (actions)
@@ -615,12 +619,14 @@
   :ensure t
   :config
   (setq dashboard-banner-logo-title "Hello Michael, Welcome to Emacs.")
+  (setq dashboard-startup-banner 'logo)
+  (setq dashboard-center-content t)
   (setq dashboard-items '((recents  . 10)
-                        (bookmarks . 5)
-                        (projects . 5)))
+                          (bookmarks . 5)
+                          (agenda . 10)
+                          (projects . 5)))
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
-
   (defun switch-to-dashboard ()
     (interactive)
     (require 'dashboard)
