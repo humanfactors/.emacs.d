@@ -11,7 +11,9 @@
 
 (setq package-enable-at-startup nil)
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")
                          ("melpa" . "https://melpa.org/packages/")))
+
 
 ;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 ;; (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
