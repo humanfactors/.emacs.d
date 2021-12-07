@@ -120,9 +120,7 @@
 
 (use-package swiper
   :after ivy
-  :bind (("C-s" . swiper)
-     ("C-f" . swiper)
-     ("C-r" . swiper)))
+  :bind (("C-s" . swiper)))
 
 ;; (use-package emojify
 ;;   :defer t
@@ -141,6 +139,9 @@
   (ivy-count-format "(%d/%d) ")
   (ivy-use-virtual-buffers t)
   :config
+  (setq ivy-re-builders-alist
+        '((t . ivy--regex-ignore-order)))
+
   (global-set-key (kbd "<f1> f") 'counsel-describe-function)
   (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
   (global-set-key (kbd "<f1> o") 'counsel-describe-symbol)
@@ -347,24 +348,6 @@
   :defer nil ;; dont defer so we can add our functions to hooks
   :config (smart-hungry-delete-add-default-hooks)
   )
-
-
-(use-package clojure-mode
-  :defer t
-  :ensure t
-  :mode (("\\.clj\\'" . clojure-mode)
-     ("\\.edn\\'" . clojure-mode))
-  ;; :init
-  ;; (add-hook 'clojure-mode-hook #'yas-minor-mode)
-  ;; (add-hook 'clojure-mode-hook #'linum-mode)
-  ;; (add-hook 'clojure-mode-hook #'subword-mode)
-  ;; (add-hook 'clojure-mode-hook #'smartparens-mode)
-  ;; (add-hook 'clojure-mode-hook #'eldoc-mode)
-
-  )
-
-;; (use-package cider
-;;   :ensure t)
 
 
 (use-package reftex
