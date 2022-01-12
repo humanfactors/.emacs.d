@@ -2,9 +2,11 @@
 
 (require 'org)
 
+(use-package org-contrib)
+
 (use-package org
   :demand
-  :ensure org-plus-contrib
+  :ensure org-contrib 
   :config
   (require 'org-tempo)
   (add-hook 'org-mode-hook 'auto-save-mode)
@@ -51,8 +53,8 @@
                     '(org-level-5 ((t (:inherit outline-5 :height 1.0 :slant italic))))
                     '(org-quote ((t (:inherit org-quote :background "#363848")))))
 
-(setq-default org-display-custom-times nil)
-;; (setq org-time-stamp-custom-formats '("<%a %b %e %Y>" . "<%a %b %e %Y %H:%M>"))
+  (setq-default org-display-custom-times nil)
+  ;; (setq org-time-stamp-custom-formats '("<%a %b %e %Y>" . "<%a %b %e %Y %H:%M>"))
 
   ;; Electric pair things for orgmode only
   ;; (electric-pair-mode 1)
@@ -67,14 +69,15 @@
   ;; This is it mate
   (setq org-directory "~/Dropbox/org/"
         org-support-shift-select 1
-        org-agenda-files (list "~/Dropbox/org/WritingLog.org" "~/Dropbox/org/Agenda.org"))
+        org-agenda-files (list "~/Dropbox/org/WritingLog.org" "~/Dropbox/org/Agenda.org" "Inbox.org"))
+  
   (tempo-define-template "title"
-                         '("#+TITLE: ?\n" >)
+                         '("#+TITLE: ?" >)
                          "<ti"
                          "Insert a title")
 
   (tempo-define-template "datetime"
-                         '("#+DATE: ?\n" >)
+                         '("#+DATE: ?" >)
                          "<date"
                          "Insert a title")
   :init
@@ -130,106 +133,136 @@
 
 
 
-(defun unpackaged/org-fix-blank-lines (prefix)
-  "Ensure that blank lines exist between headings and between headings and their contents.
+  (defun unpackaged/org-fix-blank-lines (prefix)
+    "Ensure that blank lines exist between headings and between headings and their contents.
 With prefix, operate on whole buffer. Ensures that blank lines
 exist after each headings's drawers."
-  (interactive "P")
-  (org-map-entries (lambda ()
-                     (org-with-wide-buffer
-                      ;; `org-map-entries' narrows the buffer, which prevents us from seeing
-                      ;; newlines before the current heading, so we do this part widened.
-                      (while (not (looking-back "\n\n" nil))
-                        ;; Insert blank lines before heading.
-                        (insert "\n")))
-                     (let ((end (org-entry-end-position)))
-                       ;; Insert blank lines before entry content
-                       (forward-line)
-                       (while (and (org-at-planning-p)
-                                   (< (point) (point-max)))
-                         ;; Skip planning lines
-                         (forward-line))
-                       (while (re-search-forward org-drawer-regexp end t)
-                         ;; Skip drawers. You might think that `org-at-drawer-p' would suffice, but
-                         ;; for some reason it doesn't work correctly when operating on hidden text.
-                         ;; This works, taken from `org-agenda-get-some-entry-text'.
-                         (re-search-forward "^[ \t]*:END:.*\n?" end t)
-                         (goto-char (match-end 0)))
-                       (unless (or (= (point) (point-max))
-                                   (org-at-heading-p)
-                                   (looking-at-p "\n"))
-                         (insert "\n"))))
-                   t (if prefix
-                         nil
-                       'tree)))
+    (interactive "P")
+    (org-map-entries (lambda ()
+                       (org-with-wide-buffer
+                        ;; `org-map-entries' narrows the buffer, which prevents us from seeing
+                        ;; newlines before the current heading, so we do this part widened.
+                        (while (not (looking-back "\n\n" nil))
+                          ;; Insert blank lines before heading.
+                          (insert "\n")))
+                       (let ((end (org-entry-end-position)))
+                         ;; Insert blank lines before entry content
+                         (forward-line)
+                         (while (and (org-at-planning-p)
+                                     (< (point) (point-max)))
+                           ;; Skip planning lines
+                           (forward-line))
+                         (while (re-search-forward org-drawer-regexp end t)
+                           ;; Skip drawers. You might think that `org-at-drawer-p' would suffice, but
+                           ;; for some reason it doesn't work correctly when operating on hidden text.
+                           ;; This works, taken from `org-agenda-get-some-entry-text'.
+                           (re-search-forward "^[ \t]*:END:.*\n?" end t)
+                           (goto-char (match-end 0)))
+                         (unless (or (= (point) (point-max))
+                                     (org-at-heading-p)
+                                     (looking-at-p "\n"))
+                           (insert "\n"))))
+                     t (if prefix
+                           nil
+                         'tree)))
 
 ;;;###autoload
-(defmacro unpackaged/def-org-maybe-surround (&rest keys)
-  "Define and bind interactive commands for each of KEYS that surround the region or insert text.
+  (defmacro unpackaged/def-org-maybe-surround (&rest keys)
+    "Define and bind interactive commands for each of KEYS that surround the region or insert text.
 Commands are bound in `org-mode-map' to each of KEYS.  If the
 region is active, commands surround it with the key character,
 otherwise call `org-self-insert-command'."
-  `(progn
-     ,@(cl-loop for key in keys
-                for name = (intern (concat "unpackaged/org-maybe-surround-" key))
-                for docstring = (format "If region is active, surround it with \"%s\", otherwise call `org-self-insert-command'." key)
-                collect `(defun ,name ()
-                           ,docstring
-                           (interactive)
-                           (if (region-active-p)
-                               (let ((beg (region-beginning))
-                                     (end (region-end)))
-                                 (save-excursion
-                                   (goto-char end)
-                                   (insert ,key)
-                                   (goto-char beg)
-                                   (insert ,key)))
-                             (call-interactively #'org-self-insert-command)))
-                collect `(define-key org-mode-map (kbd ,key) #',name))))
+    `(progn
+       ,@(cl-loop for key in keys
+                  for name = (intern (concat "unpackaged/org-maybe-surround-" key))
+                  for docstring = (format "If region is active, surround it with \"%s\", otherwise call `org-self-insert-command'." key)
+                  collect `(defun ,name ()
+                             ,docstring
+                             (interactive)
+                             (if (region-active-p)
+                                 (let ((beg (region-beginning))
+                                       (end (region-end)))
+                                   (save-excursion
+                                     (goto-char end)
+                                     (insert ,key)
+                                     (goto-char beg)
+                                     (insert ,key)))
+                               (call-interactively #'org-self-insert-command)))
+                  collect `(define-key org-mode-map (kbd ,key) #',name))))
 
-(unpackaged/def-org-maybe-surround "~" "=" "*" "/" "+")
+  (unpackaged/def-org-maybe-surround "~" "=" "*" "/" "+")
 
-(defun unpackaged/org-outline-numbers (&optional remove-p)
-  "Add outline number overlays to the current buffer.
+  (defun unpackaged/org-outline-numbers (&optional remove-p)
+    "Add outline number overlays to the current buffer.
 When REMOVE-P is non-nil (interactively, with prefix), remove
 them.  Overlays are not automatically updated when the outline
 structure changes."
-  ;; NOTE: This does not necessarily play nicely with org-indent-mode
-  ;; or org-bullets, but it probably wouldn't be too hard to fix that.
-  (interactive (list current-prefix-arg))
-  (cl-labels ((heading-number ()
-               (or (when-let ((num (previous-sibling-number)))
-                     (1+ num))
-                   1))
-              (previous-sibling-number ()
-               (save-excursion
-                 (let ((pos (point)))
-                   (org-backward-heading-same-level 1)
-                   (when (/= pos (point))
-                     (heading-number)))))
-              (number-list ()
-               (let ((ancestor-numbers (save-excursion
-                                         (cl-loop while (org-up-heading-safe)
-                                                  collect (heading-number)))))
-                 (nreverse (cons (heading-number) ancestor-numbers))))
-              (add-overlay ()
-               (let* ((ov-length (org-current-level))
-                      (ov (make-overlay (point) (+ (point) ov-length)))
-                      (ov-string (concat (mapconcat #'number-to-string (number-list) ".")
-                                         ".")))
-                 (overlay-put ov 'org-outline-numbers t)
-                 (overlay-put ov 'display ov-string))))
-    (remove-overlays nil nil 'org-outline-numbers t)
-    (unless remove-p
-      (org-with-wide-buffer
-       (goto-char (point-min))
-       (when (org-before-first-heading-p)
-         (outline-next-heading))
-       (cl-loop do (add-overlay)
-                while (outline-next-heading))))))
+    ;; NOTE: This does not necessarily play nicely with org-indent-mode
+    ;; or org-bullets, but it probably wouldn't be too hard to fix that.
+    (interactive (list current-prefix-arg))
+    (cl-labels ((heading-number ()
+                                (or (when-let ((num (previous-sibling-number)))
+                                      (1+ num))
+                                    1))
+                (previous-sibling-number ()
+                                         (save-excursion
+                                           (let ((pos (point)))
+                                             (org-backward-heading-same-level 1)
+                                             (when (/= pos (point))
+                                               (heading-number)))))
+                (number-list ()
+                             (let ((ancestor-numbers (save-excursion
+                                                       (cl-loop while (org-up-heading-safe)
+                                                                collect (heading-number)))))
+                               (nreverse (cons (heading-number) ancestor-numbers))))
+                (add-overlay ()
+                             (let* ((ov-length (org-current-level))
+                                    (ov (make-overlay (point) (+ (point) ov-length)))
+                                    (ov-string (concat (mapconcat #'number-to-string (number-list) ".")
+                                                       ".")))
+                               (overlay-put ov 'org-outline-numbers t)
+                               (overlay-put ov 'display ov-string))))
+      (remove-overlays nil nil 'org-outline-numbers t)
+      (unless remove-p
+        (org-with-wide-buffer
+         (goto-char (point-min))
+         (when (org-before-first-heading-p)
+           (outline-next-heading))
+         (cl-loop do (add-overlay)
+                  while (outline-next-heading))))))
 
-;; End
-)
+
+
+
+  ;; '(org-headline-done
+  ;;   ((((class color) (min-colors 16) (background dark))
+  ;;     (:foreground "LightSalmon" :strike-through t)))))
+
+  (setq org-capture-templates
+        `(("t" "Task" entry  (file "Inbox.org")
+           ,(concat "* TODO %?\n"
+                    "/Entered on/ %U"))
+          ("n" "Note" entry  (file "Inbox.org")
+           ,(concat "* NOTE (%t)\n"
+                    "/Entered on/ %U\n" "%?"))
+          ("i" "Idea" entry (file+headline "WritingLog.org" "Writing Idea")
+           ,(concat "* Idea (%a)\n"
+                    "/Entered on/ %U\n" "%?"))))
+
+  (defun org-capture-inbox ()
+     (interactive)
+     (call-interactively 'org-store-link)
+     (org-capture nil "i"))
+
+  (defun org-capture-note ()
+     (interactive)
+     (call-interactively 'org-store-link)
+     (org-capture nil "n"))
+
+(define-key global-map (kbd "<f5> 1") 'org-capture-inbox)
+(define-key global-map (kbd "<f5> 2") 'org-capture-note)
+
+  )
 
 ;; (define-key org-mode-map (kbd "<f7> 1") 'unpackaged/org-outline-numbers)
 
@@ -238,10 +271,6 @@ structure changes."
 
 
 
-
-;; '(org-headline-done
-;;            ((((class color) (min-colors 16) (background dark))
-;;               (:foreground "LightSalmon" :strike-through t)))))
 
 
 

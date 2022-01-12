@@ -9,6 +9,9 @@
 (set-keyboard-coding-system 'utf-8)
 (setq default-buffer-file-coding-system 'utf-8)
 
+;; Minibuffer show time
+(display-time-mode +1)
+
 ;; Editing config
 (setq mouse-yank-at-point nil) ;; Fixes bug associated with middle click paste for spell check
 (setq-default tab-width 2) ; or any other preferred value
