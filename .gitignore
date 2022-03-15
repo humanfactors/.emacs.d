@@ -32,3 +32,4 @@ var/pcache/ucs-utils
 *.eln
 network-security.data
 *.tmp
+url/*

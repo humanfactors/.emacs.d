@@ -18,6 +18,10 @@
 (setq-default indent-tabs-mode nil)
 (setq-default evil-shift-width tab-width)
 
+;; Setting the default undo (over-written by undo-tree)
+(global-set-key (kbd "C-z") 'undo)
+(global-set-key (kbd "C-S-z") 'redo)
+
 ;; Recent files
 (require 'recentf)
 (recentf-mode 1)
