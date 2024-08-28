@@ -1,4 +1,4 @@
-#+TITLE: Michael's .emacs.d
+#+TITLE: Micah's .emacs.d
 
 #+html: <img align="right" src="docs/resize.png?raw=true" alt="Logo" width="300"/>
 
