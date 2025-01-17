@@ -119,4 +119,4 @@
 
 (global-set-key (kbd "C-x 9") 'R-scratch)
 
-(provide 'mdw-ess)
+(provide 'mkw-ess)

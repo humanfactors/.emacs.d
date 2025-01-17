@@ -1,4 +1,4 @@
-;; MDW Org Configuration
+;; mkw Org Configuration
 
 (require 'org)
 
@@ -106,14 +106,14 @@
       (unless (bolp)
         (newline))
       (insert "#+BEGIN_SRC\n")))
-  (defmacro mdw|org-emphasize (fname char)
+  (defmacro mkw|org-emphasize (fname char)
     "Make function for setting the emphasis in org mode"
     `(defun ,fname () (interactive)
             (org-emphasize ,char)))
-  (mdw|org-emphasize mdw/org-underline ?_)
-  (mdw|org-emphasize mdw/org-strike-through ?+)
+  (mkw|org-emphasize mkw/org-underline ?_)
+  (mkw|org-emphasize mkw/org-strike-through ?+)
 
-  (defun mdw/org-indir-buffer-open-full ()
+  (defun mkw/org-indir-buffer-open-full ()
     (interactive)
     (progn
       (org-tree-to-indirect-buffer)
@@ -123,11 +123,11 @@
   (general-define-key
    :keymaps 'org-mode-map
    "C-'" nil
-   "C-c b" (mdw|org-emphasize mdw/org-bold ?*)
-   "C-c `" (mdw|org-emphasize mdw/org-code ?~)
-   "C-c i" (mdw|org-emphasize mdw/org-italic ?/)
-   "C-c l" (mdw|org-emphasize mdw/org-literal ?=)
-   "<f7> b" 'mdw/org-indir-buffer-open-full
+   "C-c b" (mkw|org-emphasize mkw/org-bold ?*)
+   "C-c `" (mkw|org-emphasize mkw/org-code ?~)
+   "C-c i" (mkw|org-emphasize mkw/org-italic ?/)
+   "C-c l" (mkw|org-emphasize mkw/org-literal ?=)
+   "<f7> b" 'mkw/org-indir-buffer-open-full
    "<f7> o" 'org-tree-to-indirect-buffer)
 
 
@@ -274,4 +274,4 @@ structure changes."
 
 
 
-(provide 'mdw-org)
+(provide 'mkw-org)

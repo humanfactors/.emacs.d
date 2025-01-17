@@ -624,4 +624,4 @@
 
 ;; (use-package xahk-mode)
 
-(provide 'mdw-modes)
+(provide 'mkw-modes)

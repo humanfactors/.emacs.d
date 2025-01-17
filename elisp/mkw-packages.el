@@ -1,4 +1,4 @@
-;;; mdw-packages.el
+;;; mkw-packages.el
 ;;
 ;;; Code:
 
@@ -67,5 +67,5 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-(provide 'mdw-packages)
-;;; mdw-packages.el ends here
+(provide 'mkw-packages)
+;;; mkw-packages.el ends here

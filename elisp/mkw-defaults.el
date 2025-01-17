@@ -1,4 +1,4 @@
-;;; mdw-defaults.el --- My set of sane defaults
+;;; mkw-defaults.el --- My set of sane defaults
 ;;
 ;;; Code:
 
@@ -35,6 +35,7 @@
 (setq inhibit-startup-message t)
 (setq frame-inhibit-implied-resize t)
 (setq initial-major-mode 'fundamental-mode)
+(setq inhibit-compacting-font-caches t)
 
 ;; y or n is fine
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -166,5 +167,5 @@
 (defun display-startup-echo-area-message ()
   (message "Welcome to the Matrix."))
 
-(provide 'mdw-defaults)
-;;; mdw-defaults.el ends here
+(provide 'mkw-defaults)
+;;; mkw-defaults.el ends here

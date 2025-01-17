@@ -101,4 +101,4 @@ containing the current file by the default explorer."
     (error "Can't toggle window layout when the number of windows isn't two.")))
 
 
-(provide 'mdw-spacemacs)
+(provide 'mkw-spacemacs)

@@ -1,4 +1,4 @@
-;;; mdw-utilities.el --- mdw-utilities description
+;;; mkw-utilities.el --- mkw-utilities description
 ;;
 ;;; Code:
 
@@ -18,7 +18,7 @@ Uses `bjk-timestamp-format' for formatting the date/time."
   (insert (format-time-string "%Y%m%d_%H%M" (current-time))))
 
 
-(defun mdw/open-directory-in-system-viewer ()
+(defun mkw/open-directory-in-system-viewer ()
   (interactive)
   (when-system gnu/linux
     (if default-directory
@@ -30,7 +30,7 @@ Uses `bjk-timestamp-format' for formatting the date/time."
 	(w32explore (expand-file-name default-directory))
       (error "No `default-directory' to open"))))
 
-(defun mdw/insert-global-set-key (key command)
+(defun mkw/insert-global-set-key (key command)
   (interactive (list (read-key-sequence "Key sequence: ")
 		     (read-command "Command: ")))
   (prin1 `(global-set-key (kbd ,(key-description key)) ',command)
@@ -42,7 +42,7 @@ Uses `bjk-timestamp-format' for formatting the date/time."
 ;;   (prin1 `(global-set-key (kbd ,(key-description key)) ',command)
 ;;	 (current-buffer)))
 
-(defun mdw/insert-key-sequence (key)
+(defun mkw/insert-key-sequence (key)
   (interactive (list (read-key-sequence "Key sequence: ")))
   (prin1 `,(key-description key) (current-buffer)))
 
@@ -162,7 +162,7 @@ given, the duplicated region will be commented out."
       (insert (buffer-substring start end))
       (when comment (comment-region start end)))))
 
-(defun mdw/standard-drinks (abv quant)
+(defun mkw/standard-drinks (abv quant)
   (interactive(list (read-number "ABV in %")
 		    (read-number "How many millilitres?")))
   (print (* abv (/ quant 1000.0) 0.789)))
@@ -369,5 +369,5 @@ Will work on both org-mode and any mode that accepts plain html."
       (forward-char (if is-org-mode -8 -6)))))
 
 
-(provide 'mdw-utilities)
-;; End of mdw-utilities.el
+(provide 'mkw-utilities)
+;; End of mkw-utilities.el

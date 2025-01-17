@@ -21,14 +21,14 @@ I dream of the day Emacs has rich-text buffer support (e.g., copy paste with for
 ** Usage Notes
 The configuration files are in =./elisp/=  and each =.el= is somewhat cryptically named, but the load order of the files is shown in =.init.el=.
 
-- 📦 =mdw-packages.el= ⇨ Initial installation of core packages — first time setup.
-- 🛠 =mdw-defaults.el= ⇨ Defaults that are /in theory/ directly portable to a vanilla Emacs config
-- 🎨 =mdw-vibes.el= ⇨ Theme, fonts and anything pretty.
-- 🛠 =mdw-utilities.el= ⇨ Misc accumulated functions from the internet or old configs
-- 📦 =mdw-modes.el= ⇨ All use-package configurations and mode configuration, including
-- 🗒 =mdw-org.el= ⇨ Orgmode stuff
-- 🛠 =mdw-ess.el= ⇨ R settings
-- ⌨ =mdw-keybinds.el= ⇨ All keybinds, including general-define-key stuff.
+- 📦 =mkw-packages.el= ⇨ Initial installation of core packages — first time setup.
+- 🛠 =mkw-defaults.el= ⇨ Defaults that are /in theory/ directly portable to a vanilla Emacs config
+- 🎨 =mkw-vibes.el= ⇨ Theme, fonts and anything pretty.
+- 🛠 =mkw-utilities.el= ⇨ Misc accumulated functions from the internet or old configs
+- 📦 =mkw-modes.el= ⇨ All use-package configurations and mode configuration, including
+- 🗒 =mkw-org.el= ⇨ Orgmode stuff
+- 🛠 =mkw-ess.el= ⇨ R settings
+- ⌨ =mkw-keybinds.el= ⇨ All keybinds, including general-define-key stuff.
 
 ** Preview
 

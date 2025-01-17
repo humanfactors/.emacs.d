@@ -1,4 +1,4 @@
-;;; mdw-keybinds.el
+;;; mkw-keybinds.el
 ;;
 ;;; Code:
 
@@ -51,7 +51,7 @@
 (global-set-key (kbd "C-{") 'backward-sentence)
 (global-set-key (kbd "C-}") 'forward-sentence)
 
-;; Keybinds for Custom Functions defined in mdw-utilities.el
+;; Keybinds for Custom Functions defined in mkw-utilities.el
 (global-set-key (kbd "M-<up>") 'move-line-up)
 (global-set-key (kbd "M-<down>") 'move-line-down)
 (global-set-key "\C-x\M-s" `michael-filetimestamp)
@@ -71,14 +71,14 @@
 (global-set-key (kbd "C-c r") 'counsel-recentf)
 
 ;; File Nav
-(defmacro mdw/define-openfile (filename dir keybind)
+(defmacro mkw/define-openfile (filename dir keybind)
   (let ((func (intern (concat "openfile-" filename))))
     `(progn
        (defun ,func ()
    (interactive) (find-file ,dir))
        (global-set-key (kbd ,keybind) ',func))))
 
-(defmacro mdw/define-openfile-funconly (filename dir)
+(defmacro mkw/define-openfile-funconly (filename dir)
   (let ((func (intern (concat "openfile-" filename))))
     `(progn
        (defun ,func ()
@@ -102,21 +102,21 @@
         ("notes" "d:/Dropbox/notes")
         ("code" "~/Code/")
         ("emacs-dir" "~/.emacs.d/")))
-      (mdw/define-openfile "org" "d:/Dropbox/org" "C-x M-o")
-      (mdw/define-openfile "dropboxmain" "d:/Dropbox" "C-x M-1")
-      (mdw/define-openfile "home" "~/" "C-x M-h"))
+      (mkw/define-openfile "org" "d:/Dropbox/org" "C-x M-o")
+      (mkw/define-openfile "dropboxmain" "d:/Dropbox" "C-x M-1")
+      (mkw/define-openfile "home" "~/" "C-x M-h"))
   nil)
 
-(mdw/define-openfile-funconly "keybinds" "~/.emacs.d/elisp/mdw-keybinds.el")
-(mdw/define-openfile-funconly "manuscripts" "~/Dropbox/org/Manuscripts.org")
-(mdw/define-openfile-funconly "forrest" "~/Dropbox/org/Forrest.org")
-(mdw/define-openfile-funconly "AHK" "~/Dropbox/Code/AHK")
-(mdw/define-openfile-funconly "notes" "~/Dropbox/org")
-(mdw/define-openfile-funconly "code" "~/Code/")
-(mdw/define-openfile-funconly "emacs-dir" "~/.emacs.d/elisp/")
-(mdw/define-openfile "org" "~/Dropbox/org/" "C-x M-o")
-(mdw/define-openfile "dropboxmain" "~/Dropbox/" "C-x M-1")
-(mdw/define-openfile "home" "~/" "C-x M-h")
+(mkw/define-openfile-funconly "keybinds" "~/.emacs.d/elisp/mkw-keybinds.el")
+(mkw/define-openfile-funconly "manuscripts" "~/Dropbox/org/Manuscripts.org")
+(mkw/define-openfile-funconly "forrest" "~/Dropbox/org/Forrest.org")
+(mkw/define-openfile-funconly "AHK" "~/Dropbox/Code/AHK")
+(mkw/define-openfile-funconly "notes" "~/Dropbox/org")
+(mkw/define-openfile-funconly "code" "~/Code/")
+(mkw/define-openfile-funconly "emacs-dir" "~/.emacs.d/elisp/")
+(mkw/define-openfile "org" "~/Dropbox/org/" "C-x M-o")
+(mkw/define-openfile "dropboxmain" "~/Dropbox/" "C-x M-1")
+(mkw/define-openfile "home" "~/" "C-x M-h")
 
 
 
@@ -129,7 +129,7 @@
  :prefix "SPC"
  :non-normal-prefix "C-\\"
  "d" 'deft
- "v" 'mdw/open-directory-in-system-viewer
+ "v" 'mkw/open-directory-in-system-viewer
  "n" 'neotree-toggle
  "b" 'evil-buffer-new
  "RET" 'switch-to-dashboard
@@ -180,7 +180,7 @@
  :non-normal-prefix "C-\\ k"
  :prefix-command 'keybind-utilites
  "f" 'free-keys
- "i" 'mdw/insert-global-set-key
+ "i" 'mkw/insert-global-set-key
  "L" 'describe-bindings
  )
 
@@ -262,5 +262,5 @@
 
 ;; (global-set-key (kbd "C-M-o") 'hydra-window/body)
 
-(provide 'mdw-keybinds)
-;;; mdw-keybinds.el ends here
+(provide 'mkw-keybinds)
+;;; mkw-keybinds.el ends here

@@ -1,4 +1,4 @@
-;;; init.el --- startpoint of Michael's Emacs config
+;;; init.el --- startpoint of Micah's Emacs config
 ;;
 ;;; Code:
 
@@ -41,22 +41,22 @@
 ;; The Mdubziverse
 (message "Loading Config")
 
-(require 'mdw-packages)  ; Kind of redundant with use-package... So should fix this
-(time-since-init "mdw-packages")
-(require 'mdw-defaults)	 ; In theory this should work on almost any emacs config
-(time-since-init "mdw-defaults")
-(require 'mdw-vibes)	 ; Appearance and fonts.. Ya know, vibes?
-(time-since-init "mdw-vibes")
-(require 'mdw-utilities) ; Always ensure utilities loads before keybinds
-(time-since-init "mdw-utilities")
-(require 'mdw-modes)	 ; Always ensure modes loads before keybinds
-(time-since-init "mdw-modes")
-(require 'mdw-org)       ; Orgmode customisations
-(time-since-init "mdw-org")
-(require 'mdw-ess)       ; R etc
-(time-since-init "mdw-ess")
-(require 'mdw-spacemacs) ; Spacemacs ganking
-(time-since-init "mdw-spacemacs")
-(require 'mdw-keybinds)	 ; Customisations that aren't in use-package definitions
-(time-since-init "mdw-keybinds")
+(require 'mkw-packages)  ; Kind of redundant with use-package... So should fix this
+(time-since-init "mkw-packages")
+(require 'mkw-defaults)	 ; In theory this should work on almost any emacs config
+(time-since-init "mkw-defaults")
+(require 'mkw-vibes)	 ; Appearance and fonts.. Ya know, vibes?
+(time-since-init "mkw-vibes")
+(require 'mkw-utilities) ; Always ensure utilities loads before keybinds
+(time-since-init "mkw-utilities")
+(require 'mkw-modes)	 ; Always ensure modes loads before keybinds
+(time-since-init "mkw-modes")
+(require 'mkw-org)       ; Orgmode customisations
+(time-since-init "mkw-org")
+(require 'mkw-ess)       ; R etc
+(time-since-init "mkw-ess")
+(require 'mkw-spacemacs) ; Spacemacs ganking
+(time-since-init "mkw-spacemacs")
+(require 'mkw-keybinds)	 ; Customisations that aren't in use-package definitions
+(time-since-init "mkw-keybinds")
 

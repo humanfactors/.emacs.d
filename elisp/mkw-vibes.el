@@ -1,4 +1,4 @@
-;;; mdw-vibes.el
+;;; mkw-vibes.el
 ;; Things that make this look sexy
 ;;; Code:
 
@@ -84,7 +84,7 @@
 
 
 
-(provide 'mdw-vibes)
+(provide 'mkw-vibes)
 
 
-;;; mdw-vibes.el ends here
+;;; mkw-vibes.el ends here
