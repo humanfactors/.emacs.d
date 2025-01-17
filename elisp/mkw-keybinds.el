@@ -54,8 +54,8 @@
 ;; Keybinds for Custom Functions defined in mkw-utilities.el
 (global-set-key (kbd "M-<up>") 'move-line-up)
 (global-set-key (kbd "M-<down>") 'move-line-down)
-(global-set-key "\C-x\M-s" `michael-filetimestamp)
-(global-set-key "\C-x\M-d" `michael-timestamp)
+(global-set-key "\C-x\M-s" `micah-filetimestamp)
+(global-set-key "\C-x\M-d" `micah-timestamp)
 
 ;; Appearance
 (define-key global-map (kbd "<f7><f7>") 'visual-fill-column-mode)

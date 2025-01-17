@@ -3,14 +3,14 @@
 ;;; Code:
 
 ;; Utility Functionality
-(defun michael-timestamp ()
+(defun micah-timestamp ()
   "Insert a timestamp at the current point.
 Note no attempt to go to beginning of line and no added carriage return.
 Uses `bjk-timestamp-format' for formatting the date/time."
   (interactive)
   (insert (format-time-string "%Y-%m-%d %H:%M" (current-time))))
 
-(defun michael-filetimestamp ()
+(defun micah-filetimestamp ()
   "Insert a timestamp at the current point.
 Note no attempt to go to beginning of line and no added carriage return.
 Uses `bjk-timestamp-format' for formatting the date/time."

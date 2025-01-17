@@ -1,2 +1,2 @@
-;; Michael's Julia Configuration
+;; micah's Julia Configuration
 ;; TODO: Fix

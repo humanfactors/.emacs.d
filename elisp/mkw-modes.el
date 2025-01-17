@@ -601,7 +601,7 @@
 (use-package dashboard
   :ensure t
   :config
-  (setq dashboard-banner-logo-title "Hello Michael, Welcome to Emacs.")
+  (setq dashboard-banner-logo-title "Hello micah, Welcome to Emacs.")
   (setq dashboard-startup-banner 'logo)
   (setq dashboard-center-content t)
   (setq dashboard-items '((recents  . 10)
